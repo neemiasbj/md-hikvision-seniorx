@@ -6,6 +6,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.com.thidi.middleware.resource.CLogger;
 import br.com.thidi.middleware.utils.UtilPropertiesImpl;
 import jakarta.websocket.ClientEndpoint;
 import jakarta.websocket.CloseReason;
@@ -50,7 +54,15 @@ public class SeniorWebSocketClient {
 
 	@OnMessage
 	public void onMessage(String message) {
-		System.out.println("Received message: " + message);
+		System.out.println(message);
+		ObjectMapper objectMapper = new ObjectMapper();
+		JsonNode jsonNode;
+		try {
+			jsonNode = objectMapper.readTree(message);
+			SeniorHandlerService.HandleWebSocketMessage(jsonNode.get("deviceId").asLong());
+		} catch (Exception e) {
+			CLogger.logSeniorError("ON MESSAGE", e.getMessage());
+		}
 	}
 
 	@OnClose

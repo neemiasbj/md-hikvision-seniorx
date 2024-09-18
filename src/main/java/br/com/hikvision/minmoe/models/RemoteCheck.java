@@ -1,4 +1,4 @@
-package br.com.hikvision.models.minmoe;
+package br.com.hikvision.minmoe.models;
 
 public class RemoteCheck {
 

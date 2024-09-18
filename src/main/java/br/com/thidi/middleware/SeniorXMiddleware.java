@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 import br.com.seniorx.services.SeniorHandlerService;
+import br.com.seniorx.services.SeniorWebSocketService;
 import br.com.thidi.middleware.resource.CLogger;
 import br.com.thidi.middleware.services.PropertiesService;
 import br.com.thidi.middleware.utils.PropertiesUtilImpl;
@@ -45,12 +46,9 @@ public class SeniorXMiddleware {
 		CLogger.logPropertiesInfo("FILE CONFIG DATA", "time.pooling.pendency.seconds: " + PropertiesUtilImpl.getValor("time.pooling.pendency.seconds"));
 		CLogger.logPropertiesInfo("FILE CONFIG DATA", "time.keep.alive.senior.seconds: " + PropertiesUtilImpl.getValor("time.keep.alive.senior.seconds"));
 		CLogger.logPropertiesInfo("FILE CONFIG DATA", "time.waiting.resttemplate.seconds: " + PropertiesUtilImpl.getValor("time.waiting.resttemplate.seconds"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA", "server.api.minmon.url: " + PropertiesUtilImpl.getValor("server.api.minmon.url"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA", "server.api.minmon.port: " + PropertiesUtilImpl.getValor("server.api.minmon.port"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA", "server.api.minmon.uri: " + PropertiesUtilImpl.getValor("server.api.minmon.uri"));
 
-//		SeniorWebSocketService ws = new SeniorWebSocketService();
-//		ws.start();
+		SeniorWebSocketService ws = new SeniorWebSocketService();
+		ws.start();
 
 		SeniorHandlerService shs = new SeniorHandlerService();
 		shs.start();

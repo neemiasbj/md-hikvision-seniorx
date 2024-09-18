@@ -1,38 +1,23 @@
-package br.com.hikvision.models.minmoe;
+package br.com.hikvision.minmoe.models;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
 
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "HttpHostNotification")
+@XmlType(propOrder = { "id", "url", "protocolType", "parameterFormatType", "addressingFormatType", "ipAddress", "portNo", "httpAuthenticationMethod" })
 public class HttpHostNotification {
 
-	@XmlElement(name = "id")
 	private String id;
-
-	@XmlElement(name = "url")
 	private String url;
-
-	@XmlElement(name = "protocolType")
 	private String protocolType;
-
-	@XmlElement(name = "parameterFormatType")
 	private String parameterFormatType;
-
-	@XmlElement(name = "addressingFormatType")
 	private String addressingFormatType;
-
-	@XmlElement(name = "ipAddress")
 	private String ipAddress;
-
-	@XmlElement(name = "portNo")
 	private int portNo;
-
-	@XmlElement(name = "httpAuthenticationMethod")
 	private String httpAuthenticationMethod;
 
-	// Getters e Setters
-
+	@XmlElement
 	public String getId() {
 		return id;
 	}
@@ -41,6 +26,7 @@ public class HttpHostNotification {
 		this.id = id;
 	}
 
+	@XmlElement
 	public String getUrl() {
 		return url;
 	}
@@ -49,6 +35,7 @@ public class HttpHostNotification {
 		this.url = url;
 	}
 
+	@XmlElement
 	public String getProtocolType() {
 		return protocolType;
 	}
@@ -57,6 +44,7 @@ public class HttpHostNotification {
 		this.protocolType = protocolType;
 	}
 
+	@XmlElement
 	public String getParameterFormatType() {
 		return parameterFormatType;
 	}
@@ -65,6 +53,7 @@ public class HttpHostNotification {
 		this.parameterFormatType = parameterFormatType;
 	}
 
+	@XmlElement
 	public String getAddressingFormatType() {
 		return addressingFormatType;
 	}
@@ -73,6 +62,7 @@ public class HttpHostNotification {
 		this.addressingFormatType = addressingFormatType;
 	}
 
+	@XmlElement
 	public String getIpAddress() {
 		return ipAddress;
 	}
@@ -81,6 +71,7 @@ public class HttpHostNotification {
 		this.ipAddress = ipAddress;
 	}
 
+	@XmlElement
 	public int getPortNo() {
 		return portNo;
 	}
@@ -89,6 +80,7 @@ public class HttpHostNotification {
 		this.portNo = portNo;
 	}
 
+	@XmlElement
 	public String getHttpAuthenticationMethod() {
 		return httpAuthenticationMethod;
 	}

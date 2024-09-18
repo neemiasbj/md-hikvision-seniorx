@@ -3,12 +3,19 @@ package br.com.seniorx.services;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import br.com.hikvision.minmoe.models.DeviceInfo;
+import br.com.hikvision.minmoe.models.ExcludePhotoRequest;
+import br.com.hikvision.minmoe.models.IncludeFaceRequest;
+import br.com.hikvision.minmoe.models.SearchPhotoRequest;
+import br.com.hikvision.minmoe.models.User;
 import br.com.hikvision.services.HikvisionMinMoeService;
 import br.com.seniorx.models.ActiveDeviceOutputPendency;
 import br.com.seniorx.models.AllPendency;
@@ -23,6 +30,8 @@ import br.com.seniorx.models.DeviceDisplayMessagePendency;
 import br.com.seniorx.models.DevicePendency;
 import br.com.seniorx.models.DeviceUpdatedPendency;
 import br.com.seniorx.models.Event;
+import br.com.seniorx.models.Event.EventTypeEnum;
+import br.com.seniorx.models.Event.StatusEnum;
 import br.com.seniorx.models.ExcludeBiometryPendency;
 import br.com.seniorx.models.ExcludeCardPendency;
 import br.com.seniorx.models.ExcludePhotoPendency;
@@ -32,15 +41,16 @@ import br.com.seniorx.models.IncludePhotoPendency;
 import br.com.seniorx.models.LoadHolidayListPendency;
 import br.com.seniorx.models.ManagerDevice;
 import br.com.seniorx.models.ManufacturerUpdatedPendency;
+import br.com.seniorx.models.OperationUpdateDeviceEnum;
 import br.com.seniorx.models.PendencyExecuted;
 import br.com.seniorx.models.PendencyUpdated;
+import br.com.seniorx.models.PendencyUpdated.OperationEnum;
 import br.com.seniorx.models.PersonAreaUpdatedPendency;
+import br.com.seniorx.models.PersonPhotoTemplates;
 import br.com.seniorx.models.SetDeviceEmergencyPendency;
 import br.com.seniorx.models.UnblockDevicePendency;
 import br.com.seniorx.models.UnsetDeviceEmergencyPendency;
 import br.com.seniorx.models.UpdatePersonREPPendency;
-import br.com.seniorx.models.Event.EventTypeEnum;
-import br.com.seniorx.models.Event.StatusEnum;
 import br.com.thidi.middleware.resource.CLogger;
 import br.com.thidi.middleware.utils.PropertiesUtilImpl;
 
@@ -48,6 +58,8 @@ public class SeniorHandlerService {
 
 	ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
 	private int interval = PropertiesUtilImpl.getValor("time.keep.alive.senior.seconds").isEmpty() ? 30 : Integer.valueOf(PropertiesUtilImpl.getValor("time.keep.alive.senior.seconds"));
+	private static SimpleDateFormat sdfyyyyMMddHHmmss = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	Calendar calendar = Calendar.getInstance();
 
 	public void start() {
 		executorService.scheduleAtFixedRate(() -> {
@@ -57,10 +69,9 @@ public class SeniorHandlerService {
 		executorService.scheduleAtFixedRate(() -> {
 			HandleDevicesPendencies();
 		}, 0, interval, TimeUnit.SECONDS);
-
 	}
 
-	private final DateFormat seniorDateTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	private final static DateFormat seniorDateTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
 	public void handleKeepAlive() {
 		CLogger.logSeniorInfo("KEEP ALIVE", "Checking devices...");
@@ -97,15 +108,15 @@ public class SeniorHandlerService {
 				CLogger.logSeniorInfo("KEEP ALIVE", "No devices found.");
 			} else {
 				for (ManagerDevice device : devices) {
-					Thread keepAlvive = new Thread(() -> {
-						HikvisionMinMoeService minmonService = new HikvisionMinMoeService(device);
+					Thread pendnciesHandler = new Thread(() -> {
+						HikvisionMinMoeService minmoeService = new HikvisionMinMoeService(device);
 						seniorService.setDevice(device);
 
 						AllPendency allPendencies = seniorService.getDevicePendencies(device.getId());
 
-						HandleDevicePendencies(allPendencies, minmonService, seniorService);
+						HandleDevicePendencies(allPendencies, minmoeService, seniorService);
 					});
-					keepAlvive.start();
+					pendnciesHandler.start();
 				}
 			}
 		} catch (Exception e) {
@@ -113,7 +124,7 @@ public class SeniorHandlerService {
 		}
 	}
 
-	public void HandleWebSocketMessage(Long deviceId) {
+	public static void HandleWebSocketMessage(Long deviceId) {
 
 		ManagerDevice device = SeniorApiService.getDevice(deviceId);
 
@@ -130,11 +141,62 @@ public class SeniorHandlerService {
 
 	}
 
-	private void HandleDevicePendencies(AllPendency pendencies, HikvisionMinMoeService minmoeService, SeniorApiService seniorService) {
+	private static void HandleDevicePendencies(AllPendency pendencies, HikvisionMinMoeService minmoeService, SeniorApiService seniorService) {
 		handleDeviceStatusPendencies(pendencies.getDeviceStatus(), minmoeService, seniorService);
+		handleDeviceDateTimePendencies(pendencies.getDeviceDateTime(), seniorService);
+		handleResetDevicePendencies(pendencies.getResetDevice(), seniorService);
+		handleBlockDevicePendencies(pendencies.getBlockDevice(), seniorService);
+		handleUnblockDevicePendencies(pendencies.getUnblockDevice(), seniorService);
+		handleSetDeviceEmergencyPendencies(pendencies.getSetDeviceEmergency(), seniorService);
+		handleUnsetDeviceEmergencyPendencies(pendencies.getUnsetDeviceEmergency(), seniorService);
+		handleApolloIncludeCardPendencies(pendencies.getApolloIncludeCard(), seniorService);
+		handleApolloExcludeCardPendencies(pendencies.getApolloExcludeCard(), seniorService);
+		handleIncludeBiometryPendencies(pendencies.getIncludeBiometry(), seniorService);
+		handleExcludeBiometryPendencies(pendencies.getExcludeBiometry(), seniorService);
+		handleDevicePendencies(pendencies.getDevice(), seniorService, minmoeService);
+		handleLoadHolidayListPendencies(pendencies.getLoadHolidayList(), seniorService);
+		handleRemoveHolidayListPendencies(pendencies.getRemoveHolidayList(), seniorService);
+		handleActivateDeviceOutputPendencies(pendencies.getActivateDeviceOutput(), seniorService);
+		handleDeactivateDeviceOutputPendencies(pendencies.getDeactivateDeviceOutput(), seniorService);
+		handleDatamartUpdatedPendencies(pendencies.getDatamartUpdated(), seniorService);
+		handlePersonLocationUpdatedPendencies(pendencies.getPersonLocationUpdated(), seniorService);
+		handleCollectEventPendencies(pendencies.getCollectEvent(), seniorService);
+		handleInputStatusPendencies(pendencies.getInputStatus(), seniorService);
+		handleManufacturerUpdatedPendencies(pendencies.getManufacturerUpdated(), seniorService);
+		handleUpdatePersonREPPendencies(pendencies.getUpdatePersonREP(), seniorService);
+		handleLoadAllowCardListPendencies(pendencies.getLoadAllowCardList(), seniorService);
+		handleRemoveAllowCardListPendencies(pendencies.getRemoveBiometryList(), seniorService);
+		handleLoadBiometryListPendencies(pendencies.getLoadBiometryList(), seniorService);
+		handleRemoveBiometryListPendencies(pendencies.getRemoveBiometryList(), seniorService);
+		handleIncludeCardPendencies(pendencies.getIncludeCard(), seniorService);
+		handleExcludeCardPendencies(pendencies.getExcludeCard(), seniorService);
+		handleDeviceDisplayMessagePendencies(pendencies.getDeviceDisplayMessage(), seniorService);
+		handleUpdateFirmwarePendencies(pendencies.getUpdateFirmware(), seniorService);
+		handleIncludePhotoPendencies(pendencies.getIncludePhoto(), seniorService, minmoeService);
+		handleExcludePhotoPendencies(pendencies.getExcludePhoto(), seniorService, minmoeService);
+		handleLoadCredentialFacialList(pendencies.getLoadCredentialFacialList(), seniorService, minmoeService);
 	}
 
-	private void handleDeviceStatusPendencies(List<DevicePendency> pendencies, HikvisionMinMoeService minmoeService, SeniorApiService seniorService) {
+	private static void sendSuccessPendency(SeniorApiService seniorService, Long pendencyId) {
+		List<PendencyExecuted> pendenciesSuccess = new ArrayList<PendencyExecuted>();
+		PendencyExecuted pendencyExecuted = new PendencyExecuted();
+		pendencyExecuted.setPendencyId(pendencyId);
+		pendenciesSuccess.add(pendencyExecuted);
+		seniorService.updatePendenciesExecuted(pendenciesSuccess);
+		CLogger.logSeniorDebug("DeviceDateTimePendencies", "OK");
+	}
+
+	private static void updatePendencyStatus(SeniorApiService seniorService, Long pendencyId, PendencyUpdated.OperationEnum status) {
+		List<PendencyUpdated> pendenciesUpdate = new ArrayList<PendencyUpdated>();
+		PendencyUpdated pendencyUpdated = new PendencyUpdated();
+		pendencyUpdated.setPendencyId(pendencyId);
+		pendencyUpdated.setOperation(status);
+		pendencyUpdated.setErrorCode(345);
+		pendenciesUpdate.add(pendencyUpdated);
+		seniorService.updatePendenciesStatus(pendenciesUpdate);
+	}
+
+	private static void handleDeviceStatusPendencies(List<DevicePendency> pendencies, HikvisionMinMoeService minmoeService, SeniorApiService seniorService) {
 
 		if (pendencies != null)
 			for (DevicePendency pendency : pendencies)
@@ -144,9 +206,11 @@ public class SeniorHandlerService {
 
 	}
 
-	private void checkDeviceStatus(DevicePendency pendency, SeniorApiService seniorService, HikvisionMinMoeService minmoeService, Long deviceId) {
+	private static void checkDeviceStatus(DevicePendency pendency, SeniorApiService seniorService, HikvisionMinMoeService minmoeService, Long deviceId) {
 
-		Boolean deviceStatus = minmoeService.getDeviceInfo();
+		DeviceInfo deviceInfo = minmoeService.getDeviceInfo();
+
+		Boolean deviceStatus = deviceInfo == null ? false : true;
 
 		AreaControlList areaControl = seniorService.getAreaById(seniorService.getDevice().getAreaId());
 		if (areaControl == null) {
@@ -184,98 +248,554 @@ public class SeniorHandlerService {
 		}
 	}
 
-	private void handleDeviceDateTimePendencies(List<DevicePendency> pendencies) {
-
+	private static void handleDeviceDateTimePendencies(List<DevicePendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (DevicePendency pendency : pendencies) {
+				List<PendencyUpdated> pendenciesUpdate = new ArrayList<PendencyUpdated>();
+				PendencyUpdated pendencyUpdated = new PendencyUpdated();
+				pendencyUpdated.setPendencyId(pendency.getPendencyId());
+				pendencyUpdated.setOperation(br.com.seniorx.models.PendencyUpdated.OperationEnum.KEEP_PENDENCY);
+				seniorService.updatePendenciesStatus(pendenciesUpdate);
+				CLogger.logSeniorDebug("DeviceDateTimePendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("DeviceDateTimePendencies", e.getMessage());
+		}
 	}
 
-	private void handleResetDevicePendencies(List<DevicePendency> pendencies) {
+	private static void handleResetDevicePendencies(List<DevicePendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (DevicePendency pendency : pendencies) {
+				List<PendencyUpdated> pendenciesUpdate = new ArrayList<PendencyUpdated>();
+				PendencyUpdated pendencyUpdated = new PendencyUpdated();
+				pendencyUpdated.setPendencyId(pendency.getPendencyId());
+				pendencyUpdated.setOperation(br.com.seniorx.models.PendencyUpdated.OperationEnum.KEEP_PENDENCY);
+				seniorService.updatePendenciesStatus(pendenciesUpdate);
+				CLogger.logSeniorDebug("ResetDevicePendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("ResetDevicePendencies", e.getMessage());
+		}
 	}
 
-	private void handleBlockDevicePendencies(List<BlockDevicePendency> pendencies) {
+	private static void handleBlockDevicePendencies(List<BlockDevicePendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (BlockDevicePendency pendency : pendencies) {
+				List<PendencyUpdated> pendenciesUpdate = new ArrayList<PendencyUpdated>();
+				PendencyUpdated pendencyUpdated = new PendencyUpdated();
+				pendencyUpdated.setPendencyId(pendency.getPendencyId());
+				pendencyUpdated.setOperation(br.com.seniorx.models.PendencyUpdated.OperationEnum.KEEP_PENDENCY);
+				seniorService.updatePendenciesStatus(pendenciesUpdate);
+				CLogger.logSeniorDebug("BlockDevicePendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("BlockDevicePendencies", e.getMessage());
+		}
 	}
 
-	private void handleUnblockDevicePendencies(List<UnblockDevicePendency> pendencies) {
+	private static void handleUnblockDevicePendencies(List<UnblockDevicePendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (UnblockDevicePendency pendency : pendencies) {
+				List<PendencyUpdated> pendenciesUpdate = new ArrayList<PendencyUpdated>();
+				PendencyUpdated pendencyUpdated = new PendencyUpdated();
+				pendencyUpdated.setPendencyId(pendency.getPendencyId());
+				pendencyUpdated.setOperation(br.com.seniorx.models.PendencyUpdated.OperationEnum.KEEP_PENDENCY);
+				seniorService.updatePendenciesStatus(pendenciesUpdate);
+				CLogger.logSeniorDebug("UnblockDevicePendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("UnblockDevicePendencies", e.getMessage());
+		}
 	}
 
-	private void handleSetDeviceEmergencyPendencies(List<SetDeviceEmergencyPendency> pendencies) {
+	private static void handleSetDeviceEmergencyPendencies(List<SetDeviceEmergencyPendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (SetDeviceEmergencyPendency pendency : pendencies) {
+				List<PendencyUpdated> pendenciesUpdate = new ArrayList<PendencyUpdated>();
+				PendencyUpdated pendencyUpdated = new PendencyUpdated();
+				pendencyUpdated.setPendencyId(pendency.getPendencyId());
+				pendencyUpdated.setOperation(br.com.seniorx.models.PendencyUpdated.OperationEnum.KEEP_PENDENCY);
+				seniorService.updatePendenciesStatus(pendenciesUpdate);
+				CLogger.logSeniorDebug("SetDeviceEmergencyPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("SetDeviceEmergencyPendencies", e.getMessage());
+		}
 	}
 
-	private void handleUnsetDeviceEmergencyPendencies(List<UnsetDeviceEmergencyPendency> pendencies) {
+	private static void handleUnsetDeviceEmergencyPendencies(List<UnsetDeviceEmergencyPendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (UnsetDeviceEmergencyPendency pendency : pendencies) {
+				List<PendencyUpdated> pendenciesUpdate = new ArrayList<PendencyUpdated>();
+				PendencyUpdated pendencyUpdated = new PendencyUpdated();
+				pendencyUpdated.setPendencyId(pendency.getPendencyId());
+				pendencyUpdated.setOperation(br.com.seniorx.models.PendencyUpdated.OperationEnum.KEEP_PENDENCY);
+				seniorService.updatePendenciesStatus(pendenciesUpdate);
+				CLogger.logSeniorDebug("UnsetDeviceEmergencyPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("UnsetDeviceEmergencyPendencies", e.getMessage());
+		}
 	}
 
-	private void handleApolloIncludeCardPendencies(List<ApolloIncludeCardPendency> pendencies) {
+	private static void handleApolloIncludeCardPendencies(List<ApolloIncludeCardPendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (ApolloIncludeCardPendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("ApolloIncludeCardPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("ApolloIncludeCardPendencies", e.getMessage());
+		}
 	}
 
-	private void handleApolloExcludeCardPendencies(List<ApolloExcludeCardPendency> pendencies) {
+	private static void handleApolloExcludeCardPendencies(List<ApolloExcludeCardPendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (ApolloExcludeCardPendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("ApolloExcludeCardPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("ApolloExcludeCardPendencies", e.getMessage());
+		}
 	}
 
-	private void handleIncludeBiometryPendencies(List<IncludeBiometryPendency> pendencies) {
+	private static void handleIncludeBiometryPendencies(List<IncludeBiometryPendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (IncludeBiometryPendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("IncludeBiometryPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("IncludeBiometryPendencies", e.getMessage());
+		}
 	}
 
-	private void handleExcludeBiometryPendencies(List<ExcludeBiometryPendency> pendencies) {
+	private static void handleExcludeBiometryPendencies(List<ExcludeBiometryPendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (ExcludeBiometryPendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("ExcludeBiometryPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("ExcludeBiometryPendencies", e.getMessage());
+		}
 	}
 
-	private void handleDevicePendencies(List<DeviceUpdatedPendency> pendencies) {
+	private static void handleDevicePendencies(List<DeviceUpdatedPendency> pendencies, SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+		try {
+			for (DeviceUpdatedPendency pendency : pendencies) {
+				if (pendency.getOperation().equals(OperationUpdateDeviceEnum.DEVICE_CONFIG)) {
+					ManagerDevice device = SeniorApiService.getDevice(pendency.getManagerDeviceId());
+					Boolean success = minmoeService.configureDevice(device);
+					if (success) {
+						sendSuccessPendency(seniorService, pendency.getPendencyId());
+						CLogger.logSeniorDebug("DevicePendencies", "OK");
+					} else
+						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+
+				} else {
+					sendSuccessPendency(seniorService, pendency.getPendencyId());
+					CLogger.logSeniorDebug("DevicePendencies", "OK");
+				}
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("DevicePendencies", e.getMessage());
+		}
 	}
 
-	private void handleLoadHolidayListPendencies(List<LoadHolidayListPendency> pendencies) {
+	private static void handleLoadHolidayListPendencies(List<LoadHolidayListPendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (LoadHolidayListPendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("LoadHolidayListPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("LoadHolidayListPendencies", e.getMessage());
+		}
 	}
 
-	private void handleRemoveHolidayListPendencies(List<DevicePendency> pendencies) {
+	private static void handleRemoveHolidayListPendencies(List<DevicePendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (DevicePendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("RemoveHolidayListPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("RemoveHolidayListPendencies", e.getMessage());
+		}
 	}
 
-	private void handleActivateDeviceOutputPendencies(List<ActiveDeviceOutputPendency> pendencies) {
+	private static void handleActivateDeviceOutputPendencies(List<ActiveDeviceOutputPendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (ActiveDeviceOutputPendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("ActivateDeviceOutputPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("ActivateDeviceOutputPendencies", e.getMessage());
+		}
 	}
 
-	private void handleDeactivateDeviceOutputPendencies(List<DeactiveDeviceOutputPendency> pendencies) {
+	private static void handleDeactivateDeviceOutputPendencies(List<DeactiveDeviceOutputPendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (DeactiveDeviceOutputPendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("DeactivateDeviceOutputPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("DeactivateDeviceOutputPendencies", e.getMessage());
+		}
 	}
 
-	private void handleDatamartUpdatedPendencies(List<DatamartUpdatedPendency> pendencies) {
+	private static void handleDatamartUpdatedPendencies(List<DatamartUpdatedPendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (DatamartUpdatedPendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("DatamartUpdatedPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("DatamartUpdatedPendencies", e.getMessage());
+		}
 	}
 
-	private void handlePersonLocationUpdatedPendencies(List<PersonAreaUpdatedPendency> pendencies) {
+	private static void handlePersonLocationUpdatedPendencies(List<PersonAreaUpdatedPendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (PersonAreaUpdatedPendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("PersonLocationUpdatedPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("PersonLocationUpdatedPendencies", e.getMessage());
+		}
 	}
 
-	private void handleCollectEventPendencies(List<CollectEventPendency> pendencies) {
+	private static void handleCollectEventPendencies(List<CollectEventPendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (CollectEventPendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("CollectEventPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("CollectEventPendencies", e.getMessage());
+		}
 	}
 
-	private void handleInputStatusPendencies(List<DevicePendency> pendencies) {
+	private static void handleInputStatusPendencies(List<DevicePendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (DevicePendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("InputStatusPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("InputStatusPendencies", e.getMessage());
+		}
 	}
 
-	private void handleManufacturerUpdatedPendencies(List<ManufacturerUpdatedPendency> pendencies) {
+	private static void handleManufacturerUpdatedPendencies(List<ManufacturerUpdatedPendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (ManufacturerUpdatedPendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("ManufacturerUpdatedPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("ManufacturerUpdatedPendencies", e.getMessage());
+		}
 	}
 
-	private void handleUpdatePersonREPPendencies(List<UpdatePersonREPPendency> pendencies) {
+	private static void handleUpdatePersonREPPendencies(List<UpdatePersonREPPendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (UpdatePersonREPPendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("UpdatePersonREPPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("UpdatePersonREPPendencies", e.getMessage());
+		}
 	}
 
-	private void handleLoadAllowCardListPendencies(List<DevicePendency> pendencies) {
+	private static void handleLoadAllowCardListPendencies(List<DevicePendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (DevicePendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("LoadAllowCardListPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("LoadAllowCardListPendencies", e.getMessage());
+		}
 	}
 
-	private void handleRemoveAllowCardListPendencies(List<DevicePendency> pendencies) {
+	private static void handleRemoveAllowCardListPendencies(List<DevicePendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (DevicePendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("RemoveAllowCardListPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("RemoveAllowCardListPendencies", e.getMessage());
+		}
 	}
 
-	private void handleLoadBiometryListPendencies(List<DevicePendency> pendencies) {
+	private static void handleLoadBiometryListPendencies(List<DevicePendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (DevicePendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("LoadBiometryListPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("LoadBiometryListPendencies", e.getMessage());
+		}
 	}
 
-	private void handleRemoveBiometryListPendencies(List<DevicePendency> pendencies) {
+	private static void handleRemoveBiometryListPendencies(List<DevicePendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (DevicePendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("RemoveBiometryListPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("RemoveBiometryListPendencies", e.getMessage());
+		}
 	}
 
-	private void handleIncludeCardPendencies(List<IncludeCardPendency> pendencies) {
+	private static void handleIncludeCardPendencies(List<IncludeCardPendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (IncludeCardPendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("IncludeCardPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("IncludeCardPendencies", e.getMessage());
+		}
 	}
 
-	private void handleExcludeCardPendencies(List<ExcludeCardPendency> pendencies) {
+	private static void handleExcludeCardPendencies(List<ExcludeCardPendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (ExcludeCardPendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("ExcludeCardPendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("ExcludeCardPendencies", e.getMessage());
+		}
 	}
 
-	private void handleDeviceDisplayMessagePendencies(List<DeviceDisplayMessagePendency> pendencies) {
+	private static void handleDeviceDisplayMessagePendencies(List<DeviceDisplayMessagePendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (DeviceDisplayMessagePendency pendency : pendencies) {
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("DeviceDisplayMessagePendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("DeviceDisplayMessagePendencies", e.getMessage());
+		}
 	}
 
-	private void handleUpdateFirmwarePendencies(List<DevicePendency> pendencies) {
+	private static void handleUpdateFirmwarePendencies(List<DevicePendency> pendencies, SeniorApiService seniorService) {
+		// TODO
+		try {
+			for (DevicePendency pendency : pendencies) {
+
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				CLogger.logSeniorDebug("UpdateFirmwarePendencies", "OK");
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("UpdateFirmwarePendencies", e.getMessage());
+		}
 	}
 
-	private void handleIncludePhotoPendencies(List<IncludePhotoPendency> pendencies) {
+	private static void handleIncludePhotoPendencies(List<IncludePhotoPendency> pendencies, SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+		try {
+			for (IncludePhotoPendency pendency : pendencies) {
+
+				try {
+					User user = new User();
+
+					User.UserInfo userInfo = new User.UserInfo();
+					userInfo.setEmployeeNo(pendency.getPersonId().toString());
+					userInfo.setName(pendency.getPersonName());
+					userInfo.setUserType("normal");
+
+					Date currentDate = new Date();
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTime(currentDate);
+					calendar.add(Calendar.YEAR, 10);
+					Date datePlusTenYears = calendar.getTime();
+
+					User.Valid valid = new User.Valid();
+					valid.setEnable(true);
+					valid.setBeginTime(sdfyyyyMMddHHmmss.format(currentDate));
+					valid.setEndTime(sdfyyyyMMddHHmmss.format(datePlusTenYears));
+					userInfo.setValid(valid);
+					userInfo.setDoorRight("1");
+
+					User.RightPlan rightPlan = new User.RightPlan();
+					rightPlan.setDoorNo(1);
+					rightPlan.setPlanTemplateNo("1");
+
+					userInfo.setRightPlan(List.of(rightPlan));
+
+					user.setUserInfo(userInfo);
+
+					Boolean success = includePerson(user, pendency.getPhotoUrl(), minmoeService);
+
+					if (success) {
+						sendSuccessPendency(seniorService, pendency.getPendencyId());
+						CLogger.logSeniorDebug("IncludePhotoPendencies", "OK");
+					} else {
+						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+						CLogger.logSeniorError("IncludePhotoPendencies", "ERROR");
+
+					}
+				} catch (Exception e) {
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+					CLogger.logSeniorError("IncludePhotoPendencies", e.getMessage());
+				}
+
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("IncludePhotoPendencies", e.getMessage());
+		}
 	}
 
-	private void handleExcludePhotoPendencies(List<ExcludePhotoPendency> pendencies) {
+	private static boolean includePerson(User user, String photoUrl, HikvisionMinMoeService minmoeService) {
+		if (!minmoeService.includeUser(user))
+			return false;
+
+		SearchPhotoRequest photo = new SearchPhotoRequest();
+		photo.setFPID(user.getUserInfo().getEmployeeNo());
+		photo.setMaxResults(5);
+		photo.setSearchResultPosition(0);
+
+		Boolean hasPhoto = minmoeService.searchPhoto(photo);
+
+		ExcludePhotoRequest exclude = new ExcludePhotoRequest();
+		ExcludePhotoRequest.Fpid fpid = new ExcludePhotoRequest.Fpid();
+		fpid.setValue(user.getUserInfo().getEmployeeNo());
+		exclude.setFPID(Collections.singletonList(fpid));
+
+		if (hasPhoto)
+			minmoeService.excludePhoto(exclude);
+
+		IncludeFaceRequest faceDataRequest = new IncludeFaceRequest(user.getUserInfo().getEmployeeNo());
+
+		return minmoeService.includePhoto(faceDataRequest, photoUrl);
 	}
 
+	private static void handleExcludePhotoPendencies(List<ExcludePhotoPendency> pendencies, SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+		// TODO
+		try {
+			for (ExcludePhotoPendency pendency : pendencies) {
+				try {
+					ExcludePhotoRequest fpidRequest = new ExcludePhotoRequest();
+					ExcludePhotoRequest.Fpid fpid = new ExcludePhotoRequest.Fpid();
+					fpid.setValue(pendency.getPersonId().toString());
+					fpidRequest.setFPID(Collections.singletonList(fpid));
+
+					Boolean success = minmoeService.excludePhoto(fpidRequest);
+					if (success) {
+						sendSuccessPendency(seniorService, pendency.getPendencyId());
+						CLogger.logSeniorDebug("ExcludePhotoPendencies", "OK");
+					} else {
+						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.REMOVE_PENDENCY);
+						CLogger.logSeniorError("ExcludePhotoPendencies", "ERROR");
+					}
+				} catch (Exception e) {
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+					CLogger.logSeniorError("ExcludePhotoPendencies", e.getMessage());
+				}
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("ExcludePhotoPendencies", e.getMessage());
+		}
+	}
+
+	private static void handleLoadCredentialFacialList(List<DevicePendency> pendencies, SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+
+		try {
+
+			for (DevicePendency pendency : pendencies) {
+				try {
+					// TODO excluir todos os usuários
+
+					List<PersonPhotoTemplates> personsInfo = seniorService.getCredentialFacialList();
+					Boolean success = false;
+
+					for (PersonPhotoTemplates personInfo : personsInfo) {
+						User user = new User();
+
+						User.UserInfo userInfo = new User.UserInfo();
+						userInfo.setEmployeeNo(personInfo.getPersonId().toString());
+						userInfo.setName(personInfo.getName());
+						userInfo.setUserType("normal");
+
+						Date currentDate = new Date();
+						Calendar calendar = Calendar.getInstance();
+						calendar.setTime(currentDate);
+						calendar.add(Calendar.YEAR, 10);
+						Date datePlusTenYears = calendar.getTime();
+
+						User.Valid valid = new User.Valid();
+						valid.setEnable(true);
+						valid.setBeginTime(sdfyyyyMMddHHmmss.format(currentDate));
+						valid.setEndTime(sdfyyyyMMddHHmmss.format(datePlusTenYears));
+						userInfo.setValid(valid);
+						userInfo.setDoorRight("1");
+
+						User.RightPlan rightPlan = new User.RightPlan();
+						rightPlan.setDoorNo(1);
+						rightPlan.setPlanTemplateNo("1");
+
+						userInfo.setRightPlan(List.of(rightPlan));
+
+						user.setUserInfo(userInfo);
+
+						success = includePerson(user, personInfo.getPhotoURL(), minmoeService);
+						if (!success) {
+							updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+							CLogger.logSeniorError("ExcludePhotoPendencies", "ERROR");
+							return;
+						}
+					}
+
+					sendSuccessPendency(seniorService, pendency.getPendencyId());
+					CLogger.logSeniorDebug("ExcludePhotoPendencies", "OK");
+
+				} catch (Exception e) {
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+					CLogger.logSeniorError("ExcludePhotoPendencies", e.getMessage());
+				}
+			}
+		} catch (Exception e) {
+			CLogger.logSeniorError("LoadCredentialFacialList", e.getMessage());
+		}
+
+	}
 }

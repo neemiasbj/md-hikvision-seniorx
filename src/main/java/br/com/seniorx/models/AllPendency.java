@@ -8,6 +8,10 @@ import com.google.gson.annotations.SerializedName;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * AllPendency
+ */
+
 public class AllPendency {
 	@SerializedName("deviceStatus")
 	private List<DevicePendency> deviceStatus = null;
@@ -1009,49 +1013,24 @@ public class AllPendency {
 			return false;
 		}
 		AllPendency allPendency = (AllPendency) o;
-		return Objects.equals(this.deviceStatus, allPendency.deviceStatus)
-				&& Objects.equals(this.deviceDateTime, allPendency.deviceDateTime)
-				&& Objects.equals(this.resetDevice, allPendency.resetDevice)
-				&& Objects.equals(this.blockDevice, allPendency.blockDevice)
-				&& Objects.equals(this.unblockDevice, allPendency.unblockDevice)
-				&& Objects.equals(this.setDeviceEmergency, allPendency.setDeviceEmergency)
-				&& Objects.equals(this.unsetDeviceEmergency, allPendency.unsetDeviceEmergency)
-				&& Objects.equals(this.apolloIncludeCard, allPendency.apolloIncludeCard)
-				&& Objects.equals(this.apolloExcludeCard, allPendency.apolloExcludeCard)
-				&& Objects.equals(this.includeBiometry, allPendency.includeBiometry)
-				&& Objects.equals(this.excludeBiometry, allPendency.excludeBiometry)
-				&& Objects.equals(this.device, allPendency.device)
-				&& Objects.equals(this.loadHolidayList, allPendency.loadHolidayList)
-				&& Objects.equals(this.removeHolidayList, allPendency.removeHolidayList)
-				&& Objects.equals(this.activateDeviceOutput, allPendency.activateDeviceOutput)
-				&& Objects.equals(this.deactivateDeviceOutput, allPendency.deactivateDeviceOutput)
-				&& Objects.equals(this.datamartUpdated, allPendency.datamartUpdated)
-				&& Objects.equals(this.personLocationUpdated, allPendency.personLocationUpdated)
-				&& Objects.equals(this.collectEvent, allPendency.collectEvent)
-				&& Objects.equals(this.inputStatus, allPendency.inputStatus)
-				&& Objects.equals(this.manufacturerUpdated, allPendency.manufacturerUpdated)
-				&& Objects.equals(this.updatePersonREP, allPendency.updatePersonREP)
-				&& Objects.equals(this.loadAllowCardList, allPendency.loadAllowCardList)
-				&& Objects.equals(this.removeAllowCardList, allPendency.removeAllowCardList)
-				&& Objects.equals(this.loadBiometryList, allPendency.loadBiometryList)
-				&& Objects.equals(this.removeBiometryList, allPendency.removeBiometryList)
-				&& Objects.equals(this.includeCard, allPendency.includeCard)
-				&& Objects.equals(this.excludeCard, allPendency.excludeCard)
-				&& Objects.equals(this.deviceDisplayMessage, allPendency.deviceDisplayMessage)
-				&& Objects.equals(this.updateFirmware, allPendency.updateFirmware)
-				&& Objects.equals(this.includePhoto, allPendency.includePhoto)
-				&& Objects.equals(this.excludePhoto, allPendency.excludePhoto)
-				&& Objects.equals(this.loadCredentialFacialList, allPendency.loadCredentialFacialList);
+		return Objects.equals(this.deviceStatus, allPendency.deviceStatus) && Objects.equals(this.deviceDateTime, allPendency.deviceDateTime) && Objects.equals(this.resetDevice, allPendency.resetDevice)
+				&& Objects.equals(this.blockDevice, allPendency.blockDevice) && Objects.equals(this.unblockDevice, allPendency.unblockDevice) && Objects.equals(this.setDeviceEmergency, allPendency.setDeviceEmergency)
+				&& Objects.equals(this.unsetDeviceEmergency, allPendency.unsetDeviceEmergency) && Objects.equals(this.apolloIncludeCard, allPendency.apolloIncludeCard) && Objects.equals(this.apolloExcludeCard, allPendency.apolloExcludeCard)
+				&& Objects.equals(this.includeBiometry, allPendency.includeBiometry) && Objects.equals(this.excludeBiometry, allPendency.excludeBiometry) && Objects.equals(this.device, allPendency.device)
+				&& Objects.equals(this.loadHolidayList, allPendency.loadHolidayList) && Objects.equals(this.removeHolidayList, allPendency.removeHolidayList) && Objects.equals(this.activateDeviceOutput, allPendency.activateDeviceOutput)
+				&& Objects.equals(this.deactivateDeviceOutput, allPendency.deactivateDeviceOutput) && Objects.equals(this.datamartUpdated, allPendency.datamartUpdated) && Objects.equals(this.personLocationUpdated, allPendency.personLocationUpdated)
+				&& Objects.equals(this.collectEvent, allPendency.collectEvent) && Objects.equals(this.inputStatus, allPendency.inputStatus) && Objects.equals(this.manufacturerUpdated, allPendency.manufacturerUpdated)
+				&& Objects.equals(this.updatePersonREP, allPendency.updatePersonREP) && Objects.equals(this.loadAllowCardList, allPendency.loadAllowCardList) && Objects.equals(this.removeAllowCardList, allPendency.removeAllowCardList)
+				&& Objects.equals(this.loadBiometryList, allPendency.loadBiometryList) && Objects.equals(this.removeBiometryList, allPendency.removeBiometryList) && Objects.equals(this.includeCard, allPendency.includeCard)
+				&& Objects.equals(this.excludeCard, allPendency.excludeCard) && Objects.equals(this.deviceDisplayMessage, allPendency.deviceDisplayMessage) && Objects.equals(this.updateFirmware, allPendency.updateFirmware)
+				&& Objects.equals(this.includePhoto, allPendency.includePhoto) && Objects.equals(this.excludePhoto, allPendency.excludePhoto) && Objects.equals(this.loadCredentialFacialList, allPendency.loadCredentialFacialList);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(deviceStatus, deviceDateTime, resetDevice, blockDevice, unblockDevice, setDeviceEmergency,
-				unsetDeviceEmergency, apolloIncludeCard, apolloExcludeCard, includeBiometry, excludeBiometry, device,
-				loadHolidayList, removeHolidayList, activateDeviceOutput, deactivateDeviceOutput, datamartUpdated,
-				personLocationUpdated, collectEvent, inputStatus, manufacturerUpdated, updatePersonREP,
-				loadAllowCardList, removeAllowCardList, loadBiometryList, removeBiometryList, includeCard, excludeCard,
-				deviceDisplayMessage, updateFirmware, includePhoto, excludePhoto, loadCredentialFacialList);
+		return Objects.hash(deviceStatus, deviceDateTime, resetDevice, blockDevice, unblockDevice, setDeviceEmergency, unsetDeviceEmergency, apolloIncludeCard, apolloExcludeCard, includeBiometry, excludeBiometry, device, loadHolidayList,
+				removeHolidayList, activateDeviceOutput, deactivateDeviceOutput, datamartUpdated, personLocationUpdated, collectEvent, inputStatus, manufacturerUpdated, updatePersonREP, loadAllowCardList, removeAllowCardList, loadBiometryList,
+				removeBiometryList, includeCard, excludeCard, deviceDisplayMessage, updateFirmware, includePhoto, excludePhoto, loadCredentialFacialList);
 	}
 
 	@Override
