@@ -53,9 +53,6 @@ public class SeniorXMiddleware {
 		SeniorHandlerService shs = new SeniorHandlerService();
 		shs.start();
 
-//		PendencyQueueService pqs = new PendencyQueueService();
-//		pqs.start();
-
 	};
 
 	public synchronized String getVersion() {
