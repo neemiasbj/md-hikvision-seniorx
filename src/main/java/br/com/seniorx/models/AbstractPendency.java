@@ -2,7 +2,7 @@ package br.com.seniorx.models;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public abstract class AbstractPendency {
 	@SerializedName("pendencyId")
@@ -16,7 +16,7 @@ public abstract class AbstractPendency {
 	 * 
 	 * @return pendencyId
 	 **/
-	@ApiModelProperty(value = "Identificador da pendência")
+	@Schema(description = "Identificador da pendência")
 	public Long getPendencyId() {
 		return pendencyId;
 	}
@@ -35,7 +35,7 @@ public abstract class AbstractPendency {
 	 * 
 	 * @return managerDeviceId
 	 **/
-	@ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+	@Schema(description = "Identificador do dispositivo gerenciador")
 	public Long getManagerDeviceId() {
 		return managerDeviceId;
 	}

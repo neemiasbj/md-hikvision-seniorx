@@ -1,10 +1,15 @@
+
 package br.com.seniorx.models;
 
 import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * BlockDevicePendency
+ */
 
 public class BlockDevicePendency {
 	@SerializedName("pendencyId")
@@ -26,7 +31,7 @@ public class BlockDevicePendency {
 	 * 
 	 * @return pendencyId
 	 **/
-	@ApiModelProperty(value = "Identificador da pendência")
+	@Schema(description = "Identificador da pendência")
 	public Long getPendencyId() {
 		return pendencyId;
 	}
@@ -45,7 +50,7 @@ public class BlockDevicePendency {
 	 * 
 	 * @return managerDeviceId
 	 **/
-	@ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+	@Schema(description = "Identificador do dispositivo gerenciador")
 	public Long getManagerDeviceId() {
 		return managerDeviceId;
 	}
@@ -64,7 +69,7 @@ public class BlockDevicePendency {
 	 * 
 	 * @return deviceId
 	 **/
-	@ApiModelProperty(value = "Identificador do dispositivo")
+	@Schema(description = "Identificador do dispositivo")
 	public Long getDeviceId() {
 		return deviceId;
 	}
@@ -82,9 +87,7 @@ public class BlockDevicePendency {
 			return false;
 		}
 		BlockDevicePendency blockDevicePendency = (BlockDevicePendency) o;
-		return Objects.equals(this.pendencyId, blockDevicePendency.pendencyId)
-				&& Objects.equals(this.managerDeviceId, blockDevicePendency.managerDeviceId)
-				&& Objects.equals(this.deviceId, blockDevicePendency.deviceId);
+		return Objects.equals(this.pendencyId, blockDevicePendency.pendencyId) && Objects.equals(this.managerDeviceId, blockDevicePendency.managerDeviceId) && Objects.equals(this.deviceId, blockDevicePendency.deviceId);
 	}
 
 	@Override

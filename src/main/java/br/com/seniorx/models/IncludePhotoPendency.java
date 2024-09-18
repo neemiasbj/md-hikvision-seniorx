@@ -1,3 +1,4 @@
+
 package br.com.seniorx.models;
 
 import java.util.ArrayList;
@@ -6,14 +7,18 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * IncludePhotoPendency
  */
 
-public class IncludePhotoPendency extends AbstractPendency {
-	
+public class IncludePhotoPendency {
+	@SerializedName("pendencyId")
+	private Long pendencyId = null;
+
+	@SerializedName("managerDeviceId")
+	private Long managerDeviceId = null;
 
 	@SerializedName("personId")
 	private Long personId = null;
@@ -27,6 +32,44 @@ public class IncludePhotoPendency extends AbstractPendency {
 	@SerializedName("cardList")
 	private List<CardInformation> cardList = null;
 
+	public IncludePhotoPendency pendencyId(Long pendencyId) {
+		this.pendencyId = pendencyId;
+		return this;
+	}
+
+	/**
+	 * Identificador da pendência
+	 * 
+	 * @return pendencyId
+	 **/
+	@Schema(description = "Identificador da pendência")
+	public Long getPendencyId() {
+		return pendencyId;
+	}
+
+	public void setPendencyId(Long pendencyId) {
+		this.pendencyId = pendencyId;
+	}
+
+	public IncludePhotoPendency managerDeviceId(Long managerDeviceId) {
+		this.managerDeviceId = managerDeviceId;
+		return this;
+	}
+
+	/**
+	 * Identificador do dispositivo gerenciador
+	 * 
+	 * @return managerDeviceId
+	 **/
+	@Schema(description = "Identificador do dispositivo gerenciador")
+	public Long getManagerDeviceId() {
+		return managerDeviceId;
+	}
+
+	public void setManagerDeviceId(Long managerDeviceId) {
+		this.managerDeviceId = managerDeviceId;
+	}
+
 	public IncludePhotoPendency personId(Long personId) {
 		this.personId = personId;
 		return this;
@@ -37,7 +80,7 @@ public class IncludePhotoPendency extends AbstractPendency {
 	 * 
 	 * @return personId
 	 **/
-	@ApiModelProperty(value = "Identificador da pessoa")
+	@Schema(description = "Identificador da pessoa")
 	public Long getPersonId() {
 		return personId;
 	}
@@ -56,7 +99,7 @@ public class IncludePhotoPendency extends AbstractPendency {
 	 * 
 	 * @return personName
 	 **/
-	@ApiModelProperty(value = "Nome da pessoa")
+	@Schema(description = "Nome da pessoa")
 	public String getPersonName() {
 		return personName;
 	}
@@ -75,7 +118,7 @@ public class IncludePhotoPendency extends AbstractPendency {
 	 * 
 	 * @return photoUrl
 	 **/
-	@ApiModelProperty(value = "URL da foto")
+	@Schema(description = "URL da foto")
 	public String getPhotoUrl() {
 		return photoUrl;
 	}
@@ -102,7 +145,7 @@ public class IncludePhotoPendency extends AbstractPendency {
 	 * 
 	 * @return cardList
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description = "")
 	public List<CardInformation> getCardList() {
 		return cardList;
 	}
@@ -120,14 +163,13 @@ public class IncludePhotoPendency extends AbstractPendency {
 			return false;
 		}
 		IncludePhotoPendency includePhotoPendency = (IncludePhotoPendency) o;
-		return Objects.equals(this.getPendencyId(), includePhotoPendency
-				.getPendencyId()) && Objects.equals(this.getManagerDeviceId(), includePhotoPendency.getManagerDeviceId()) && Objects.equals(this.personId, includePhotoPendency.personId)
-				&& Objects.equals(this.personName, includePhotoPendency.personName) && Objects.equals(this.photoUrl, includePhotoPendency.photoUrl) && Objects.equals(this.cardList, includePhotoPendency.cardList);
+		return Objects.equals(this.pendencyId, includePhotoPendency.pendencyId) && Objects.equals(this.managerDeviceId, includePhotoPendency.managerDeviceId) && Objects.equals(this.personId, includePhotoPendency.personId) && Objects.equals(this.personName, includePhotoPendency.personName)
+				&& Objects.equals(this.photoUrl, includePhotoPendency.photoUrl) && Objects.equals(this.cardList, includePhotoPendency.cardList);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getPendencyId(), getManagerDeviceId(), personId, personName, photoUrl, cardList);
+		return Objects.hash(pendencyId, managerDeviceId, personId, personName, photoUrl, cardList);
 	}
 
 	@Override
@@ -135,8 +177,8 @@ public class IncludePhotoPendency extends AbstractPendency {
 		StringBuilder sb = new StringBuilder();
 		sb.append("class IncludePhotoPendency {\n");
 
-		sb.append("    pendencyId: ").append(toIndentedString(getPendencyId())).append("\n");
-		sb.append("    managerDeviceId: ").append(toIndentedString(getManagerDeviceId())).append("\n");
+		sb.append("    pendencyId: ").append(toIndentedString(pendencyId)).append("\n");
+		sb.append("    managerDeviceId: ").append(toIndentedString(managerDeviceId)).append("\n");
 		sb.append("    personId: ").append(toIndentedString(personId)).append("\n");
 		sb.append("    personName: ").append(toIndentedString(personName)).append("\n");
 		sb.append("    photoUrl: ").append(toIndentedString(photoUrl)).append("\n");

@@ -1,91 +1,22 @@
+
 package br.com.seniorx.models;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * BiometricTechnologyTemplatesList
+ */
 
 public class BiometricTechnologyTemplatesList {
 	/**
 	 * Gets or Sets manufacturer
 	 */
-	@JsonAdapter(ManufacturerEnum.Adapter.class)
-	public enum ManufacturerEnum {
-		NONE("NONE"),
-
-		FINGERPRINT_SAGEM("FINGERPRINT_SAGEM"),
-
-		FINGERPRINT_SUPREMA("FINGERPRINT_SUPREMA"),
-
-		FINGERPRINT_VIRDI("FINGERPRINT_VIRDI"),
-
-		FINGERPRINT_NITGEN("FINGERPRINT_NITGEN"),
-
-		FINGERPRINT_CAMA("FINGERPRINT_CAMA"),
-
-		FINGERPRINT_INNOVATRICS("FINGERPRINT_INNOVATRICS"),
-
-		HANDKEY_IR("HANDKEY_IR"),
-
-		FACIAL("FACIAL"),
-
-		FINGERPRINT_ZKTECO("FINGERPRINT_ZKTECO"),
-
-		FINGERPRINT_SECUKEY("FINGERPRINT_SECUKEY"),
-
-		FACIAL_VISICA("FACIAL_VISICA"),
-
-		FINGERPRINT_DIXI("FINGERPRINT_DIXI"),
-
-		FACIAL_DIXI("FACIAL_DIXI"),
-
-		FACIAL_HENRY("FACIAL_HENRY");
-
-		private String value;
-
-		ManufacturerEnum(String value) {
-			this.value = value;
-		}
-
-		public String getValue() {
-			return value;
-		}
-
-		@Override
-		public String toString() {
-			return String.valueOf(value);
-		}
-
-		public static ManufacturerEnum fromValue(String text) {
-			for (ManufacturerEnum b : ManufacturerEnum.values()) {
-				if (String.valueOf(b.value).equals(text)) {
-					return b;
-				}
-			}
-			return null;
-		}
-
-		public static class Adapter extends TypeAdapter<ManufacturerEnum> {
-			@Override
-			public void write(final JsonWriter jsonWriter, final ManufacturerEnum enumeration) throws IOException {
-				jsonWriter.value(enumeration.getValue());
-			}
-
-			@Override
-			public ManufacturerEnum read(final JsonReader jsonReader) throws IOException {
-				String value = jsonReader.nextString();
-				return ManufacturerEnum.fromValue(String.valueOf(value));
-			}
-		}
-	}
 
 	@SerializedName("manufacturer")
 	private ManufacturerEnum manufacturer = null;
@@ -106,7 +37,7 @@ public class BiometricTechnologyTemplatesList {
 	 * 
 	 * @return manufacturer
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description = "")
 	public ManufacturerEnum getManufacturer() {
 		return manufacturer;
 	}
@@ -125,7 +56,7 @@ public class BiometricTechnologyTemplatesList {
 	 * 
 	 * @return biometrySecurityLevel
 	 **/
-	@ApiModelProperty(value = "Nível de segurança biométrica")
+	@Schema(description = "Nível de segurança biométrica")
 	public Integer getBiometrySecurityLevel() {
 		return biometrySecurityLevel;
 	}
@@ -152,7 +83,7 @@ public class BiometricTechnologyTemplatesList {
 	 * 
 	 * @return templates
 	 **/
-	@ApiModelProperty(value = "Codificado em base64")
+	@Schema(description = "Codificado em base64")
 	public List<String> getTemplates() {
 		return templates;
 	}
@@ -170,9 +101,7 @@ public class BiometricTechnologyTemplatesList {
 			return false;
 		}
 		BiometricTechnologyTemplatesList biometricTechnologyTemplatesList = (BiometricTechnologyTemplatesList) o;
-		return Objects.equals(this.manufacturer, biometricTechnologyTemplatesList.manufacturer)
-				&& Objects.equals(this.biometrySecurityLevel, biometricTechnologyTemplatesList.biometrySecurityLevel)
-				&& Objects.equals(this.templates, biometricTechnologyTemplatesList.templates);
+		return Objects.equals(this.manufacturer, biometricTechnologyTemplatesList.manufacturer) && Objects.equals(this.biometrySecurityLevel, biometricTechnologyTemplatesList.biometrySecurityLevel) && Objects.equals(this.templates, biometricTechnologyTemplatesList.templates);
 	}
 
 	@Override

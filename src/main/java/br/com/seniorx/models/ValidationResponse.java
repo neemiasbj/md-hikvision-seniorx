@@ -1,3 +1,4 @@
+
 package br.com.seniorx.models;
 
 import java.io.IOException;
@@ -9,337 +10,215 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * ValidationResponse
  */
 
 public class ValidationResponse {
-  /**
-   * Gets or Sets accessType
-   */
-  @JsonAdapter(AccessTypeEnum.Adapter.class)
-  public enum AccessTypeEnum {
-    VALID("ACCESS_VALID"),
-    
-    DENIED_PERMISSION("ACCESS_DENIED_PERMISSION"),
-    
-    DENIED_SITUATION("ACCESS_DENIED_SITUATION"),
-    
-    DENIED_CARD_VALIDITY("ACCESS_DENIED_CARD_VALIDITY"),
-    
-    DENIED_LEVEL_CONTROLER("ACCESS_DENIED_LEVEL_CONTROLER"),
-    
-    DENIED_CREDIT_ACCESS("ACCESS_DENIED_CREDIT_ACCESS"),
-    
-    DENIED_ROLE_RANGE("ACCESS_DENIED_ROLE_RANGE"),
-    
-    DENIED_LOCAL_RANGE("ACCESS_DENIED_LOCAL_RANGE"),
-    
-    DENIED_CARD_NOT_FOUND("ACCESS_DENIED_CARD_NOT_FOUND"),
-    
-    VALID_ACCOMPANY("ACCESS_VALID_ACCOMPANY"),
-    
-    DENIED_ACCOMPANY("ACCESS_DENIED_ACCOMPANY"),
-    
-    DENIED_INVALID_AUTHORIZER("ACCESS_DENIED_INVALID_AUTHORIZER"),
-    
-    DENIED_WAITING_FOR_NEXT_VALIDATION("ACCESS_DENIED_WAITING_FOR_NEXT_VALIDATION"),
-    
-    DENIED_ANTI_PASSBACK("ACCESS_DENIED_ANTI_PASSBACK"),
-    
-    DENIED_CREDIT_RANGE("ACCESS_DENIED_CREDIT_RANGE"),
-    
-    DENIED_STOCKING_CONTROL("ACCESS_DENIED_STOCKING_CONTROL"),
-    
-    DENIED_NOT_PARKING_SPACE_TYPE("ACCESS_DENIED_NOT_PARKING_SPACE_TYPE"),
-    
-    DENIED_NOT_PARKING_SPACE("ACCESS_DENIED_NOT_PARKING_SPACE"),
-    
-    COERCION("ACCESS_COERCION"),
-    
-    DENIED_BIOMETRY("ACCESS_DENIED_BIOMETRY"),
-    
-    DENIED_CARD_FORMAT_ERROR("ACCESS_DENIED_CARD_FORMAT_ERROR"),
-    
-    DENIED_FACILITY_CODE("ACCESS_DENIED_FACILITY_CODE"),
-    
-    DENIED_PASSWORD("ACCESS_DENIED_PASSWORD"),
-    
-    DENIED_SECOND_CARD_NOT_PRESENTED("ACCESS_DENIED_SECOND_CARD_NOT_PRESENTED"),
-    
-    DESISTENCE("ACCESS_DESISTENCE"),
-    
-    VALID_AUTHORIZER("ACCESS_VALID_AUTHORIZER"),
-    
-    VALID_FACILITY_CODE("ACCESS_VALID_FACILITY_CODE"),
-    
-    VALID_FRAUD("ACCESS_VALID_FRAUD"),
-    
-    VALID_OUT_REPOSE("ACCESS_VALID_OUT_REPOSE"),
-    
-    DENIED("ACCESS_DENIED"),
-    
-    DENIED_CREDENTIAL_NOT_FOUND("ACCESS_DENIED_CREDENTIAL_NOT_FOUND"),
-    
-    DENIED_CREDENTIAL_VALIDITY("ACCESS_DENIED_CREDENTIAL_VALIDITY"),
-    
-    DENIED_INVALID_VEHICLE_CREDENTIAL_FORMAT("ACCESS_DENIED_INVALID_VEHICLE_CREDENTIAL_FORMAT"),
-    
-    DENIED_INVALID_VEHICLE_CARD_CREDENTIAL("ACCESS_DENIED_INVALID_VEHICLE_CARD_CREDENTIAL"),
-    
-    DENIED_WAITING_VEHICLE("ACCESS_DENIED_WAITING_VEHICLE"),
-    
-    DENIED_READER_NOT_VALIDATE_VEHICLE("ACCESS_DENIED_READER_NOT_VALIDATE_VEHICLE"),
-    
-    DENIED_PERSON_NOT_ASSOCIATED_WITH_VEHICLE("ACCESS_DENIED_PERSON_NOT_ASSOCIATED_WITH_VEHICLE"),
-    
-    DENIED_CUSTOM_VALIDATION("ACCESS_DENIED_CUSTOM_VALIDATION"),
-    
-    DENIED_BLOCK_PROVISORY_ON_EXIT("ACCESS_DENIED_BLOCK_PROVISORY_ON_EXIT"),
-    
-    DENIED_CONTROLS_IN_BETWEEN_WORKDAYS("ACCESS_DENIED_CONTROLS_IN_BETWEEN_WORKDAYS"),
-    
-    DENIED_WITHOUT_MASK("ACCESS_DENIED_WITHOUT_MASK"),
-    
-    DENIED_ABNORMAL_TEMPERATURE("ACCESS_DENIED_ABNORMAL_TEMPERATURE");
+	/**
+	 * Gets or Sets accessType
+	 */
 
-    private String value;
+	@SerializedName("accessType")
+	private AccessTypeEnum accessType = null;
 
-    AccessTypeEnum(String value) {
-      this.value = value;
-    }
+	@SerializedName("verifyBiometry")
+	private Boolean verifyBiometry = false;
 
-    public String getValue() {
-      return value;
-    }
+	@SerializedName("currentOwnerLocation")
+	private Long currentOwnerLocation = null;
 
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
+	@SerializedName("personCheckLevel")
+	private Boolean personCheckLevel = false;
 
-    public static AccessTypeEnum fromValue(String text) {
-      for (AccessTypeEnum b : AccessTypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
+	/**
+	 * Tipo da credencial (titular ou provisória)
+	 */
+	@JsonAdapter(CredentialTypeEnum.Adapter.class)
+	public enum CredentialTypeEnum {
+		HOLDER("HOLDER"),
 
-    public static class Adapter extends TypeAdapter<AccessTypeEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final AccessTypeEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
+		PROVISORY("PROVISORY");
 
-      @Override
-      public AccessTypeEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return AccessTypeEnum.fromValue(String.valueOf(value));
-      }
-    }
-  }
-  @SerializedName("accessType")
-  private AccessTypeEnum accessType = null;
+		private String value;
 
-  @SerializedName("verifyBiometry")
-  private Boolean verifyBiometry = false;
+		CredentialTypeEnum(String value) {
+			this.value = value;
+		}
 
-  @SerializedName("currentOwnerLocation")
-  private Long currentOwnerLocation = null;
+		public String getValue() {
+			return value;
+		}
 
-  @SerializedName("personCheckLevel")
-  private Boolean personCheckLevel = false;
+		@Override
+		public String toString() {
+			return String.valueOf(value);
+		}
 
-  /**
-   * Tipo da credencial (titular ou provisória)
-   */
-  @JsonAdapter(CredentialTypeEnum.Adapter.class)
-  public enum CredentialTypeEnum {
-    HOLDER("HOLDER"),
-    
-    PROVISORY("PROVISORY");
+		public static CredentialTypeEnum fromValue(String text) {
+			for (CredentialTypeEnum b : CredentialTypeEnum.values()) {
+				if (String.valueOf(b.value).equals(text)) {
+					return b;
+				}
+			}
+			return null;
+		}
 
-    private String value;
+		public static class Adapter extends TypeAdapter<CredentialTypeEnum> {
+			@Override
+			public void write(final JsonWriter jsonWriter, final CredentialTypeEnum enumeration) throws IOException {
+				jsonWriter.value(enumeration.getValue());
+			}
 
-    CredentialTypeEnum(String value) {
-      this.value = value;
-    }
+			@Override
+			public CredentialTypeEnum read(final JsonReader jsonReader) throws IOException {
+				String value = jsonReader.nextString();
+				return CredentialTypeEnum.fromValue(String.valueOf(value));
+			}
+		}
+	}
 
-    public String getValue() {
-      return value;
-    }
+	@SerializedName("credentialType")
+	private CredentialTypeEnum credentialType = null;
 
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
+	public ValidationResponse accessType(AccessTypeEnum accessType) {
+		this.accessType = accessType;
+		return this;
+	}
 
-    public static CredentialTypeEnum fromValue(String text) {
-      for (CredentialTypeEnum b : CredentialTypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
+	/**
+	 * Get accessType
+	 * 
+	 * @return accessType
+	 **/
+	@Schema(description = "")
+	public AccessTypeEnum getAccessType() {
+		return accessType;
+	}
 
-    public static class Adapter extends TypeAdapter<CredentialTypeEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final CredentialTypeEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
+	public void setAccessType(AccessTypeEnum accessType) {
+		this.accessType = accessType;
+	}
 
-      @Override
-      public CredentialTypeEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return CredentialTypeEnum.fromValue(String.valueOf(value));
-      }
-    }
-  }
-  @SerializedName("credentialType")
-  private CredentialTypeEnum credentialType = null;
+	public ValidationResponse verifyBiometry(Boolean verifyBiometry) {
+		this.verifyBiometry = verifyBiometry;
+		return this;
+	}
 
-  public ValidationResponse accessType(AccessTypeEnum accessType) {
-    this.accessType = accessType;
-    return this;
-  }
+	/**
+	 * Informa se verifica biometria
+	 * 
+	 * @return verifyBiometry
+	 **/
+	@Schema(description = "Informa se verifica biometria")
+	public Boolean isVerifyBiometry() {
+		return verifyBiometry;
+	}
 
-   /**
-   * Get accessType
-   * @return accessType
-  **/
-  @ApiModelProperty(value = "")
-  public AccessTypeEnum getAccessType() {
-    return accessType;
-  }
+	public void setVerifyBiometry(Boolean verifyBiometry) {
+		this.verifyBiometry = verifyBiometry;
+	}
 
-  public void setAccessType(AccessTypeEnum accessType) {
-    this.accessType = accessType;
-  }
+	public ValidationResponse currentOwnerLocation(Long currentOwnerLocation) {
+		this.currentOwnerLocation = currentOwnerLocation;
+		return this;
+	}
 
-  public ValidationResponse verifyBiometry(Boolean verifyBiometry) {
-    this.verifyBiometry = verifyBiometry;
-    return this;
-  }
+	/**
+	 * Identificador da localização atual da pessoa
+	 * 
+	 * @return currentOwnerLocation
+	 **/
+	@Schema(description = "Identificador da localização atual da pessoa")
+	public Long getCurrentOwnerLocation() {
+		return currentOwnerLocation;
+	}
 
-   /**
-   * Informa se verifica biometria
-   * @return verifyBiometry
-  **/
-  @ApiModelProperty(value = "Informa se verifica biometria")
-  public Boolean isVerifyBiometry() {
-    return verifyBiometry;
-  }
+	public void setCurrentOwnerLocation(Long currentOwnerLocation) {
+		this.currentOwnerLocation = currentOwnerLocation;
+	}
 
-  public void setVerifyBiometry(Boolean verifyBiometry) {
-    this.verifyBiometry = verifyBiometry;
-  }
+	public ValidationResponse personCheckLevel(Boolean personCheckLevel) {
+		this.personCheckLevel = personCheckLevel;
+		return this;
+	}
 
-  public ValidationResponse currentOwnerLocation(Long currentOwnerLocation) {
-    this.currentOwnerLocation = currentOwnerLocation;
-    return this;
-  }
+	/**
+	 * Informa se a pessoa controla nível
+	 * 
+	 * @return personCheckLevel
+	 **/
+	@Schema(description = "Informa se a pessoa controla nível")
+	public Boolean isPersonCheckLevel() {
+		return personCheckLevel;
+	}
 
-   /**
-   * Identificador da localização atual da pessoa
-   * @return currentOwnerLocation
-  **/
-  @ApiModelProperty(value = "Identificador da localização atual da pessoa")
-  public Long getCurrentOwnerLocation() {
-    return currentOwnerLocation;
-  }
+	public void setPersonCheckLevel(Boolean personCheckLevel) {
+		this.personCheckLevel = personCheckLevel;
+	}
 
-  public void setCurrentOwnerLocation(Long currentOwnerLocation) {
-    this.currentOwnerLocation = currentOwnerLocation;
-  }
+	public ValidationResponse credentialType(CredentialTypeEnum credentialType) {
+		this.credentialType = credentialType;
+		return this;
+	}
 
-  public ValidationResponse personCheckLevel(Boolean personCheckLevel) {
-    this.personCheckLevel = personCheckLevel;
-    return this;
-  }
+	/**
+	 * Tipo da credencial (titular ou provisória)
+	 * 
+	 * @return credentialType
+	 **/
+	@Schema(description = "Tipo da credencial (titular ou provisória)")
+	public CredentialTypeEnum getCredentialType() {
+		return credentialType;
+	}
 
-   /**
-   * Informa se a pessoa controla nível
-   * @return personCheckLevel
-  **/
-  @ApiModelProperty(value = "Informa se a pessoa controla nível")
-  public Boolean isPersonCheckLevel() {
-    return personCheckLevel;
-  }
+	public void setCredentialType(CredentialTypeEnum credentialType) {
+		this.credentialType = credentialType;
+	}
 
-  public void setPersonCheckLevel(Boolean personCheckLevel) {
-    this.personCheckLevel = personCheckLevel;
-  }
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		ValidationResponse validationResponse = (ValidationResponse) o;
+		return Objects.equals(this.accessType, validationResponse.accessType) && Objects.equals(this.verifyBiometry, validationResponse.verifyBiometry) && Objects.equals(this.currentOwnerLocation, validationResponse.currentOwnerLocation)
+				&& Objects.equals(this.personCheckLevel, validationResponse.personCheckLevel) && Objects.equals(this.credentialType, validationResponse.credentialType);
+	}
 
-  public ValidationResponse credentialType(CredentialTypeEnum credentialType) {
-    this.credentialType = credentialType;
-    return this;
-  }
+	@Override
+	public int hashCode() {
+		return Objects.hash(accessType, verifyBiometry, currentOwnerLocation, personCheckLevel, credentialType);
+	}
 
-   /**
-   * Tipo da credencial (titular ou provisória)
-   * @return credentialType
-  **/
-  @ApiModelProperty(value = "Tipo da credencial (titular ou provisória)")
-  public CredentialTypeEnum getCredentialType() {
-    return credentialType;
-  }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class ValidationResponse {\n");
 
-  public void setCredentialType(CredentialTypeEnum credentialType) {
-    this.credentialType = credentialType;
-  }
+		sb.append("    accessType: ").append(toIndentedString(accessType)).append("\n");
+		sb.append("    verifyBiometry: ").append(toIndentedString(verifyBiometry)).append("\n");
+		sb.append("    currentOwnerLocation: ").append(toIndentedString(currentOwnerLocation)).append("\n");
+		sb.append("    personCheckLevel: ").append(toIndentedString(personCheckLevel)).append("\n");
+		sb.append("    credentialType: ").append(toIndentedString(credentialType)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
 
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    ValidationResponse validationResponse = (ValidationResponse) o;
-    return Objects.equals(this.accessType, validationResponse.accessType) &&
-        Objects.equals(this.verifyBiometry, validationResponse.verifyBiometry) &&
-        Objects.equals(this.currentOwnerLocation, validationResponse.currentOwnerLocation) &&
-        Objects.equals(this.personCheckLevel, validationResponse.personCheckLevel) &&
-        Objects.equals(this.credentialType, validationResponse.credentialType);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(accessType, verifyBiometry, currentOwnerLocation, personCheckLevel, credentialType);
-  }
-
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class ValidationResponse {\n");
-    
-    sb.append("    accessType: ").append(toIndentedString(accessType)).append("\n");
-    sb.append("    verifyBiometry: ").append(toIndentedString(verifyBiometry)).append("\n");
-    sb.append("    currentOwnerLocation: ").append(toIndentedString(currentOwnerLocation)).append("\n");
-    sb.append("    personCheckLevel: ").append(toIndentedString(personCheckLevel)).append("\n");
-    sb.append("    credentialType: ").append(toIndentedString(credentialType)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 
 }
-

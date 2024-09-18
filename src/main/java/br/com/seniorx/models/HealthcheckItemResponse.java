@@ -1,3 +1,4 @@
+
 package br.com.seniorx.models;
 
 import java.io.IOException;
@@ -9,142 +10,141 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * HealthcheckItemResponse
  */
 
 public class HealthcheckItemResponse {
-  @SerializedName("name")
-  private String name = null;
+	@SerializedName("name")
+	private String name = null;
 
-  /**
-   * Gets or Sets status
-   */
-  @JsonAdapter(StatusEnum.Adapter.class)
-  public enum StatusEnum {
-    UP("UP"),
-    
-    DOWN("DOWN");
+	/**
+	 * Gets or Sets status
+	 */
+	@JsonAdapter(StatusEnum.Adapter.class)
+	public enum StatusEnum {
+		UP("UP"),
 
-    private String value;
+		DOWN("DOWN");
 
-    StatusEnum(String value) {
-      this.value = value;
-    }
+		private String value;
 
-    public String getValue() {
-      return value;
-    }
+		StatusEnum(String value) {
+			this.value = value;
+		}
 
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
+		public String getValue() {
+			return value;
+		}
 
-    public static StatusEnum fromValue(String text) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
+		@Override
+		public String toString() {
+			return String.valueOf(value);
+		}
 
-    public static class Adapter extends TypeAdapter<StatusEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final StatusEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
+		public static StatusEnum fromValue(String text) {
+			for (StatusEnum b : StatusEnum.values()) {
+				if (String.valueOf(b.value).equals(text)) {
+					return b;
+				}
+			}
+			return null;
+		}
 
-      @Override
-      public StatusEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return StatusEnum.fromValue(String.valueOf(value));
-      }
-    }
-  }
-  @SerializedName("status")
-  private StatusEnum status = null;
+		public static class Adapter extends TypeAdapter<StatusEnum> {
+			@Override
+			public void write(final JsonWriter jsonWriter, final StatusEnum enumeration) throws IOException {
+				jsonWriter.value(enumeration.getValue());
+			}
 
-  public HealthcheckItemResponse name(String name) {
-    this.name = name;
-    return this;
-  }
+			@Override
+			public StatusEnum read(final JsonReader jsonReader) throws IOException {
+				String value = jsonReader.nextString();
+				return StatusEnum.fromValue(String.valueOf(value));
+			}
+		}
+	}
 
-   /**
-   * Get name
-   * @return name
-  **/
-  @ApiModelProperty(value = "")
-  public String getName() {
-    return name;
-  }
+	@SerializedName("status")
+	private StatusEnum status = null;
 
-  public void setName(String name) {
-    this.name = name;
-  }
+	public HealthcheckItemResponse name(String name) {
+		this.name = name;
+		return this;
+	}
 
-  public HealthcheckItemResponse status(StatusEnum status) {
-    this.status = status;
-    return this;
-  }
+	/**
+	 * Get name
+	 * 
+	 * @return name
+	 **/
+	@Schema(description = "")
+	public String getName() {
+		return name;
+	}
 
-   /**
-   * Get status
-   * @return status
-  **/
-  @ApiModelProperty(value = "")
-  public StatusEnum getStatus() {
-    return status;
-  }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-  public void setStatus(StatusEnum status) {
-    this.status = status;
-  }
+	public HealthcheckItemResponse status(StatusEnum status) {
+		this.status = status;
+		return this;
+	}
 
+	/**
+	 * Get status
+	 * 
+	 * @return status
+	 **/
+	@Schema(description = "")
+	public StatusEnum getStatus() {
+		return status;
+	}
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    HealthcheckItemResponse healthcheckItemResponse = (HealthcheckItemResponse) o;
-    return Objects.equals(this.name, healthcheckItemResponse.name) &&
-        Objects.equals(this.status, healthcheckItemResponse.status);
-  }
+	public void setStatus(StatusEnum status) {
+		this.status = status;
+	}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(name, status);
-  }
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		HealthcheckItemResponse healthcheckItemResponse = (HealthcheckItemResponse) o;
+		return Objects.equals(this.name, healthcheckItemResponse.name) && Objects.equals(this.status, healthcheckItemResponse.status);
+	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, status);
+	}
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class HealthcheckItemResponse {\n");
-    
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class HealthcheckItemResponse {\n");
 
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
+		sb.append("    name: ").append(toIndentedString(name)).append("\n");
+		sb.append("    status: ").append(toIndentedString(status)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
+
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 
 }
-

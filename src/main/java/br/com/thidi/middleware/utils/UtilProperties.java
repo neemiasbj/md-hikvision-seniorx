@@ -18,7 +18,7 @@ public class UtilProperties {
 
     private static final Logger logger = LogManager.getLogger(UtilProperties.class);
     private Properties props;
-    private final String propertiesFileName = "application.properties";
+    private final String propertiesFileName = "app.properties";
     private final PropertyPlaceholderHelper placeholderHelper;
 
     protected UtilProperties() {

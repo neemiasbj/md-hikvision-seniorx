@@ -1,3 +1,4 @@
+
 package br.com.seniorx.models;
 
 import java.io.IOException;
@@ -9,287 +10,245 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Event
  */
 
 public class Event {
-  @SerializedName("deviceId")
-  private Long deviceId = null;
 
-  @SerializedName("date")
-  private String date = null;
+	@JsonAdapter(EventTypeEnum.Adapter.class)
+	public enum EventTypeEnum {
+		DEVICE_STARTED("DEVICE_STARTED"),
 
-  @SerializedName("timezoneOffset")
-  private Integer timezoneOffset = null;
+		DEVICE_ONLINE("DEVICE_ONLINE"),
 
-  /**
-   * Gets or Sets status
-   */
-  @JsonAdapter(StatusEnum.Adapter.class)
-  public enum StatusEnum {
-    ONLINE("ONLINE"),
-    
-    OFFLINE("OFFLINE");
+		DEVICE_OFFLINE("DEVICE_OFFLINE"),
 
-    private String value;
+		ISSUANCE_OF_TIME_AND_ATTENDANCE_REPORT("ISSUANCE_OF_TIME_AND_ATTENDANCE_REPORT"),
 
-    StatusEnum(String value) {
-      this.value = value;
-    }
+		STARTED_USING_USB_FISCAL_PORT("STARTED_USING_USB_FISCAL_PORT"),
 
-    public String getValue() {
-      return value;
-    }
+		PAPER_REEL_REPLACED("PAPER_REEL_REPLACED"),
 
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
+		LACK_OF_PAPER("LACK_OF_PAPER"),
 
-    public static StatusEnum fromValue(String text) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
+		LOW_MEMORY("LOW_MEMORY"),
 
-    public static class Adapter extends TypeAdapter<StatusEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final StatusEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
+		NO_MEMORY("NO_MEMORY"),
 
-      @Override
-      public StatusEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return StatusEnum.fromValue(String.valueOf(value));
-      }
-    }
-  }
-  @SerializedName("status")
-  private StatusEnum status = null;
+		BATTERY_REPLACED("BATTERY_REPLACED"),
 
-  /**
-   * Gets or Sets eventType
-   */
-  @JsonAdapter(EventTypeEnum.Adapter.class)
-  public enum EventTypeEnum {
-    DEVICE_STARTED("DEVICE_STARTED"),
-    
-    DEVICE_ONLINE("DEVICE_ONLINE"),
-    
-    DEVICE_OFFLINE("DEVICE_OFFLINE"),
-    
-    ISSUANCE_OF_TIME_AND_ATTENDANCE_REPORT("ISSUANCE_OF_TIME_AND_ATTENDANCE_REPORT"),
-    
-    STARTED_USING_USB_FISCAL_PORT("STARTED_USING_USB_FISCAL_PORT"),
-    
-    PAPER_REEL_REPLACED("PAPER_REEL_REPLACED"),
-    
-    LACK_OF_PAPER("LACK_OF_PAPER"),
-    
-    LOW_MEMORY("LOW_MEMORY"),
-    
-    NO_MEMORY("NO_MEMORY"),
-    
-    BATTERY_REPLACED("BATTERY_REPLACED"),
-    
-    STARTED_USING_BATTERY("STARTED_USING_BATTERY"),
-    
-    STARTED_USING_ENERGY("STARTED_USING_ENERGY"),
-    
-    DEVICE_LOCKED("DEVICE_LOCKED"),
-    
-    DEVICE_UNLOCKED("DEVICE_UNLOCKED"),
-    
-    TAMPER("TAMPER"),
-    
-    DOOR_HELD_OPEN("DOOR_HELD_OPEN"),
-    
-    DOOR_FORCED_OPEN("DOOR_FORCED_OPEN");
+		STARTED_USING_BATTERY("STARTED_USING_BATTERY"),
 
-    private String value;
+		STARTED_USING_ENERGY("STARTED_USING_ENERGY"),
 
-    EventTypeEnum(String value) {
-      this.value = value;
-    }
+		DEVICE_LOCKED("DEVICE_LOCKED"),
 
-    public String getValue() {
-      return value;
-    }
+		DEVICE_UNLOCKED("DEVICE_UNLOCKED"),
 
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
+		TAMPER("TAMPER"),
 
-    public static EventTypeEnum fromValue(String text) {
-      for (EventTypeEnum b : EventTypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
+		DOOR_HELD_OPEN("DOOR_HELD_OPEN"),
 
-    public static class Adapter extends TypeAdapter<EventTypeEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final EventTypeEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
+		DOOR_FORCED_OPEN("DOOR_FORCED_OPEN");
 
-      @Override
-      public EventTypeEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return EventTypeEnum.fromValue(String.valueOf(value));
-      }
-    }
-  }
-  @SerializedName("eventType")
-  private EventTypeEnum eventType = null;
+		private String value;
 
-  public Event deviceId(Long deviceId) {
-    this.deviceId = deviceId;
-    return this;
-  }
+		EventTypeEnum(String value) {
+			this.value = value;
+		}
 
-   /**
-   * Identificador do dispositivo
-   * @return deviceId
-  **/
-  @ApiModelProperty(value = "Identificador do dispositivo")
-  public Long getDeviceId() {
-    return deviceId;
-  }
+		public String getValue() {
+			return value;
+		}
 
-  public void setDeviceId(Long deviceId) {
-    this.deviceId = deviceId;
-  }
+		@Override
+		public String toString() {
+			return String.valueOf(value);
+		}
 
-  public Event date(String date) {
-    this.date = date;
-    return this;
-  }
+		public static EventTypeEnum fromValue(String text) {
+			for (EventTypeEnum b : EventTypeEnum.values()) {
+				if (String.valueOf(b.value).equals(text)) {
+					return b;
+				}
+			}
+			return null;
+		}
 
-   /**
-   * Data da notificação em UTC
-   * @return date
-  **/
-  @ApiModelProperty(value = "Data da notificação em UTC")
-  public String getDate() {
-    return date;
-  }
+		public static class Adapter extends TypeAdapter<EventTypeEnum> {
+			@Override
+			public void write(final JsonWriter jsonWriter, final EventTypeEnum enumeration) throws IOException {
+				jsonWriter.value(enumeration.getValue());
+			}
 
-  public void setDate(String date) {
-    this.date = date;
-  }
+			@Override
+			public EventTypeEnum read(final JsonReader jsonReader) throws IOException {
+				String value = jsonReader.nextString();
+				return EventTypeEnum.fromValue(String.valueOf(value));
+			}
+		}
+	}
 
-  public Event timezoneOffset(Integer timezoneOffset) {
-    this.timezoneOffset = timezoneOffset;
-    return this;
-  }
+	@SerializedName("deviceId")
+	private Integer deviceId = null;
 
-   /**
-   * Offset em minutos
-   * @return timezoneOffset
-  **/
-  @ApiModelProperty(value = "Offset em minutos")
-  public Integer getTimezoneOffset() {
-    return timezoneOffset;
-  }
+	@SerializedName("date")
+	private String date = null;
 
-  public void setTimezoneOffset(Integer timezoneOffset) {
-    this.timezoneOffset = timezoneOffset;
-  }
+	@SerializedName("timezoneOffset")
+	private Integer timezoneOffset = null;
+	@SerializedName("status")
+	private OnOffStatusEnum status = null;
 
-  public Event status(StatusEnum status) {
-    this.status = status;
-    return this;
-  }
+	@SerializedName("eventType")
+	private EventTypeEnum eventType = null;
 
-   /**
-   * Get status
-   * @return status
-  **/
-  @ApiModelProperty(value = "")
-  public StatusEnum getStatus() {
-    return status;
-  }
+	/**
+	 * Gets or Sets status
+	 */
 
-  public void setStatus(StatusEnum status) {
-    this.status = status;
-  }
+	/**
+	 * Gets or Sets eventType
+	 */
 
-  public Event eventType(EventTypeEnum eventType) {
-    this.eventType = eventType;
-    return this;
-  }
+	public Event deviceId(Integer deviceId) {
+		this.deviceId = deviceId;
+		return this;
+	}
 
-   /**
-   * Get eventType
-   * @return eventType
-  **/
-  @ApiModelProperty(value = "")
-  public EventTypeEnum getEventType() {
-    return eventType;
-  }
+	/**
+	 * Identificador do dispositivo
+	 * 
+	 * @return deviceId
+	 **/
+	@Schema(description = "Identificador do dispositivo")
+	public Integer getDeviceId() {
+		return deviceId;
+	}
 
-  public void setEventType(EventTypeEnum eventType) {
-    this.eventType = eventType;
-  }
+	public void setDeviceId(Integer deviceId) {
+		this.deviceId = deviceId;
+	}
 
+	public Event date(String date) {
+		this.date = date;
+		return this;
+	}
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Event event = (Event) o;
-    return Objects.equals(this.deviceId, event.deviceId) &&
-        Objects.equals(this.date, event.date) &&
-        Objects.equals(this.timezoneOffset, event.timezoneOffset) &&
-        Objects.equals(this.status, event.status) &&
-        Objects.equals(this.eventType, event.eventType);
-  }
+	/**
+	 * Data da notificação em UTC
+	 * 
+	 * @return date
+	 **/
+	@Schema(description = "Data da notificação em UTC")
+	public String getDate() {
+		return date;
+	}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(deviceId, date, timezoneOffset, status, eventType);
-  }
+	public void setDate(String date) {
+		this.date = date;
+	}
 
+	public Event timezoneOffset(Integer timezoneOffset) {
+		this.timezoneOffset = timezoneOffset;
+		return this;
+	}
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Event {\n");
-    
-    sb.append("    deviceId: ").append(toIndentedString(deviceId)).append("\n");
-    sb.append("    date: ").append(toIndentedString(date)).append("\n");
-    sb.append("    timezoneOffset: ").append(toIndentedString(timezoneOffset)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    eventType: ").append(toIndentedString(eventType)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
+	/**
+	 * Offset em minutos
+	 * 
+	 * @return timezoneOffset
+	 **/
+	@Schema(description = "Offset em minutos")
+	public Integer getTimezoneOffset() {
+		return timezoneOffset;
+	}
 
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
+	public void setTimezoneOffset(Integer timezoneOffset) {
+		this.timezoneOffset = timezoneOffset;
+	}
+
+	public Event status(OnOffStatusEnum status) {
+		this.status = status;
+		return this;
+	}
+
+	/**
+	 * Get status
+	 * 
+	 * @return status
+	 **/
+	@Schema(description = "")
+	public OnOffStatusEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(OnOffStatusEnum status) {
+		this.status = status;
+	}
+
+	public Event eventType(EventTypeEnum eventType) {
+		this.eventType = eventType;
+		return this;
+	}
+
+	/**
+	 * Get eventType
+	 * 
+	 * @return eventType
+	 **/
+	@Schema(description = "")
+	public EventTypeEnum getEventType() {
+		return eventType;
+	}
+
+	public void setEventType(EventTypeEnum eventType) {
+		this.eventType = eventType;
+	}
+
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Event event = (Event) o;
+		return Objects.equals(this.deviceId, event.deviceId) && Objects.equals(this.date, event.date) && Objects.equals(this.timezoneOffset, event.timezoneOffset) && Objects.equals(this.status, event.status) && Objects.equals(this.eventType, event.eventType);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(deviceId, date, timezoneOffset, status, eventType);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class Event {\n");
+
+		sb.append("    deviceId: ").append(toIndentedString(deviceId)).append("\n");
+		sb.append("    date: ").append(toIndentedString(date)).append("\n");
+		sb.append("    timezoneOffset: ").append(toIndentedString(timezoneOffset)).append("\n");
+		sb.append("    status: ").append(toIndentedString(status)).append("\n");
+		sb.append("    eventType: ").append(toIndentedString(eventType)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
+
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 
 }
-

@@ -1,282 +1,162 @@
+
 package br.com.seniorx.models;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * IncludeBiometry
  */
 
 public class IncludeBiometry {
-  /**
-   * Gets or Sets origin
-   */
-  @JsonAdapter(OriginEnum.Adapter.class)
-  public enum OriginEnum {
-    PERSON("PERSON"),
-    
-    CARD("CARD"),
-    
-    PIS("PIS"),
-    
-    CPF("CPF");
+	/**
+	 * Gets or Sets origin
+	 */
 
-    private String value;
+	@SerializedName("origin")
+	private TypeOriginEnum origin = null;
 
-    OriginEnum(String value) {
-      this.value = value;
-    }
+	@SerializedName("originId")
+	private Long originId = null;
 
-    public String getValue() {
-      return value;
-    }
+	/**
+	 * Gets or Sets manufacturer
+	 */
 
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
+	@SerializedName("manufacturer")
+	private ManufacturerEnum manufacturerEnum = null;
 
-    public static OriginEnum fromValue(String text) {
-      for (OriginEnum b : OriginEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
+	@SerializedName("templateList")
+	private List<String> templateList = null;
 
-    public static class Adapter extends TypeAdapter<OriginEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final OriginEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
+	public IncludeBiometry origin(TypeOriginEnum origin) {
+		this.origin = origin;
+		return this;
+	}
 
-      @Override
-      public OriginEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return OriginEnum.fromValue(String.valueOf(value));
-      }
-    }
-  }
-  @SerializedName("origin")
-  private OriginEnum origin = null;
+	/**
+	 * Get origin
+	 * 
+	 * @return origin
+	 **/
+	@Schema(description = "")
+	public TypeOriginEnum getOrigin() {
+		return origin;
+	}
 
-  @SerializedName("originId")
-  private Long originId = null;
+	public void setOrigin(TypeOriginEnum origin) {
+		this.origin = origin;
+	}
 
-  /**
-   * Gets or Sets manufacturer
-   */
-  @JsonAdapter(ManufacturerEnum.Adapter.class)
-  public enum ManufacturerEnum {
-    NONE("NONE"),
-    
-    FINGERPRINT_SAGEM("FINGERPRINT_SAGEM"),
-    
-    FINGERPRINT_SUPREMA("FINGERPRINT_SUPREMA"),
-    
-    FINGERPRINT_VIRDI("FINGERPRINT_VIRDI"),
-    
-    FINGERPRINT_NITGEN("FINGERPRINT_NITGEN"),
-    
-    FINGERPRINT_CAMA("FINGERPRINT_CAMA"),
-    
-    FINGERPRINT_INNOVATRICS("FINGERPRINT_INNOVATRICS"),
-    
-    HANDKEY_IR("HANDKEY_IR"),
-    
-    FACIAL("FACIAL"),
-    
-    FINGERPRINT_ZKTECO("FINGERPRINT_ZKTECO"),
-    
-    FINGERPRINT_SECUKEY("FINGERPRINT_SECUKEY"),
-    
-    FACIAL_VISICA("FACIAL_VISICA"),
-    
-    FINGERPRINT_DIXI("FINGERPRINT_DIXI"),
-    
-    FACIAL_DIXI("FACIAL_DIXI"),
-    
-    FACIAL_HENRY("FACIAL_HENRY");
+	public IncludeBiometry originId(Long originId) {
+		this.originId = originId;
+		return this;
+	}
 
-    private String value;
+	/**
+	 * Identificador da origem do cadastro biométrico
+	 * 
+	 * @return originId
+	 **/
+	@Schema(description = "Identificador da origem do cadastro biométrico")
+	public Long getOriginId() {
+		return originId;
+	}
 
-    ManufacturerEnum(String value) {
-      this.value = value;
-    }
+	public void setOriginId(Long originId) {
+		this.originId = originId;
+	}
 
-    public String getValue() {
-      return value;
-    }
+	public IncludeBiometry manufacturerEnum(ManufacturerEnum manufacturerEnum) {
+		this.manufacturerEnum = manufacturerEnum;
+		return this;
+	}
 
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
+	/**
+	 * Get manufacturer
+	 * 
+	 * @return manufacturer
+	 **/
+	@Schema(description = "")
+	public ManufacturerEnum getManufacturer() {
+		return manufacturerEnum;
+	}
 
-    public static ManufacturerEnum fromValue(String text) {
-      for (ManufacturerEnum b : ManufacturerEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
+	public void setManufacturer(ManufacturerEnum manufacturerEnum) {
+		this.manufacturerEnum = manufacturerEnum;
+	}
 
-    public static class Adapter extends TypeAdapter<ManufacturerEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final ManufacturerEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
+	public IncludeBiometry templateList(List<String> templateList) {
+		this.templateList = templateList;
+		return this;
+	}
 
-      @Override
-      public ManufacturerEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return ManufacturerEnum.fromValue(String.valueOf(value));
-      }
-    }
-  }
-  @SerializedName("manufacturer")
-  private ManufacturerEnum manufacturer = null;
+	public IncludeBiometry addTemplateListItem(String templateListItem) {
+		if (this.templateList == null) {
+			this.templateList = new ArrayList<String>();
+		}
+		this.templateList.add(templateListItem);
+		return this;
+	}
 
-  @SerializedName("templateList")
-  private List<String> templateList = null;
+	/**
+	 * Codificado em base64
+	 * 
+	 * @return templateList
+	 **/
+	@Schema(description = "Codificado em base64")
+	public List<String> getTemplateList() {
+		return templateList;
+	}
 
-  public IncludeBiometry origin(OriginEnum origin) {
-    this.origin = origin;
-    return this;
-  }
+	public void setTemplateList(List<String> templateList) {
+		this.templateList = templateList;
+	}
 
-   /**
-   * Get origin
-   * @return origin
-  **/
-  @ApiModelProperty(value = "")
-  public OriginEnum getOrigin() {
-    return origin;
-  }
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		IncludeBiometry includeBiometry = (IncludeBiometry) o;
+		return Objects.equals(this.origin, includeBiometry.origin) && Objects.equals(this.originId, includeBiometry.originId) && Objects.equals(this.manufacturerEnum, includeBiometry.manufacturerEnum) && Objects.equals(this.templateList, includeBiometry.templateList);
+	}
 
-  public void setOrigin(OriginEnum origin) {
-    this.origin = origin;
-  }
+	@Override
+	public int hashCode() {
+		return Objects.hash(origin, originId, manufacturerEnum, templateList);
+	}
 
-  public IncludeBiometry originId(Long originId) {
-    this.originId = originId;
-    return this;
-  }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class IncludeBiometry {\n");
 
-   /**
-   * Identificador da origem do cadastro biométrico
-   * @return originId
-  **/
-  @ApiModelProperty(value = "Identificador da origem do cadastro biométrico")
-  public Long getOriginId() {
-    return originId;
-  }
+		sb.append("    origin: ").append(toIndentedString(origin)).append("\n");
+		sb.append("    originId: ").append(toIndentedString(originId)).append("\n");
+		sb.append("    manufacturer: ").append(toIndentedString(manufacturerEnum)).append("\n");
+		sb.append("    templateList: ").append(toIndentedString(templateList)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
 
-  public void setOriginId(Long originId) {
-    this.originId = originId;
-  }
-
-  public IncludeBiometry manufacturer(ManufacturerEnum manufacturer) {
-    this.manufacturer = manufacturer;
-    return this;
-  }
-
-   /**
-   * Get manufacturer
-   * @return manufacturer
-  **/
-  @ApiModelProperty(value = "")
-  public ManufacturerEnum getManufacturer() {
-    return manufacturer;
-  }
-
-  public void setManufacturer(ManufacturerEnum manufacturer) {
-    this.manufacturer = manufacturer;
-  }
-
-  public IncludeBiometry templateList(List<String> templateList) {
-    this.templateList = templateList;
-    return this;
-  }
-
-  public IncludeBiometry addTemplateListItem(String templateListItem) {
-    if (this.templateList == null) {
-      this.templateList = new ArrayList<String>();
-    }
-    this.templateList.add(templateListItem);
-    return this;
-  }
-
-   /**
-   * Codificado em base64
-   * @return templateList
-  **/
-  @ApiModelProperty(value = "Codificado em base64")
-  public List<String> getTemplateList() {
-    return templateList;
-  }
-
-  public void setTemplateList(List<String> templateList) {
-    this.templateList = templateList;
-  }
-
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    IncludeBiometry includeBiometry = (IncludeBiometry) o;
-    return Objects.equals(this.origin, includeBiometry.origin) &&
-        Objects.equals(this.originId, includeBiometry.originId) &&
-        Objects.equals(this.manufacturer, includeBiometry.manufacturer) &&
-        Objects.equals(this.templateList, includeBiometry.templateList);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(origin, originId, manufacturer, templateList);
-  }
-
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class IncludeBiometry {\n");
-    
-    sb.append("    origin: ").append(toIndentedString(origin)).append("\n");
-    sb.append("    originId: ").append(toIndentedString(originId)).append("\n");
-    sb.append("    manufacturer: ").append(toIndentedString(manufacturer)).append("\n");
-    sb.append("    templateList: ").append(toIndentedString(templateList)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 
 }
-

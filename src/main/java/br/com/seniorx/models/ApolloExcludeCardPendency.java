@@ -1,10 +1,15 @@
+
 package br.com.seniorx.models;
 
 import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * ApolloExcludeCardPendency
+ */
 
 public class ApolloExcludeCardPendency {
 	@SerializedName("pendencyId")
@@ -29,7 +34,7 @@ public class ApolloExcludeCardPendency {
 	 * 
 	 * @return pendencyId
 	 **/
-	@ApiModelProperty(value = "Identificador da pendência")
+	@Schema(description = "Identificador da pendência")
 	public Long getPendencyId() {
 		return pendencyId;
 	}
@@ -48,7 +53,7 @@ public class ApolloExcludeCardPendency {
 	 * 
 	 * @return managerDeviceId
 	 **/
-	@ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+	@Schema(description = "Identificador do dispositivo gerenciador")
 	public Long getManagerDeviceId() {
 		return managerDeviceId;
 	}
@@ -67,7 +72,7 @@ public class ApolloExcludeCardPendency {
 	 * 
 	 * @return card
 	 **/
-	@ApiModelProperty(value = "Número do cartão")
+	@Schema(description = "Número do cartão")
 	public Long getCard() {
 		return card;
 	}
@@ -86,7 +91,7 @@ public class ApolloExcludeCardPendency {
 	 * 
 	 * @return personId
 	 **/
-	@ApiModelProperty(value = "Identificador da pessoa")
+	@Schema(description = "Identificador da pessoa")
 	public Long getPersonId() {
 		return personId;
 	}
@@ -104,10 +109,7 @@ public class ApolloExcludeCardPendency {
 			return false;
 		}
 		ApolloExcludeCardPendency apolloExcludeCardPendency = (ApolloExcludeCardPendency) o;
-		return Objects.equals(this.pendencyId, apolloExcludeCardPendency.pendencyId)
-				&& Objects.equals(this.managerDeviceId, apolloExcludeCardPendency.managerDeviceId)
-				&& Objects.equals(this.card, apolloExcludeCardPendency.card)
-				&& Objects.equals(this.personId, apolloExcludeCardPendency.personId);
+		return Objects.equals(this.pendencyId, apolloExcludeCardPendency.pendencyId) && Objects.equals(this.managerDeviceId, apolloExcludeCardPendency.managerDeviceId) && Objects.equals(this.card, apolloExcludeCardPendency.card) && Objects.equals(this.personId, apolloExcludeCardPendency.personId);
 	}
 
 	@Override

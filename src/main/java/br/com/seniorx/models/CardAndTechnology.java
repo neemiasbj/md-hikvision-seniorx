@@ -1,15 +1,15 @@
+
 package br.com.seniorx.models;
 
-import java.io.IOException;
 import java.util.Objects;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * CardAndTechnology
+ */
 
 public class CardAndTechnology {
 	@SerializedName("cardNumber")
@@ -18,53 +18,6 @@ public class CardAndTechnology {
 	/**
 	 * Gets or Sets cardTechnology
 	 */
-	@JsonAdapter(CardTechnologyEnum.Adapter.class)
-	public enum CardTechnologyEnum {
-		BARCODE_CARD("BARCODE_CARD"),
-
-		RFID_CARD("RFID_CARD"),
-
-		SMART_CARD("SMART_CARD"),
-
-		QRCODE("QRCODE");
-
-		private String value;
-
-		CardTechnologyEnum(String value) {
-			this.value = value;
-		}
-
-		public String getValue() {
-			return value;
-		}
-
-		@Override
-		public String toString() {
-			return String.valueOf(value);
-		}
-
-		public static CardTechnologyEnum fromValue(String text) {
-			for (CardTechnologyEnum b : CardTechnologyEnum.values()) {
-				if (String.valueOf(b.value).equals(text)) {
-					return b;
-				}
-			}
-			return null;
-		}
-
-		public static class Adapter extends TypeAdapter<CardTechnologyEnum> {
-			@Override
-			public void write(final JsonWriter jsonWriter, final CardTechnologyEnum enumeration) throws IOException {
-				jsonWriter.value(enumeration.getValue());
-			}
-
-			@Override
-			public CardTechnologyEnum read(final JsonReader jsonReader) throws IOException {
-				String value = jsonReader.nextString();
-				return CardTechnologyEnum.fromValue(String.valueOf(value));
-			}
-		}
-	}
 
 	@SerializedName("cardTechnology")
 	private CardTechnologyEnum cardTechnology = null;
@@ -79,7 +32,7 @@ public class CardAndTechnology {
 	 * 
 	 * @return cardNumber
 	 **/
-	@ApiModelProperty(value = "Número do cartão")
+	@Schema(description = "Número do cartão")
 	public Long getCardNumber() {
 		return cardNumber;
 	}
@@ -98,7 +51,7 @@ public class CardAndTechnology {
 	 * 
 	 * @return cardTechnology
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description = "")
 	public CardTechnologyEnum getCardTechnology() {
 		return cardTechnology;
 	}
@@ -116,8 +69,7 @@ public class CardAndTechnology {
 			return false;
 		}
 		CardAndTechnology cardAndTechnology = (CardAndTechnology) o;
-		return Objects.equals(this.cardNumber, cardAndTechnology.cardNumber)
-				&& Objects.equals(this.cardTechnology, cardAndTechnology.cardTechnology);
+		return Objects.equals(this.cardNumber, cardAndTechnology.cardNumber) && Objects.equals(this.cardTechnology, cardAndTechnology.cardTechnology);
 	}
 
 	@Override

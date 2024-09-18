@@ -1,3 +1,4 @@
+
 package br.com.seniorx.models;
 
 import java.io.IOException;
@@ -9,211 +10,211 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * DeviceDisplayMessagePendency
  */
 
 public class DeviceDisplayMessagePendency {
-  @SerializedName("pendencyId")
-  private Long pendencyId = null;
+	@SerializedName("pendencyId")
+	private Long pendencyId = null;
 
-  @SerializedName("managerDeviceId")
-  private Long managerDeviceId = null;
+	@SerializedName("managerDeviceId")
+	private Long managerDeviceId = null;
 
-  @SerializedName("message")
-  private String message = null;
+	@SerializedName("message")
+	private String message = null;
 
-  @SerializedName("duration")
-  private Long duration = null;
+	@SerializedName("duration")
+	private Long duration = null;
 
-  /**
-   * Gets or Sets mode
-   */
-  @JsonAdapter(ModeEnum.Adapter.class)
-  public enum ModeEnum {
-    ENQUEUE("ENQUEUE"),
-    
-    OVERRIDE("OVERRIDE");
+	/**
+	 * Gets or Sets mode
+	 */
+	@JsonAdapter(ModeEnum.Adapter.class)
+	public enum ModeEnum {
+		ENQUEUE("ENQUEUE"),
 
-    private String value;
+		OVERRIDE("OVERRIDE");
 
-    ModeEnum(String value) {
-      this.value = value;
-    }
+		private String value;
 
-    public String getValue() {
-      return value;
-    }
+		ModeEnum(String value) {
+			this.value = value;
+		}
 
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
+		public String getValue() {
+			return value;
+		}
 
-    public static ModeEnum fromValue(String text) {
-      for (ModeEnum b : ModeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
+		@Override
+		public String toString() {
+			return String.valueOf(value);
+		}
 
-    public static class Adapter extends TypeAdapter<ModeEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final ModeEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
+		public static ModeEnum fromValue(String text) {
+			for (ModeEnum b : ModeEnum.values()) {
+				if (String.valueOf(b.value).equals(text)) {
+					return b;
+				}
+			}
+			return null;
+		}
 
-      @Override
-      public ModeEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return ModeEnum.fromValue(String.valueOf(value));
-      }
-    }
-  }
-  @SerializedName("mode")
-  private ModeEnum mode = null;
+		public static class Adapter extends TypeAdapter<ModeEnum> {
+			@Override
+			public void write(final JsonWriter jsonWriter, final ModeEnum enumeration) throws IOException {
+				jsonWriter.value(enumeration.getValue());
+			}
 
-  public DeviceDisplayMessagePendency pendencyId(Long pendencyId) {
-    this.pendencyId = pendencyId;
-    return this;
-  }
+			@Override
+			public ModeEnum read(final JsonReader jsonReader) throws IOException {
+				String value = jsonReader.nextString();
+				return ModeEnum.fromValue(String.valueOf(value));
+			}
+		}
+	}
 
-   /**
-   * Identificador da pendência
-   * @return pendencyId
-  **/
-  @ApiModelProperty(value = "Identificador da pendência")
-  public Long getPendencyId() {
-    return pendencyId;
-  }
+	@SerializedName("mode")
+	private ModeEnum mode = null;
 
-  public void setPendencyId(Long pendencyId) {
-    this.pendencyId = pendencyId;
-  }
+	public DeviceDisplayMessagePendency pendencyId(Long pendencyId) {
+		this.pendencyId = pendencyId;
+		return this;
+	}
 
-  public DeviceDisplayMessagePendency managerDeviceId(Long managerDeviceId) {
-    this.managerDeviceId = managerDeviceId;
-    return this;
-  }
+	/**
+	 * Identificador da pendência
+	 * 
+	 * @return pendencyId
+	 **/
+	@Schema(description = "Identificador da pendência")
+	public Long getPendencyId() {
+		return pendencyId;
+	}
 
-   /**
-   * Identificador do dispositivo gerenciador
-   * @return managerDeviceId
-  **/
-  @ApiModelProperty(value = "Identificador do dispositivo gerenciador")
-  public Long getManagerDeviceId() {
-    return managerDeviceId;
-  }
+	public void setPendencyId(Long pendencyId) {
+		this.pendencyId = pendencyId;
+	}
 
-  public void setManagerDeviceId(Long managerDeviceId) {
-    this.managerDeviceId = managerDeviceId;
-  }
+	public DeviceDisplayMessagePendency managerDeviceId(Long managerDeviceId) {
+		this.managerDeviceId = managerDeviceId;
+		return this;
+	}
 
-  public DeviceDisplayMessagePendency message(String message) {
-    this.message = message;
-    return this;
-  }
+	/**
+	 * Identificador do dispositivo gerenciador
+	 * 
+	 * @return managerDeviceId
+	 **/
+	@Schema(description = "Identificador do dispositivo gerenciador")
+	public Long getManagerDeviceId() {
+		return managerDeviceId;
+	}
 
-   /**
-   * Mensagem
-   * @return message
-  **/
-  @ApiModelProperty(value = "Mensagem")
-  public String getMessage() {
-    return message;
-  }
+	public void setManagerDeviceId(Long managerDeviceId) {
+		this.managerDeviceId = managerDeviceId;
+	}
 
-  public void setMessage(String message) {
-    this.message = message;
-  }
+	public DeviceDisplayMessagePendency message(String message) {
+		this.message = message;
+		return this;
+	}
 
-  public DeviceDisplayMessagePendency duration(Long duration) {
-    this.duration = duration;
-    return this;
-  }
+	/**
+	 * Mensagem
+	 * 
+	 * @return message
+	 **/
+	@Schema(description = "Mensagem")
+	public String getMessage() {
+		return message;
+	}
 
-   /**
-   * Duração do tempo de exibição da mensagem (precisão de milissegundos)
-   * @return duration
-  **/
-  @ApiModelProperty(value = "Duração do tempo de exibição da mensagem (precisão de milissegundos)")
-  public Long getDuration() {
-    return duration;
-  }
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
-  public void setDuration(Long duration) {
-    this.duration = duration;
-  }
+	public DeviceDisplayMessagePendency duration(Long duration) {
+		this.duration = duration;
+		return this;
+	}
 
-  public DeviceDisplayMessagePendency mode(ModeEnum mode) {
-    this.mode = mode;
-    return this;
-  }
+	/**
+	 * Duração do tempo de exibição da mensagem (precisão de milissegundos)
+	 * 
+	 * @return duration
+	 **/
+	@Schema(description = "Duração do tempo de exibição da mensagem (precisão de milissegundos)")
+	public Long getDuration() {
+		return duration;
+	}
 
-   /**
-   * Get mode
-   * @return mode
-  **/
-  @ApiModelProperty(value = "")
-  public ModeEnum getMode() {
-    return mode;
-  }
+	public void setDuration(Long duration) {
+		this.duration = duration;
+	}
 
-  public void setMode(ModeEnum mode) {
-    this.mode = mode;
-  }
+	public DeviceDisplayMessagePendency mode(ModeEnum mode) {
+		this.mode = mode;
+		return this;
+	}
 
+	/**
+	 * Get mode
+	 * 
+	 * @return mode
+	 **/
+	@Schema(description = "")
+	public ModeEnum getMode() {
+		return mode;
+	}
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    DeviceDisplayMessagePendency deviceDisplayMessagePendency = (DeviceDisplayMessagePendency) o;
-    return Objects.equals(this.pendencyId, deviceDisplayMessagePendency.pendencyId) &&
-        Objects.equals(this.managerDeviceId, deviceDisplayMessagePendency.managerDeviceId) &&
-        Objects.equals(this.message, deviceDisplayMessagePendency.message) &&
-        Objects.equals(this.duration, deviceDisplayMessagePendency.duration) &&
-        Objects.equals(this.mode, deviceDisplayMessagePendency.mode);
-  }
+	public void setMode(ModeEnum mode) {
+		this.mode = mode;
+	}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(pendencyId, managerDeviceId, message, duration, mode);
-  }
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		DeviceDisplayMessagePendency deviceDisplayMessagePendency = (DeviceDisplayMessagePendency) o;
+		return Objects.equals(this.pendencyId, deviceDisplayMessagePendency.pendencyId) && Objects.equals(this.managerDeviceId, deviceDisplayMessagePendency.managerDeviceId) && Objects.equals(this.message, deviceDisplayMessagePendency.message)
+				&& Objects.equals(this.duration, deviceDisplayMessagePendency.duration) && Objects.equals(this.mode, deviceDisplayMessagePendency.mode);
+	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(pendencyId, managerDeviceId, message, duration, mode);
+	}
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class DeviceDisplayMessagePendency {\n");
-    
-    sb.append("    pendencyId: ").append(toIndentedString(pendencyId)).append("\n");
-    sb.append("    managerDeviceId: ").append(toIndentedString(managerDeviceId)).append("\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
-    sb.append("    duration: ").append(toIndentedString(duration)).append("\n");
-    sb.append("    mode: ").append(toIndentedString(mode)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class DeviceDisplayMessagePendency {\n");
 
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
+		sb.append("    pendencyId: ").append(toIndentedString(pendencyId)).append("\n");
+		sb.append("    managerDeviceId: ").append(toIndentedString(managerDeviceId)).append("\n");
+		sb.append("    message: ").append(toIndentedString(message)).append("\n");
+		sb.append("    duration: ").append(toIndentedString(duration)).append("\n");
+		sb.append("    mode: ").append(toIndentedString(mode)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
+
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 
 }
-

@@ -1,3 +1,4 @@
+
 package br.com.seniorx.models;
 
 import java.util.ArrayList;
@@ -6,7 +7,11 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * AccessLevelList
+ */
 
 public class AccessLevelList {
 	@SerializedName("id")
@@ -25,7 +30,7 @@ public class AccessLevelList {
 	 * 
 	 * @return id
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description = "")
 	public Long getId() {
 		return id;
 	}
@@ -52,7 +57,7 @@ public class AccessLevelList {
 	 * 
 	 * @return readerAndTimezoneList
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description = "")
 	public List<ReaderAndTimezone> getReaderAndTimezoneList() {
 		return readerAndTimezoneList;
 	}
@@ -70,8 +75,7 @@ public class AccessLevelList {
 			return false;
 		}
 		AccessLevelList accessLevelList = (AccessLevelList) o;
-		return Objects.equals(this.id, accessLevelList.id)
-				&& Objects.equals(this.readerAndTimezoneList, accessLevelList.readerAndTimezoneList);
+		return Objects.equals(this.id, accessLevelList.id) && Objects.equals(this.readerAndTimezoneList, accessLevelList.readerAndTimezoneList);
 	}
 
 	@Override

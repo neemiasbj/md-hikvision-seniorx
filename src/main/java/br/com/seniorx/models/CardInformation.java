@@ -1,202 +1,148 @@
+
 package br.com.seniorx.models;
 
-import java.io.IOException;
 import java.util.Objects;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Informação do cartão
  */
-@ApiModel(description = "Informação do cartão")
-
+@Schema(description = "Informação do cartão")
 public class CardInformation {
-  @SerializedName("cardNumber")
-  private Long cardNumber = null;
+	@SerializedName("cardNumber")
+	private Long cardNumber = null;
 
-  /**
-   * Gets or Sets cardTechnology
-   */
-  @JsonAdapter(CardTechnologyEnum.Adapter.class)
-  public enum CardTechnologyEnum {
-    BARCODE_CARD("BARCODE_CARD"),
-    
-    RFID_CARD("RFID_CARD"),
-    
-    SMART_CARD("SMART_CARD"),
-    
-    QRCODE("QRCODE");
+	/**
+	 * Gets or Sets cardTechnology
+	 */
 
-    private String value;
+	@SerializedName("cardTechnology")
+	private ReaderTechnologyEnum cardTechnology = null;
 
-    CardTechnologyEnum(String value) {
-      this.value = value;
-    }
+	@SerializedName("startDate")
+	private String startDate = null;
 
-    public String getValue() {
-      return value;
-    }
+	@SerializedName("expirationDate")
+	private String expirationDate = null;
 
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
+	public CardInformation cardNumber(Long cardNumber) {
+		this.cardNumber = cardNumber;
+		return this;
+	}
 
-    public static CardTechnologyEnum fromValue(String text) {
-      for (CardTechnologyEnum b : CardTechnologyEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
+	/**
+	 * Número do cartão
+	 * 
+	 * @return cardNumber
+	 **/
+	@Schema(description = "Número do cartão")
+	public Long getCardNumber() {
+		return cardNumber;
+	}
 
-    public static class Adapter extends TypeAdapter<CardTechnologyEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final CardTechnologyEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
+	public void setCardNumber(Long cardNumber) {
+		this.cardNumber = cardNumber;
+	}
 
-      @Override
-      public CardTechnologyEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return CardTechnologyEnum.fromValue(String.valueOf(value));
-      }
-    }
-  }
-  @SerializedName("cardTechnology")
-  private CardTechnologyEnum cardTechnology = null;
+	public CardInformation cardTechnology(ReaderTechnologyEnum cardTechnology) {
+		this.cardTechnology = cardTechnology;
+		return this;
+	}
 
-  @SerializedName("startDate")
-  private String startDate = null;
+	/**
+	 * Get cardTechnology
+	 * 
+	 * @return cardTechnology
+	 **/
+	@Schema(description = "")
+	public ReaderTechnologyEnum getCardTechnology() {
+		return cardTechnology;
+	}
 
-  @SerializedName("expirationDate")
-  private String expirationDate = null;
+	public void setCardTechnology(ReaderTechnologyEnum cardTechnology) {
+		this.cardTechnology = cardTechnology;
+	}
 
-  public CardInformation cardNumber(Long cardNumber) {
-    this.cardNumber = cardNumber;
-    return this;
-  }
+	public CardInformation startDate(String startDate) {
+		this.startDate = startDate;
+		return this;
+	}
 
-   /**
-   * Número do cartão
-   * @return cardNumber
-  **/
-  @ApiModelProperty(value = "Número do cartão")
-  public Long getCardNumber() {
-    return cardNumber;
-  }
+	/**
+	 * Data inicial
+	 * 
+	 * @return startDate
+	 **/
+	@Schema(description = "Data inicial")
+	public String getStartDate() {
+		return startDate;
+	}
 
-  public void setCardNumber(Long cardNumber) {
-    this.cardNumber = cardNumber;
-  }
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
 
-  public CardInformation cardTechnology(CardTechnologyEnum cardTechnology) {
-    this.cardTechnology = cardTechnology;
-    return this;
-  }
+	public CardInformation expirationDate(String expirationDate) {
+		this.expirationDate = expirationDate;
+		return this;
+	}
 
-   /**
-   * Get cardTechnology
-   * @return cardTechnology
-  **/
-  @ApiModelProperty(value = "")
-  public CardTechnologyEnum getCardTechnology() {
-    return cardTechnology;
-  }
+	/**
+	 * Data de expiração
+	 * 
+	 * @return expirationDate
+	 **/
+	@Schema(description = "Data de expiração")
+	public String getExpirationDate() {
+		return expirationDate;
+	}
 
-  public void setCardTechnology(CardTechnologyEnum cardTechnology) {
-    this.cardTechnology = cardTechnology;
-  }
+	public void setExpirationDate(String expirationDate) {
+		this.expirationDate = expirationDate;
+	}
 
-  public CardInformation startDate(String startDate) {
-    this.startDate = startDate;
-    return this;
-  }
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		CardInformation cardInformation = (CardInformation) o;
+		return Objects.equals(this.cardNumber, cardInformation.cardNumber) && Objects.equals(this.cardTechnology, cardInformation.cardTechnology) && Objects.equals(this.startDate, cardInformation.startDate) && Objects.equals(this.expirationDate, cardInformation.expirationDate);
+	}
 
-   /**
-   * Data inicial
-   * @return startDate
-  **/
-  @ApiModelProperty(value = "Data inicial")
-  public String getStartDate() {
-    return startDate;
-  }
+	@Override
+	public int hashCode() {
+		return Objects.hash(cardNumber, cardTechnology, startDate, expirationDate);
+	}
 
-  public void setStartDate(String startDate) {
-    this.startDate = startDate;
-  }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class CardInformation {\n");
 
-  public CardInformation expirationDate(String expirationDate) {
-    this.expirationDate = expirationDate;
-    return this;
-  }
+		sb.append("    cardNumber: ").append(toIndentedString(cardNumber)).append("\n");
+		sb.append("    cardTechnology: ").append(toIndentedString(cardTechnology)).append("\n");
+		sb.append("    startDate: ").append(toIndentedString(startDate)).append("\n");
+		sb.append("    expirationDate: ").append(toIndentedString(expirationDate)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
 
-   /**
-   * Data de expiração
-   * @return expirationDate
-  **/
-  @ApiModelProperty(value = "Data de expiração")
-  public String getExpirationDate() {
-    return expirationDate;
-  }
-
-  public void setExpirationDate(String expirationDate) {
-    this.expirationDate = expirationDate;
-  }
-
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    CardInformation cardInformation = (CardInformation) o;
-    return Objects.equals(this.cardNumber, cardInformation.cardNumber) &&
-        Objects.equals(this.cardTechnology, cardInformation.cardTechnology) &&
-        Objects.equals(this.startDate, cardInformation.startDate) &&
-        Objects.equals(this.expirationDate, cardInformation.expirationDate);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(cardNumber, cardTechnology, startDate, expirationDate);
-  }
-
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class CardInformation {\n");
-    
-    sb.append("    cardNumber: ").append(toIndentedString(cardNumber)).append("\n");
-    sb.append("    cardTechnology: ").append(toIndentedString(cardTechnology)).append("\n");
-    sb.append("    startDate: ").append(toIndentedString(startDate)).append("\n");
-    sb.append("    expirationDate: ").append(toIndentedString(expirationDate)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 
 }
-

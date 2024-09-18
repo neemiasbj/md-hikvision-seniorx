@@ -1,16 +1,16 @@
+
 package br.com.seniorx.models;
 
-import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * Alarm
+ */
 
 public class Alarm {
 	@SerializedName("deviceId")
@@ -25,99 +25,13 @@ public class Alarm {
 	/**
 	 * Gets or Sets status
 	 */
-	@JsonAdapter(StatusEnum.Adapter.class)
-	public enum StatusEnum {
-		ONLINE("ONLINE"),
-
-		OFFLINE("OFFLINE");
-
-		private String value;
-
-		StatusEnum(String value) {
-			this.value = value;
-		}
-
-		public String getValue() {
-			return value;
-		}
-
-		@Override
-		public String toString() {
-			return String.valueOf(value);
-		}
-
-		public static StatusEnum fromValue(String text) {
-			for (StatusEnum b : StatusEnum.values()) {
-				if (String.valueOf(b.value).equals(text)) {
-					return b;
-				}
-			}
-			return null;
-		}
-
-		public static class Adapter extends TypeAdapter<StatusEnum> {
-			@Override
-			public void write(final JsonWriter jsonWriter, final StatusEnum enumeration) throws IOException {
-				jsonWriter.value(enumeration.getValue());
-			}
-
-			@Override
-			public StatusEnum read(final JsonReader jsonReader) throws IOException {
-				String value = jsonReader.nextString();
-				return StatusEnum.fromValue(String.valueOf(value));
-			}
-		}
-	}
 
 	@SerializedName("status")
-	private StatusEnum status = null;
+	private OnOffStatusEnum status = null;
 
 	/**
 	 * Gets or Sets inputState
 	 */
-	@JsonAdapter(InputStateEnum.Adapter.class)
-	public enum InputStateEnum {
-		INACTIVE("INACTIVE"),
-
-		ACTIVE("ACTIVE");
-
-		private String value;
-
-		InputStateEnum(String value) {
-			this.value = value;
-		}
-
-		public String getValue() {
-			return value;
-		}
-
-		@Override
-		public String toString() {
-			return String.valueOf(value);
-		}
-
-		public static InputStateEnum fromValue(String text) {
-			for (InputStateEnum b : InputStateEnum.values()) {
-				if (String.valueOf(b.value).equals(text)) {
-					return b;
-				}
-			}
-			return null;
-		}
-
-		public static class Adapter extends TypeAdapter<InputStateEnum> {
-			@Override
-			public void write(final JsonWriter jsonWriter, final InputStateEnum enumeration) throws IOException {
-				jsonWriter.value(enumeration.getValue());
-			}
-
-			@Override
-			public InputStateEnum read(final JsonReader jsonReader) throws IOException {
-				String value = jsonReader.nextString();
-				return InputStateEnum.fromValue(String.valueOf(value));
-			}
-		}
-	}
 
 	@SerializedName("inputState")
 	private InputStateEnum inputState = null;
@@ -132,7 +46,7 @@ public class Alarm {
 	 * 
 	 * @return deviceId
 	 **/
-	@ApiModelProperty(value = "Identificador do dispositivo")
+	@Schema(description = "Identificador do dispositivo")
 	public Long getDeviceId() {
 		return deviceId;
 	}
@@ -151,7 +65,7 @@ public class Alarm {
 	 * 
 	 * @return date
 	 **/
-	@ApiModelProperty(value = "Data da notificação em UTC")
+	@Schema(description = "Data da notificação em UTC")
 	public OffsetDateTime getDate() {
 		return date;
 	}
@@ -170,7 +84,7 @@ public class Alarm {
 	 * 
 	 * @return timezoneOffset
 	 **/
-	@ApiModelProperty(value = "Offset em minutos")
+	@Schema(description = "Offset em minutos")
 	public Integer getTimezoneOffset() {
 		return timezoneOffset;
 	}
@@ -179,7 +93,7 @@ public class Alarm {
 		this.timezoneOffset = timezoneOffset;
 	}
 
-	public Alarm status(StatusEnum status) {
+	public Alarm status(OnOffStatusEnum status) {
 		this.status = status;
 		return this;
 	}
@@ -189,12 +103,12 @@ public class Alarm {
 	 * 
 	 * @return status
 	 **/
-	@ApiModelProperty(value = "")
-	public StatusEnum getStatus() {
+	@Schema(description = "")
+	public OnOffStatusEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusEnum status) {
+	public void setStatus(OnOffStatusEnum status) {
 		this.status = status;
 	}
 
@@ -208,7 +122,7 @@ public class Alarm {
 	 * 
 	 * @return inputState
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description = "")
 	public InputStateEnum getInputState() {
 		return inputState;
 	}
@@ -226,9 +140,7 @@ public class Alarm {
 			return false;
 		}
 		Alarm alarm = (Alarm) o;
-		return Objects.equals(this.deviceId, alarm.deviceId) && Objects.equals(this.date, alarm.date)
-				&& Objects.equals(this.timezoneOffset, alarm.timezoneOffset)
-				&& Objects.equals(this.status, alarm.status) && Objects.equals(this.inputState, alarm.inputState);
+		return Objects.equals(this.deviceId, alarm.deviceId) && Objects.equals(this.date, alarm.date) && Objects.equals(this.timezoneOffset, alarm.timezoneOffset) && Objects.equals(this.status, alarm.status) && Objects.equals(this.inputState, alarm.inputState);
 	}
 
 	@Override
@@ -250,10 +162,6 @@ public class Alarm {
 		return sb.toString();
 	}
 
-	/**
-	 * Convert the given object to string with each line indented by 4 spaces
-	 * (except the first line).
-	 */
 	private String toIndentedString(java.lang.Object o) {
 		if (o == null) {
 			return "null";

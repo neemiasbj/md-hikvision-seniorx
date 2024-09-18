@@ -1,91 +1,22 @@
+
 package br.com.seniorx.models;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * AccessBiometry
+ */
 
 public class AccessBiometry {
 	/**
 	 * Gets or Sets manufacturer
 	 */
-	@JsonAdapter(ManufacturerEnum.Adapter.class)
-	public enum ManufacturerEnum {
-		NONE("NONE"),
-
-		FINGERPRINT_SAGEM("FINGERPRINT_SAGEM"),
-
-		FINGERPRINT_SUPREMA("FINGERPRINT_SUPREMA"),
-
-		FINGERPRINT_VIRDI("FINGERPRINT_VIRDI"),
-
-		FINGERPRINT_NITGEN("FINGERPRINT_NITGEN"),
-
-		FINGERPRINT_CAMA("FINGERPRINT_CAMA"),
-
-		FINGERPRINT_INNOVATRICS("FINGERPRINT_INNOVATRICS"),
-
-		HANDKEY_IR("HANDKEY_IR"),
-
-		FACIAL("FACIAL"),
-
-		FINGERPRINT_ZKTECO("FINGERPRINT_ZKTECO"),
-
-		FINGERPRINT_SECUKEY("FINGERPRINT_SECUKEY"),
-
-		FACIAL_VISICA("FACIAL_VISICA"),
-
-		FINGERPRINT_DIXI("FINGERPRINT_DIXI"),
-
-		FACIAL_DIXI("FACIAL_DIXI"),
-
-		FACIAL_HENRY("FACIAL_HENRY");
-
-		private String value;
-
-		ManufacturerEnum(String value) {
-			this.value = value;
-		}
-
-		public String getValue() {
-			return value;
-		}
-
-		@Override
-		public String toString() {
-			return String.valueOf(value);
-		}
-
-		public static ManufacturerEnum fromValue(String text) {
-			for (ManufacturerEnum b : ManufacturerEnum.values()) {
-				if (String.valueOf(b.value).equals(text)) {
-					return b;
-				}
-			}
-			return null;
-		}
-
-		public static class Adapter extends TypeAdapter<ManufacturerEnum> {
-			@Override
-			public void write(final JsonWriter jsonWriter, final ManufacturerEnum enumeration) throws IOException {
-				jsonWriter.value(enumeration.getValue());
-			}
-
-			@Override
-			public ManufacturerEnum read(final JsonReader jsonReader) throws IOException {
-				String value = jsonReader.nextString();
-				return ManufacturerEnum.fromValue(String.valueOf(value));
-			}
-		}
-	}
 
 	@SerializedName("manufacturer")
 	private ManufacturerEnum manufacturer = null;
@@ -112,6 +43,7 @@ public class AccessBiometry {
 	 * 
 	 * @return manufacturer
 	 **/
+	@Schema(description = "")
 	public ManufacturerEnum getManufacturer() {
 		return manufacturer;
 	}
@@ -130,7 +62,7 @@ public class AccessBiometry {
 	 * 
 	 * @return biometrySecurityLevel
 	 **/
-	@ApiModelProperty(value = "Nível de segurança biométrica")
+	@Schema(description = "Nível de segurança biométrica")
 	public Integer getBiometrySecurityLevel() {
 		return biometrySecurityLevel;
 	}
@@ -157,7 +89,7 @@ public class AccessBiometry {
 	 * 
 	 * @return templateList
 	 **/
-	@ApiModelProperty(value = "Caracteres codificados em base64")
+	@Schema(description = "Caracteres codificados em base64")
 	public List<String> getTemplateList() {
 		return templateList;
 	}
@@ -176,7 +108,7 @@ public class AccessBiometry {
 	 * 
 	 * @return personId
 	 **/
-	@ApiModelProperty(value = "Identificador da pessoa")
+	@Schema(description = "Identificador da pessoa")
 	public Long getPersonId() {
 		return personId;
 	}
@@ -203,7 +135,7 @@ public class AccessBiometry {
 	 * 
 	 * @return cardList
 	 **/
-	@ApiModelProperty(value = "Lista de cartões")
+	@Schema(description = "Lista de cartões")
 	public List<CardAndTechnology> getCardList() {
 		return cardList;
 	}
@@ -221,10 +153,7 @@ public class AccessBiometry {
 			return false;
 		}
 		AccessBiometry accessBiometry = (AccessBiometry) o;
-		return Objects.equals(this.manufacturer, accessBiometry.manufacturer)
-				&& Objects.equals(this.biometrySecurityLevel, accessBiometry.biometrySecurityLevel)
-				&& Objects.equals(this.templateList, accessBiometry.templateList)
-				&& Objects.equals(this.personId, accessBiometry.personId)
+		return Objects.equals(this.manufacturer, accessBiometry.manufacturer) && Objects.equals(this.biometrySecurityLevel, accessBiometry.biometrySecurityLevel) && Objects.equals(this.templateList, accessBiometry.templateList) && Objects.equals(this.personId, accessBiometry.personId)
 				&& Objects.equals(this.cardList, accessBiometry.cardList);
 	}
 

@@ -1,10 +1,11 @@
+
 package br.com.seniorx.models;
 
 import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * DeviceUpdatedPendency
@@ -34,7 +35,7 @@ public class DeviceUpdatedPendency {
 	 * 
 	 * @return pendencyId
 	 **/
-	@ApiModelProperty(value = "Identificador da pendência")
+	@Schema(description = "Identificador da pendência")
 	public Long getPendencyId() {
 		return pendencyId;
 	}
@@ -53,7 +54,7 @@ public class DeviceUpdatedPendency {
 	 * 
 	 * @return managerDeviceId
 	 **/
-	@ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+	@Schema(description = "Identificador do dispositivo gerenciador")
 	public Long getManagerDeviceId() {
 		return managerDeviceId;
 	}
@@ -72,7 +73,7 @@ public class DeviceUpdatedPendency {
 	 * 
 	 * @return operation
 	 **/
-	@ApiModelProperty(value = "Status do dispositivo")
+	@Schema(description = "Status do dispositivo")
 	public OperationUpdateDeviceEnum getOperation() {
 		return operation;
 	}

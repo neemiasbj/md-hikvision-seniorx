@@ -13,10 +13,10 @@ import br.com.hikvision.minmoe.models.Event;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/device/minmoe")
+@RequestMapping(value = "/api/device/minmoe")
 public class MinMoeController {
 
-	@PostMapping("/Object")
+	@PostMapping("/webhook")
 	public ResponseEntity<String> receiveAndValidate(@Valid @RequestBody Object requestBody) {
 		if (requestBody instanceof Map) {
 			Map<?, ?> bodyMap = (Map<?, ?>) requestBody;

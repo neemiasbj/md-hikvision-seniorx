@@ -1,10 +1,15 @@
+
 package br.com.seniorx.models;
 
 import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * AreaControlList
+ */
 
 public class AreaControlList {
 	@SerializedName("id")
@@ -62,7 +67,7 @@ public class AreaControlList {
 	 * 
 	 * @return id
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description = "")
 	public Long getId() {
 		return id;
 	}
@@ -81,7 +86,7 @@ public class AreaControlList {
 	 * 
 	 * @return gmt
 	 **/
-	@ApiModelProperty(value = "Informa a diferença em minutos do meridiano de Greenwich")
+	@Schema(description = "Informa a diferença em minutos do meridiano de Greenwich")
 	public Integer getGmt() {
 		return gmt;
 	}
@@ -100,7 +105,7 @@ public class AreaControlList {
 	 * 
 	 * @return useDaylightSaving
 	 **/
-	@ApiModelProperty(value = "Informa se utiliza horário de verão")
+	@Schema(description = "Informa se utiliza horário de verão")
 	public Boolean isUseDaylightSaving() {
 		return useDaylightSaving;
 	}
@@ -119,7 +124,7 @@ public class AreaControlList {
 	 * 
 	 * @return startDaylightSaving
 	 **/
-	@ApiModelProperty(value = "Informa a data início do horário de verão. (ISO 8601)")
+	@Schema(description = "Informa a data início do horário de verão. (ISO 8601)")
 	public String getStartDaylightSaving() {
 		return startDaylightSaving;
 	}
@@ -138,7 +143,7 @@ public class AreaControlList {
 	 * 
 	 * @return endDaylightSaving
 	 **/
-	@ApiModelProperty(value = "Informa data de término do horário de verão. (ISO 8601)")
+	@Schema(description = "Informa data de término do horário de verão. (ISO 8601)")
 	public String getEndDaylightSaving() {
 		return endDaylightSaving;
 	}
@@ -157,7 +162,7 @@ public class AreaControlList {
 	 * 
 	 * @return daylightSavingOffset
 	 **/
-	@ApiModelProperty(value = "Quantidade em minutos que será somado ao gmt em horário de verão")
+	@Schema(description = "Quantidade em minutos que será somado ao gmt em horário de verão")
 	public Integer getDaylightSavingOffset() {
 		return daylightSavingOffset;
 	}
@@ -176,7 +181,7 @@ public class AreaControlList {
 	 * 
 	 * @return checkLevel
 	 **/
-	@ApiModelProperty(value = "Informa se o local controla nível da pessoa")
+	@Schema(description = "Informa se o local controla nível da pessoa")
 	public Boolean isCheckLevel() {
 		return checkLevel;
 	}
@@ -196,7 +201,7 @@ public class AreaControlList {
 	 * 
 	 * @return checkAntiPassback
 	 **/
-	@ApiModelProperty(value = "Informa se o local utiliza controle de anti-dupla, impedindo que o mesmo cartão realize acesso duas vezes seguidas na mesma direção")
+	@Schema(description = "Informa se o local utiliza controle de anti-dupla, impedindo que o mesmo cartão realize acesso duas vezes seguidas na mesma direção")
 	public Boolean isCheckAntiPassback() {
 		return checkAntiPassback;
 	}
@@ -215,7 +220,7 @@ public class AreaControlList {
 	 * 
 	 * @return checkCapacity
 	 **/
-	@ApiModelProperty(value = "Informa se o local controla lotação")
+	@Schema(description = "Informa se o local controla lotação")
 	public Boolean isCheckCapacity() {
 		return checkCapacity;
 	}
@@ -235,7 +240,7 @@ public class AreaControlList {
 	 * 
 	 * @return checkAccessCredit
 	 **/
-	@ApiModelProperty(value = "Informa se o local valida se o papel terá controle de acesso por meio de créditos")
+	@Schema(description = "Informa se o local valida se o papel terá controle de acesso por meio de créditos")
 	public Boolean isCheckAccessCredit() {
 		return checkAccessCredit;
 	}
@@ -255,7 +260,7 @@ public class AreaControlList {
 	 * 
 	 * @return checkAccessLevel
 	 **/
-	@ApiModelProperty(value = "Informa se os dispositivos que pertencem a esse local físico realizam a validação de nível da pessoa")
+	@Schema(description = "Informa se os dispositivos que pertencem a esse local físico realizam a validação de nível da pessoa")
 	public Boolean isCheckAccessLevel() {
 		return checkAccessLevel;
 	}
@@ -274,7 +279,7 @@ public class AreaControlList {
 	 * 
 	 * @return checkTimezoneLocation
 	 **/
-	@ApiModelProperty(value = "Informa se o local controla faixa horária do local")
+	@Schema(description = "Informa se o local controla faixa horária do local")
 	public Boolean isCheckTimezoneLocation() {
 		return checkTimezoneLocation;
 	}
@@ -293,7 +298,7 @@ public class AreaControlList {
 	 * 
 	 * @return checkAccessLevelAuthorizer
 	 **/
-	@ApiModelProperty(value = "Informa se o autorizador do local terá impacto nos níveis do local")
+	@Schema(description = "Informa se o autorizador do local terá impacto nos níveis do local")
 	public Boolean isCheckAccessLevelAuthorizer() {
 		return checkAccessLevelAuthorizer;
 	}
@@ -312,7 +317,7 @@ public class AreaControlList {
 	 * 
 	 * @return checkLocationAuthorizer
 	 **/
-	@ApiModelProperty(value = "Informa se o local valida por autorizador")
+	@Schema(description = "Informa se o local valida por autorizador")
 	public Boolean isCheckLocationAuthorizer() {
 		return checkLocationAuthorizer;
 	}
@@ -332,7 +337,7 @@ public class AreaControlList {
 	 * 
 	 * @return antiPassbackTime
 	 **/
-	@ApiModelProperty(value = "É o tempo mínimo de acesso para o mesmo destino, a fim de evitar duas pessoas utilizar o mesmo cartão para acessar o mesmo local")
+	@Schema(description = "É o tempo mínimo de acesso para o mesmo destino, a fim de evitar duas pessoas utilizar o mesmo cartão para acessar o mesmo local")
 	public Long getAntiPassbackTime() {
 		return antiPassbackTime;
 	}
@@ -350,27 +355,16 @@ public class AreaControlList {
 			return false;
 		}
 		AreaControlList areaControlList = (AreaControlList) o;
-		return Objects.equals(this.id, areaControlList.id) && Objects.equals(this.gmt, areaControlList.gmt)
-				&& Objects.equals(this.useDaylightSaving, areaControlList.useDaylightSaving)
-				&& Objects.equals(this.startDaylightSaving, areaControlList.startDaylightSaving)
-				&& Objects.equals(this.endDaylightSaving, areaControlList.endDaylightSaving)
-				&& Objects.equals(this.daylightSavingOffset, areaControlList.daylightSavingOffset)
-				&& Objects.equals(this.checkLevel, areaControlList.checkLevel)
-				&& Objects.equals(this.checkAntiPassback, areaControlList.checkAntiPassback)
-				&& Objects.equals(this.checkCapacity, areaControlList.checkCapacity)
-				&& Objects.equals(this.checkAccessCredit, areaControlList.checkAccessCredit)
-				&& Objects.equals(this.checkAccessLevel, areaControlList.checkAccessLevel)
-				&& Objects.equals(this.checkTimezoneLocation, areaControlList.checkTimezoneLocation)
-				&& Objects.equals(this.checkAccessLevelAuthorizer, areaControlList.checkAccessLevelAuthorizer)
-				&& Objects.equals(this.checkLocationAuthorizer, areaControlList.checkLocationAuthorizer)
-				&& Objects.equals(this.antiPassbackTime, areaControlList.antiPassbackTime);
+		return Objects.equals(this.id, areaControlList.id) && Objects.equals(this.gmt, areaControlList.gmt) && Objects.equals(this.useDaylightSaving, areaControlList.useDaylightSaving) && Objects.equals(this.startDaylightSaving, areaControlList.startDaylightSaving)
+				&& Objects.equals(this.endDaylightSaving, areaControlList.endDaylightSaving) && Objects.equals(this.daylightSavingOffset, areaControlList.daylightSavingOffset) && Objects.equals(this.checkLevel, areaControlList.checkLevel)
+				&& Objects.equals(this.checkAntiPassback, areaControlList.checkAntiPassback) && Objects.equals(this.checkCapacity, areaControlList.checkCapacity) && Objects.equals(this.checkAccessCredit, areaControlList.checkAccessCredit)
+				&& Objects.equals(this.checkAccessLevel, areaControlList.checkAccessLevel) && Objects.equals(this.checkTimezoneLocation, areaControlList.checkTimezoneLocation) && Objects.equals(this.checkAccessLevelAuthorizer, areaControlList.checkAccessLevelAuthorizer)
+				&& Objects.equals(this.checkLocationAuthorizer, areaControlList.checkLocationAuthorizer) && Objects.equals(this.antiPassbackTime, areaControlList.antiPassbackTime);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, gmt, useDaylightSaving, startDaylightSaving, endDaylightSaving, daylightSavingOffset,
-				checkLevel, checkAntiPassback, checkCapacity, checkAccessCredit, checkAccessLevel,
-				checkTimezoneLocation, checkAccessLevelAuthorizer, checkLocationAuthorizer, antiPassbackTime);
+		return Objects.hash(id, gmt, useDaylightSaving, startDaylightSaving, endDaylightSaving, daylightSavingOffset, checkLevel, checkAntiPassback, checkCapacity, checkAccessCredit, checkAccessLevel, checkTimezoneLocation, checkAccessLevelAuthorizer, checkLocationAuthorizer, antiPassbackTime);
 	}
 
 	@Override

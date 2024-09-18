@@ -7,7 +7,7 @@ public class ServiceManager {
 
 	private static Logger logger = LogManager.getLogger();
 
-	private SeniorXMiddleware conex;
+	private Middleware conex;
 
 	private static ServiceManager servicemanager;
 
@@ -48,7 +48,7 @@ public class ServiceManager {
 
 		logger.info("SERVICO INICIANDO...");
 
-		conex = new SeniorXMiddleware();
+		conex = new Middleware();
 //		conex.start();
 
 		return true;

@@ -1,3 +1,4 @@
+
 package br.com.seniorx.models;
 
 import java.util.ArrayList;
@@ -6,7 +7,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * AllPendency
@@ -130,7 +131,7 @@ public class AllPendency {
 	 * 
 	 * @return deviceStatus
 	 **/
-	@ApiModelProperty(value = "Requisição de status do dispositivo")
+	@Schema(description = "Requisição de status do dispositivo")
 	public List<DevicePendency> getDeviceStatus() {
 		return deviceStatus;
 	}
@@ -157,7 +158,7 @@ public class AllPendency {
 	 * 
 	 * @return deviceDateTime
 	 **/
-	@ApiModelProperty(value = "Indica que deve ser atualizada a data/hora do dispositivo")
+	@Schema(description = "Indica que deve ser atualizada a data/hora do dispositivo")
 	public List<DevicePendency> getDeviceDateTime() {
 		return deviceDateTime;
 	}
@@ -184,7 +185,7 @@ public class AllPendency {
 	 * 
 	 * @return resetDevice
 	 **/
-	@ApiModelProperty(value = "Dados armazenados no dispositivo devem ser resetados")
+	@Schema(description = "Dados armazenados no dispositivo devem ser resetados")
 	public List<DevicePendency> getResetDevice() {
 		return resetDevice;
 	}
@@ -211,7 +212,7 @@ public class AllPendency {
 	 * 
 	 * @return blockDevice
 	 **/
-	@ApiModelProperty(value = "Dispositivo deve ser bloqueado")
+	@Schema(description = "Dispositivo deve ser bloqueado")
 	public List<BlockDevicePendency> getBlockDevice() {
 		return blockDevice;
 	}
@@ -238,7 +239,7 @@ public class AllPendency {
 	 * 
 	 * @return unblockDevice
 	 **/
-	@ApiModelProperty(value = "Dispositivo deve ser desbloqueado")
+	@Schema(description = "Dispositivo deve ser desbloqueado")
 	public List<UnblockDevicePendency> getUnblockDevice() {
 		return unblockDevice;
 	}
@@ -265,7 +266,7 @@ public class AllPendency {
 	 * 
 	 * @return setDeviceEmergency
 	 **/
-	@ApiModelProperty(value = "Dispositivo deve entrar no modo de emergência")
+	@Schema(description = "Dispositivo deve entrar no modo de emergência")
 	public List<SetDeviceEmergencyPendency> getSetDeviceEmergency() {
 		return setDeviceEmergency;
 	}
@@ -292,7 +293,7 @@ public class AllPendency {
 	 * 
 	 * @return unsetDeviceEmergency
 	 **/
-	@ApiModelProperty(value = "Dispositivo deve sair do modo de emergência")
+	@Schema(description = "Dispositivo deve sair do modo de emergência")
 	public List<UnsetDeviceEmergencyPendency> getUnsetDeviceEmergency() {
 		return unsetDeviceEmergency;
 	}
@@ -319,7 +320,7 @@ public class AllPendency {
 	 * 
 	 * @return apolloIncludeCard
 	 **/
-	@ApiModelProperty(value = "Incluir um cartão no dispositivo Apollo")
+	@Schema(description = "Incluir um cartão no dispositivo Apollo")
 	public List<ApolloIncludeCardPendency> getApolloIncludeCard() {
 		return apolloIncludeCard;
 	}
@@ -346,7 +347,7 @@ public class AllPendency {
 	 * 
 	 * @return apolloExcludeCard
 	 **/
-	@ApiModelProperty(value = "Excluir um cartão no dispositivo Apollo")
+	@Schema(description = "Excluir um cartão no dispositivo Apollo")
 	public List<ApolloExcludeCardPendency> getApolloExcludeCard() {
 		return apolloExcludeCard;
 	}
@@ -373,7 +374,7 @@ public class AllPendency {
 	 * 
 	 * @return includeBiometry
 	 **/
-	@ApiModelProperty(value = "Incluir biometria")
+	@Schema(description = "Incluir biometria")
 	public List<IncludeBiometryPendency> getIncludeBiometry() {
 		return includeBiometry;
 	}
@@ -400,7 +401,7 @@ public class AllPendency {
 	 * 
 	 * @return excludeBiometry
 	 **/
-	@ApiModelProperty(value = "Excluir biometria ")
+	@Schema(description = "Excluir biometria ")
 	public List<ExcludeBiometryPendency> getExcludeBiometry() {
 		return excludeBiometry;
 	}
@@ -428,7 +429,7 @@ public class AllPendency {
 	 * 
 	 * @return device
 	 **/
-	@ApiModelProperty(value = "A configuração do dispositivo sofreu alguma alteração ou o dispositivo precisa ser configurado")
+	@Schema(description = "A configuração do dispositivo sofreu alguma alteração ou o dispositivo precisa ser configurado")
 	public List<DeviceUpdatedPendency> getDevice() {
 		return device;
 	}
@@ -455,7 +456,7 @@ public class AllPendency {
 	 * 
 	 * @return loadHolidayList
 	 **/
-	@ApiModelProperty(value = "Carregar a lista de feriados no dispositivo")
+	@Schema(description = "Carregar a lista de feriados no dispositivo")
 	public List<LoadHolidayListPendency> getLoadHolidayList() {
 		return loadHolidayList;
 	}
@@ -482,7 +483,7 @@ public class AllPendency {
 	 * 
 	 * @return removeHolidayList
 	 **/
-	@ApiModelProperty(value = "Remover a lista de feriados do dispositivo")
+	@Schema(description = "Remover a lista de feriados do dispositivo")
 	public List<DevicePendency> getRemoveHolidayList() {
 		return removeHolidayList;
 	}
@@ -509,7 +510,7 @@ public class AllPendency {
 	 * 
 	 * @return activateDeviceOutput
 	 **/
-	@ApiModelProperty(value = "Ativar uma saída digital do dispositivo")
+	@Schema(description = "Ativar uma saída digital do dispositivo")
 	public List<ActiveDeviceOutputPendency> getActivateDeviceOutput() {
 		return activateDeviceOutput;
 	}
@@ -536,7 +537,7 @@ public class AllPendency {
 	 * 
 	 * @return deactivateDeviceOutput
 	 **/
-	@ApiModelProperty(value = "Desativar uma saída digital do dispositivo")
+	@Schema(description = "Desativar uma saída digital do dispositivo")
 	public List<DeactiveDeviceOutputPendency> getDeactivateDeviceOutput() {
 		return deactivateDeviceOutput;
 	}
@@ -563,7 +564,7 @@ public class AllPendency {
 	 * 
 	 * @return datamartUpdated
 	 **/
-	@ApiModelProperty(value = "Datamart atualizado")
+	@Schema(description = "Datamart atualizado")
 	public List<DatamartUpdatedPendency> getDatamartUpdated() {
 		return datamartUpdated;
 	}
@@ -590,7 +591,7 @@ public class AllPendency {
 	 * 
 	 * @return personLocationUpdated
 	 **/
-	@ApiModelProperty(value = "Atualiza o local físico da pessoa")
+	@Schema(description = "Atualiza o local físico da pessoa")
 	public List<PersonAreaUpdatedPendency> getPersonLocationUpdated() {
 		return personLocationUpdated;
 	}
@@ -617,7 +618,7 @@ public class AllPendency {
 	 * 
 	 * @return collectEvent
 	 **/
-	@ApiModelProperty(value = "Realizar a coleta de eventos de um dispositivo. ")
+	@Schema(description = "Realizar a coleta de eventos de um dispositivo. ")
 	public List<CollectEventPendency> getCollectEvent() {
 		return collectEvent;
 	}
@@ -644,7 +645,7 @@ public class AllPendency {
 	 * 
 	 * @return inputStatus
 	 **/
-	@ApiModelProperty(value = "Verificar o status da uma entrada")
+	@Schema(description = "Verificar o status da uma entrada")
 	public List<DevicePendency> getInputStatus() {
 		return inputStatus;
 	}
@@ -671,7 +672,7 @@ public class AllPendency {
 	 * 
 	 * @return manufacturerUpdated
 	 **/
-	@ApiModelProperty(value = "Os dados da empresa do REP foram atualizados")
+	@Schema(description = "Os dados da empresa do REP foram atualizados")
 	public List<ManufacturerUpdatedPendency> getManufacturerUpdated() {
 		return manufacturerUpdated;
 	}
@@ -698,7 +699,7 @@ public class AllPendency {
 	 * 
 	 * @return updatePersonREP
 	 **/
-	@ApiModelProperty(value = "Incluir uma pessoa no REP")
+	@Schema(description = "Incluir uma pessoa no REP")
 	public List<UpdatePersonREPPendency> getUpdatePersonREP() {
 		return updatePersonREP;
 	}
@@ -725,7 +726,7 @@ public class AllPendency {
 	 * 
 	 * @return loadAllowCardList
 	 **/
-	@ApiModelProperty(value = "Inclusão da lista de liberação")
+	@Schema(description = "Inclusão da lista de liberação")
 	public List<DevicePendency> getLoadAllowCardList() {
 		return loadAllowCardList;
 	}
@@ -752,7 +753,7 @@ public class AllPendency {
 	 * 
 	 * @return removeAllowCardList
 	 **/
-	@ApiModelProperty(value = "Remover a lista de liberação do dispositivo")
+	@Schema(description = "Remover a lista de liberação do dispositivo")
 	public List<DevicePendency> getRemoveAllowCardList() {
 		return removeAllowCardList;
 	}
@@ -779,7 +780,7 @@ public class AllPendency {
 	 * 
 	 * @return loadBiometryList
 	 **/
-	@ApiModelProperty(value = "Incluir uma lista de biometria no dispositivo ")
+	@Schema(description = "Incluir uma lista de biometria no dispositivo ")
 	public List<DevicePendency> getLoadBiometryList() {
 		return loadBiometryList;
 	}
@@ -806,7 +807,7 @@ public class AllPendency {
 	 * 
 	 * @return removeBiometryList
 	 **/
-	@ApiModelProperty(value = "Remover da lista de biometria do dispositivo ")
+	@Schema(description = "Remover da lista de biometria do dispositivo ")
 	public List<DevicePendency> getRemoveBiometryList() {
 		return removeBiometryList;
 	}
@@ -833,7 +834,7 @@ public class AllPendency {
 	 * 
 	 * @return includeCard
 	 **/
-	@ApiModelProperty(value = "Incluir um cartão no dispositivo")
+	@Schema(description = "Incluir um cartão no dispositivo")
 	public List<IncludeCardPendency> getIncludeCard() {
 		return includeCard;
 	}
@@ -860,7 +861,7 @@ public class AllPendency {
 	 * 
 	 * @return excludeCard
 	 **/
-	@ApiModelProperty(value = "Remover um cartão no dispositivo")
+	@Schema(description = "Remover um cartão no dispositivo")
 	public List<ExcludeCardPendency> getExcludeCard() {
 		return excludeCard;
 	}
@@ -887,7 +888,7 @@ public class AllPendency {
 	 * 
 	 * @return deviceDisplayMessage
 	 **/
-	@ApiModelProperty(value = "Exibir mensagem no display do dispositivo")
+	@Schema(description = "Exibir mensagem no display do dispositivo")
 	public List<DeviceDisplayMessagePendency> getDeviceDisplayMessage() {
 		return deviceDisplayMessage;
 	}
@@ -914,7 +915,7 @@ public class AllPendency {
 	 * 
 	 * @return updateFirmware
 	 **/
-	@ApiModelProperty(value = "Atualização do firmware do dispositivo")
+	@Schema(description = "Atualização do firmware do dispositivo")
 	public List<DevicePendency> getUpdateFirmware() {
 		return updateFirmware;
 	}
@@ -941,7 +942,7 @@ public class AllPendency {
 	 * 
 	 * @return includePhoto
 	 **/
-	@ApiModelProperty(value = "Incluir foto no dispositivo para reconhecimento facial")
+	@Schema(description = "Incluir foto no dispositivo para reconhecimento facial")
 	public List<IncludePhotoPendency> getIncludePhoto() {
 		return includePhoto;
 	}
@@ -968,7 +969,7 @@ public class AllPendency {
 	 * 
 	 * @return excludePhoto
 	 **/
-	@ApiModelProperty(value = "Excluir foto do dispositivo")
+	@Schema(description = "Excluir foto do dispositivo")
 	public List<ExcludePhotoPendency> getExcludePhoto() {
 		return excludePhoto;
 	}
@@ -995,7 +996,7 @@ public class AllPendency {
 	 * 
 	 * @return loadCredentialFacialList
 	 **/
-	@ApiModelProperty(value = "Incluir uma lista de credencial facial no dispositivo ")
+	@Schema(description = "Incluir uma lista de credencial facial no dispositivo ")
 	public List<DevicePendency> getLoadCredentialFacialList() {
 		return loadCredentialFacialList;
 	}
@@ -1013,24 +1014,22 @@ public class AllPendency {
 			return false;
 		}
 		AllPendency allPendency = (AllPendency) o;
-		return Objects.equals(this.deviceStatus, allPendency.deviceStatus) && Objects.equals(this.deviceDateTime, allPendency.deviceDateTime) && Objects.equals(this.resetDevice, allPendency.resetDevice)
-				&& Objects.equals(this.blockDevice, allPendency.blockDevice) && Objects.equals(this.unblockDevice, allPendency.unblockDevice) && Objects.equals(this.setDeviceEmergency, allPendency.setDeviceEmergency)
-				&& Objects.equals(this.unsetDeviceEmergency, allPendency.unsetDeviceEmergency) && Objects.equals(this.apolloIncludeCard, allPendency.apolloIncludeCard) && Objects.equals(this.apolloExcludeCard, allPendency.apolloExcludeCard)
-				&& Objects.equals(this.includeBiometry, allPendency.includeBiometry) && Objects.equals(this.excludeBiometry, allPendency.excludeBiometry) && Objects.equals(this.device, allPendency.device)
-				&& Objects.equals(this.loadHolidayList, allPendency.loadHolidayList) && Objects.equals(this.removeHolidayList, allPendency.removeHolidayList) && Objects.equals(this.activateDeviceOutput, allPendency.activateDeviceOutput)
+		return Objects.equals(this.deviceStatus, allPendency.deviceStatus) && Objects.equals(this.deviceDateTime, allPendency.deviceDateTime) && Objects.equals(this.resetDevice, allPendency.resetDevice) && Objects.equals(this.blockDevice, allPendency.blockDevice)
+				&& Objects.equals(this.unblockDevice, allPendency.unblockDevice) && Objects.equals(this.setDeviceEmergency, allPendency.setDeviceEmergency) && Objects.equals(this.unsetDeviceEmergency, allPendency.unsetDeviceEmergency)
+				&& Objects.equals(this.apolloIncludeCard, allPendency.apolloIncludeCard) && Objects.equals(this.apolloExcludeCard, allPendency.apolloExcludeCard) && Objects.equals(this.includeBiometry, allPendency.includeBiometry) && Objects.equals(this.excludeBiometry, allPendency.excludeBiometry)
+				&& Objects.equals(this.device, allPendency.device) && Objects.equals(this.loadHolidayList, allPendency.loadHolidayList) && Objects.equals(this.removeHolidayList, allPendency.removeHolidayList) && Objects.equals(this.activateDeviceOutput, allPendency.activateDeviceOutput)
 				&& Objects.equals(this.deactivateDeviceOutput, allPendency.deactivateDeviceOutput) && Objects.equals(this.datamartUpdated, allPendency.datamartUpdated) && Objects.equals(this.personLocationUpdated, allPendency.personLocationUpdated)
-				&& Objects.equals(this.collectEvent, allPendency.collectEvent) && Objects.equals(this.inputStatus, allPendency.inputStatus) && Objects.equals(this.manufacturerUpdated, allPendency.manufacturerUpdated)
-				&& Objects.equals(this.updatePersonREP, allPendency.updatePersonREP) && Objects.equals(this.loadAllowCardList, allPendency.loadAllowCardList) && Objects.equals(this.removeAllowCardList, allPendency.removeAllowCardList)
-				&& Objects.equals(this.loadBiometryList, allPendency.loadBiometryList) && Objects.equals(this.removeBiometryList, allPendency.removeBiometryList) && Objects.equals(this.includeCard, allPendency.includeCard)
-				&& Objects.equals(this.excludeCard, allPendency.excludeCard) && Objects.equals(this.deviceDisplayMessage, allPendency.deviceDisplayMessage) && Objects.equals(this.updateFirmware, allPendency.updateFirmware)
-				&& Objects.equals(this.includePhoto, allPendency.includePhoto) && Objects.equals(this.excludePhoto, allPendency.excludePhoto) && Objects.equals(this.loadCredentialFacialList, allPendency.loadCredentialFacialList);
+				&& Objects.equals(this.collectEvent, allPendency.collectEvent) && Objects.equals(this.inputStatus, allPendency.inputStatus) && Objects.equals(this.manufacturerUpdated, allPendency.manufacturerUpdated) && Objects.equals(this.updatePersonREP, allPendency.updatePersonREP)
+				&& Objects.equals(this.loadAllowCardList, allPendency.loadAllowCardList) && Objects.equals(this.removeAllowCardList, allPendency.removeAllowCardList) && Objects.equals(this.loadBiometryList, allPendency.loadBiometryList)
+				&& Objects.equals(this.removeBiometryList, allPendency.removeBiometryList) && Objects.equals(this.includeCard, allPendency.includeCard) && Objects.equals(this.excludeCard, allPendency.excludeCard) && Objects.equals(this.deviceDisplayMessage, allPendency.deviceDisplayMessage)
+				&& Objects.equals(this.updateFirmware, allPendency.updateFirmware) && Objects.equals(this.includePhoto, allPendency.includePhoto) && Objects.equals(this.excludePhoto, allPendency.excludePhoto) && Objects.equals(this.loadCredentialFacialList, allPendency.loadCredentialFacialList);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(deviceStatus, deviceDateTime, resetDevice, blockDevice, unblockDevice, setDeviceEmergency, unsetDeviceEmergency, apolloIncludeCard, apolloExcludeCard, includeBiometry, excludeBiometry, device, loadHolidayList,
-				removeHolidayList, activateDeviceOutput, deactivateDeviceOutput, datamartUpdated, personLocationUpdated, collectEvent, inputStatus, manufacturerUpdated, updatePersonREP, loadAllowCardList, removeAllowCardList, loadBiometryList,
-				removeBiometryList, includeCard, excludeCard, deviceDisplayMessage, updateFirmware, includePhoto, excludePhoto, loadCredentialFacialList);
+		return Objects.hash(deviceStatus, deviceDateTime, resetDevice, blockDevice, unblockDevice, setDeviceEmergency, unsetDeviceEmergency, apolloIncludeCard, apolloExcludeCard, includeBiometry, excludeBiometry, device, loadHolidayList, removeHolidayList, activateDeviceOutput,
+				deactivateDeviceOutput, datamartUpdated, personLocationUpdated, collectEvent, inputStatus, manufacturerUpdated, updatePersonREP, loadAllowCardList, removeAllowCardList, loadBiometryList, removeBiometryList, includeCard, excludeCard, deviceDisplayMessage, updateFirmware, includePhoto,
+				excludePhoto, loadCredentialFacialList);
 	}
 
 	@Override

@@ -1,18 +1,18 @@
+
 package br.com.seniorx.models;
 
-import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * Card
+ */
 
 public class Card {
 	@SerializedName("cardNumber")
@@ -21,53 +21,6 @@ public class Card {
 	/**
 	 * Gets or Sets cardTechnology
 	 */
-	@JsonAdapter(CardTechnologyEnum.Adapter.class)
-	public enum CardTechnologyEnum {
-		BARCODE_CARD("BARCODE_CARD"),
-
-		RFID_CARD("RFID_CARD"),
-
-		SMART_CARD("SMART_CARD"),
-
-		QRCODE("QRCODE");
-
-		private String value;
-
-		CardTechnologyEnum(String value) {
-			this.value = value;
-		}
-
-		public String getValue() {
-			return value;
-		}
-
-		@Override
-		public String toString() {
-			return String.valueOf(value);
-		}
-
-		public static CardTechnologyEnum fromValue(String text) {
-			for (CardTechnologyEnum b : CardTechnologyEnum.values()) {
-				if (String.valueOf(b.value).equals(text)) {
-					return b;
-				}
-			}
-			return null;
-		}
-
-		public static class Adapter extends TypeAdapter<CardTechnologyEnum> {
-			@Override
-			public void write(final JsonWriter jsonWriter, final CardTechnologyEnum enumeration) throws IOException {
-				jsonWriter.value(enumeration.getValue());
-			}
-
-			@Override
-			public CardTechnologyEnum read(final JsonReader jsonReader) throws IOException {
-				String value = jsonReader.nextString();
-				return CardTechnologyEnum.fromValue(String.valueOf(value));
-			}
-		}
-	}
 
 	@SerializedName("cardTechnology")
 	private CardTechnologyEnum cardTechnology = null;
@@ -84,49 +37,6 @@ public class Card {
 	/**
 	 * Gets or Sets ownerType
 	 */
-	@JsonAdapter(OwnerTypeEnum.Adapter.class)
-	public enum OwnerTypeEnum {
-		PERSON("PERSON"),
-
-		VEHICLE("VEHICLE");
-
-		private String value;
-
-		OwnerTypeEnum(String value) {
-			this.value = value;
-		}
-
-		public String getValue() {
-			return value;
-		}
-
-		@Override
-		public String toString() {
-			return String.valueOf(value);
-		}
-
-		public static OwnerTypeEnum fromValue(String text) {
-			for (OwnerTypeEnum b : OwnerTypeEnum.values()) {
-				if (String.valueOf(b.value).equals(text)) {
-					return b;
-				}
-			}
-			return null;
-		}
-
-		public static class Adapter extends TypeAdapter<OwnerTypeEnum> {
-			@Override
-			public void write(final JsonWriter jsonWriter, final OwnerTypeEnum enumeration) throws IOException {
-				jsonWriter.value(enumeration.getValue());
-			}
-
-			@Override
-			public OwnerTypeEnum read(final JsonReader jsonReader) throws IOException {
-				String value = jsonReader.nextString();
-				return OwnerTypeEnum.fromValue(String.valueOf(value));
-			}
-		}
-	}
 
 	@SerializedName("ownerType")
 	private OwnerTypeEnum ownerType = null;
@@ -156,7 +66,7 @@ public class Card {
 	 * 
 	 * @return cardNumber
 	 **/
-	@ApiModelProperty(value = "Número físico do cartão")
+	@Schema(description = "Número físico do cartão")
 	public Long getCardNumber() {
 		return cardNumber;
 	}
@@ -175,7 +85,7 @@ public class Card {
 	 * 
 	 * @return cardTechnology
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description = "")
 	public CardTechnologyEnum getCardTechnology() {
 		return cardTechnology;
 	}
@@ -194,7 +104,7 @@ public class Card {
 	 * 
 	 * @return startValidity
 	 **/
-	@ApiModelProperty(value = "Data de início da validade")
+	@Schema(description = "Data de início da validade")
 	public OffsetDateTime getStartValidity() {
 		return startValidity;
 	}
@@ -213,7 +123,7 @@ public class Card {
 	 * 
 	 * @return finishValidity
 	 **/
-	@ApiModelProperty(value = "Data final da validade")
+	@Schema(description = "Data final da validade")
 	public OffsetDateTime getFinishValidity() {
 		return finishValidity;
 	}
@@ -232,7 +142,7 @@ public class Card {
 	 * 
 	 * @return checkAntiPassback
 	 **/
-	@ApiModelProperty(value = "Valida anti-dupla")
+	@Schema(description = "Valida anti-dupla")
 	public Boolean isCheckAntiPassback() {
 		return checkAntiPassback;
 	}
@@ -251,7 +161,7 @@ public class Card {
 	 * 
 	 * @return ownerType
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description = "")
 	public OwnerTypeEnum getOwnerType() {
 		return ownerType;
 	}
@@ -270,7 +180,7 @@ public class Card {
 	 * 
 	 * @return ownerId
 	 **/
-	@ApiModelProperty(value = "Identificador do proprietário da credencial (pessoa ou veículo)")
+	@Schema(description = "Identificador do proprietário da credencial (pessoa ou veículo)")
 	public Long getOwnerId() {
 		return ownerId;
 	}
@@ -289,7 +199,7 @@ public class Card {
 	 * 
 	 * @return areaId
 	 **/
-	@ApiModelProperty(value = "Identificador da área")
+	@Schema(description = "Identificador da área")
 	public Long getAreaId() {
 		return areaId;
 	}
@@ -308,7 +218,7 @@ public class Card {
 	 * 
 	 * @return isVisitor
 	 **/
-	@ApiModelProperty(value = "Informa se é um visitante")
+	@Schema(description = "Informa se é um visitante")
 	public Boolean isIsVisitor() {
 		return isVisitor;
 	}
@@ -327,7 +237,7 @@ public class Card {
 	 * 
 	 * @return isEscort
 	 **/
-	@ApiModelProperty(value = "Informa se é um autorizador")
+	@Schema(description = "Informa se é um autorizador")
 	public Boolean isIsEscort() {
 		return isEscort;
 	}
@@ -354,7 +264,7 @@ public class Card {
 	 * 
 	 * @return accessLevel
 	 **/
-	@ApiModelProperty(value = "Níveis de acesso")
+	@Schema(description = "Níveis de acesso")
 	public List<Long> getAccessLevel() {
 		return accessLevel;
 	}
@@ -372,20 +282,14 @@ public class Card {
 			return false;
 		}
 		Card card = (Card) o;
-		return Objects.equals(this.cardNumber, card.cardNumber)
-				&& Objects.equals(this.cardTechnology, card.cardTechnology)
-				&& Objects.equals(this.startValidity, card.startValidity)
-				&& Objects.equals(this.finishValidity, card.finishValidity)
-				&& Objects.equals(this.checkAntiPassback, card.checkAntiPassback)
-				&& Objects.equals(this.ownerType, card.ownerType) && Objects.equals(this.ownerId, card.ownerId)
-				&& Objects.equals(this.areaId, card.areaId) && Objects.equals(this.isVisitor, card.isVisitor)
+		return Objects.equals(this.cardNumber, card.cardNumber) && Objects.equals(this.cardTechnology, card.cardTechnology) && Objects.equals(this.startValidity, card.startValidity) && Objects.equals(this.finishValidity, card.finishValidity)
+				&& Objects.equals(this.checkAntiPassback, card.checkAntiPassback) && Objects.equals(this.ownerType, card.ownerType) && Objects.equals(this.ownerId, card.ownerId) && Objects.equals(this.areaId, card.areaId) && Objects.equals(this.isVisitor, card.isVisitor)
 				&& Objects.equals(this.isEscort, card.isEscort) && Objects.equals(this.accessLevel, card.accessLevel);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cardNumber, cardTechnology, startValidity, finishValidity, checkAntiPassback, ownerType,
-				ownerId, areaId, isVisitor, isEscort, accessLevel);
+		return Objects.hash(cardNumber, cardTechnology, startValidity, finishValidity, checkAntiPassback, ownerType, ownerId, areaId, isVisitor, isEscort, accessLevel);
 	}
 
 	@Override
