@@ -10,11 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import br.com.thidi.middleware.configurations.RestTemplateConfiguration;
 import br.com.thidi.middleware.resource.CLogger;
 
 public class DigestAuthRestTemplate {
 
-	private final RestTemplate restTemplate = new RestTemplate();
+	private final RestTemplate restTemplate = RestTemplateConfiguration.createCustomRestTemplate();
 	private final String username;
 	private final String password;
 
@@ -55,9 +56,8 @@ public class DigestAuthRestTemplate {
 						}
 
 						HttpEntity<T> updatedEntity = new HttpEntity<>(entity.getBody(), newHeaders);
-						
-						System.out.println(("Execute auth request"+ "\n\nEntity: " + updatedEntity.toString()));
-						
+
+						System.out.println(("Execute auth request" + "\n\nEntity: " + updatedEntity.toString()));
 
 						return restTemplate.exchange(url, method, updatedEntity, String.class);
 					}

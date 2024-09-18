@@ -170,7 +170,6 @@ public class SeniorApiService {
 		try {
 			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
 			ResponseEntity<AllPendency> response = restTemplate.exchange(uriDevicePendencies + "/" + deviceId, HttpMethod.GET, entity, AllPendency.class);
-			System.out.println(response.getBody());
 
 			AllPendency allPendencies = response.getBody();
 			return allPendencies;

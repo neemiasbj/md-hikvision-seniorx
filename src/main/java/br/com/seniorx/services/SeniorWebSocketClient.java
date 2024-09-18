@@ -78,7 +78,7 @@ public class SeniorWebSocketClient {
 	}
 
 	private void scheduleReconnect() {
-		scheduler.schedule(this::connect, RECONNECT_INTERVAL, TimeUnit.SECONDS);
+		scheduler.schedule(this::connect, 30, TimeUnit.SECONDS);
 	}
 
 	public void close() throws IOException {

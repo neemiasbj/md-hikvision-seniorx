@@ -21,8 +21,7 @@ public class Middleware {
 
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(Middleware.class);
-		app.setDefaultProperties(Collections.singletonMap("server.port",
-				PropertiesUtilImpl.getValor("api.port") == null ? "8080" : PropertiesUtilImpl.getValor("api.port")));
+		app.setDefaultProperties(Collections.singletonMap("server.port", PropertiesUtilImpl.getValor("api.port") == null ? "8080" : PropertiesUtilImpl.getValor("api.port")));
 		app.run(args);
 	}
 
@@ -31,30 +30,15 @@ public class Middleware {
 
 		CLogger.logPropertiesInfo("Conex", "Versão: " + getVersion());
 		CLogger.logPropertiesInfo("FILE CONFIG DATA", "api.port: " + PropertiesUtilImpl.getValor("api.port"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.senior.websocket.reconnect.interval.seconds: "
-				+ PropertiesUtilImpl.getValor("senior.websocket.reconnect.interval.seconds"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA",
-				"senior.partner_key: " + PropertiesUtilImpl.getValor("senior.partner_key"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA",
-				"senior.driver_key: " + PropertiesUtilImpl.getValor("senior.driver_key"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA",
-				"senior.api.sdk.uri: " + PropertiesUtilImpl.getValor("senior.api.sdk.uri"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA",
-				"senior.api.sdk.timeout: " + PropertiesUtilImpl.getValor("senior.api.sdk.timeout"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA",
-				"senior.websocket.uri: " + PropertiesUtilImpl.getValor("senior.websocket.uri"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA",
-				"time.pooling.pendency.seconds: " + PropertiesUtilImpl.getValor("time.pooling.pendency.seconds"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA",
-				"time.keep.alive.senior.seconds: " + PropertiesUtilImpl.getValor("time.keep.alive.senior.seconds"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA", "time.waiting.resttemplate.seconds: "
-				+ PropertiesUtilImpl.getValor("time.waiting.resttemplate.seconds"));
-
-		SeniorWebSocketService ws = new SeniorWebSocketService();
-		ws.start();
-
-		SeniorHandlerService shs = new SeniorHandlerService();
-		shs.start();
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.senior.websocket.reconnect.interval.seconds: " + PropertiesUtilImpl.getValor("senior.websocket.reconnect.interval.seconds"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.partner_key: " + PropertiesUtilImpl.getValor("senior.partner_key"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.driver_key: " + PropertiesUtilImpl.getValor("senior.driver_key"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.api.sdk.uri: " + PropertiesUtilImpl.getValor("senior.api.sdk.uri"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.api.sdk.timeout: " + PropertiesUtilImpl.getValor("senior.api.sdk.timeout"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.websocket.uri: " + PropertiesUtilImpl.getValor("senior.websocket.uri"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "time.pooling.pendency.seconds: " + PropertiesUtilImpl.getValor("time.pooling.pendency.seconds"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "time.keep.alive.senior.seconds: " + PropertiesUtilImpl.getValor("time.keep.alive.senior.seconds"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "time.waiting.resttemplate.seconds: " + PropertiesUtilImpl.getValor("time.waiting.resttemplate.seconds"));
 
 	};
 

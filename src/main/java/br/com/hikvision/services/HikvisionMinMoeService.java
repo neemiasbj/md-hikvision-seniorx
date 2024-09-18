@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URL;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +24,14 @@ import com.google.gson.Gson;
 
 import br.com.hikvision.minmoe.enums.MinMoeCheckChannelType;
 import br.com.hikvision.minmoe.models.AcsConfigRequest;
+import br.com.hikvision.minmoe.models.DateTime;
+import br.com.hikvision.minmoe.models.DeleteUsers;
 import br.com.hikvision.minmoe.models.DeviceInfo;
 import br.com.hikvision.minmoe.models.ExcludePhotoRequest;
 import br.com.hikvision.minmoe.models.HttpHostNotification;
 import br.com.hikvision.minmoe.models.HttpHostNotificationList;
 import br.com.hikvision.minmoe.models.IncludeFaceRequest;
+import br.com.hikvision.minmoe.models.RemoteControlDoor;
 import br.com.hikvision.minmoe.models.SearchPhotoRequest;
 import br.com.hikvision.minmoe.models.SearchPhotoResponse;
 import br.com.hikvision.minmoe.models.SearchPhotoResponse.Match;
@@ -52,9 +56,12 @@ public class HikvisionMinMoeService {
 	private static final String SET_HOST_PATH = "/ISAPI/Event/notification/httpHosts";
 	private static final String SET_REMOTE_CHECK_PATH = "/ISAPI/AccessControl/AcsCfg?format=json";
 	private static final String INCLUDE_USER_PATH = "/ISAPI/AccessControl/UserInfo/SetUp?format=json";
+	private static final String EXCLUDE_USERS_PATH = "/ISAPI/AccessControl/UserInfo/Delete?format=json";
 	private static final String INCLUDE_FACE_PATH = "/ISAPI/Intelligent/FDLib/FaceDataRecord?format=json";
 	private static final String EXCLUDE_FACE_PATH = "/ISAPI/Intelligent/FDLib/FDSearch/Delete?format=json&FDID=1&faceLibType=blackFD";
 	private static final String CHECK_FACE_PATH = "/ISAPI/Intelligent/FDLib/FDSearch?format=json";
+	private static final String DATE_TIME_PATH = "/ISAPI/System/time";
+	private static final String REMOTE_CONTROL_DOOR_PATH = "/ISAPI/AccessControl/RemoteControl/door/65535";
 
 	public HikvisionMinMoeService(ManagerDevice device) {
 		this.device = device;
@@ -81,7 +88,6 @@ public class HikvisionMinMoeService {
 		}
 	}
 
-	// Wrapper class for List
 	@XmlRootElement(name = "list")
 	public static class ListWrapper<T> {
 		private List<T> items;
@@ -149,12 +155,13 @@ public class HikvisionMinMoeService {
 
 			HttpHostNotification notification = new HttpHostNotification();
 			notification.setId("1");
-			notification.setUrl("/api/device/minmoe/webhook");
+			notification.setUrl("/api/hikvision/minnoe");
 			notification.setProtocolType("HTTP");
 			notification.setParameterFormatType("JSON");
 			notification.setAddressingFormatType("ipaddress");
-			notification.setIpAddress("http://177.81.228.104/");
+			notification.setIpAddress("177.81.228.104");
 			notification.setPortNo(55975);
+			notification.setParameterFormatType("json");
 			notification.setHttpAuthenticationMethod("none");
 
 			List<HttpHostNotification> notifications = new ArrayList<>();
@@ -182,7 +189,7 @@ public class HikvisionMinMoeService {
 
 		DeviceInfo deviceInfo = getDeviceInfo();
 
-		if (deviceInfo.getModel().contains("DS-K1T61")) {
+		if (deviceInfo.getModel().contains("DS-K1T671")) {
 			setRemoteCheck(true, MinMoeCheckChannelType.PRIVATE_SDK);
 		} else // (deviceInfo.getModel().contains("DS-K1T341") ||
 				// deviceInfo.getModel().contains("DS-K1T671") ||
@@ -213,18 +220,32 @@ public class HikvisionMinMoeService {
 		} catch (Exception e) {
 			CLogger.logHikivisionError("setRemoteCheck", e.getMessage());
 			return false;
-			// TODO: handle exception
 		}
 	}
 
 	public boolean includeUser(User user) {
-		try {// Setup headers
+		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 
-			// Create the HTTP entity
 			HttpEntity<User> entity = new HttpEntity<>(user, headers);
-			ResponseEntity<String> response = digestAuthRestTemplate.executeWithDigestAuth(deviceUri + INCLUDE_USER_PATH, HttpMethod.PUT, entity);
+			digestAuthRestTemplate.executeWithDigestAuth(deviceUri + INCLUDE_USER_PATH, HttpMethod.PUT, entity);
+			return true;
+		} catch (Exception e) {
+			CLogger.logHikivisionError("addUsers", e.getMessage());
+			return false;
+		}
+	}
+
+	public boolean excludeAllUsers() {
+		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+
+			DeleteUsers userInfoDelCond = new DeleteUsers();
+
+			HttpEntity<DeleteUsers> entity = new HttpEntity<>(userInfoDelCond, headers);
+			digestAuthRestTemplate.executeWithDigestAuth(deviceUri + EXCLUDE_USERS_PATH, HttpMethod.PUT, entity);
 			return true;
 		} catch (Exception e) {
 			CLogger.logHikivisionError("addUsers", e.getMessage());
@@ -309,6 +330,80 @@ public class HikvisionMinMoeService {
 		}
 	}
 
+	public boolean setDateTime(DateTime datetime) {
+		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_XML);
+
+			HttpEntity<String> entity = new HttpEntity<>(convertObjectToXml(datetime), headers);
+
+			digestAuthRestTemplate.executeWithDigestAuth(deviceUri + DATE_TIME_PATH, HttpMethod.PUT, entity);
+
+			CLogger.logHikivisionDebug("setDateTime", "OK");
+			return true;
+		} catch (Exception e) {
+			CLogger.logHikivisionError("setDateTime", e.getMessage());
+			return false;
+		}
+	}
+
+	public boolean keepDoorClosed() {
+		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_XML);
+
+			RemoteControlDoor remoteDoorControl = new RemoteControlDoor("2.0", "alwaysClose");
+
+			HttpEntity<String> entity = new HttpEntity<>(convertObjectToXml(remoteDoorControl), headers);
+
+			digestAuthRestTemplate.executeWithDigestAuth(deviceUri + REMOTE_CONTROL_DOOR_PATH, HttpMethod.PUT, entity);
+
+			CLogger.logHikivisionDebug("keepDoorClosed", "OK");
+			return true;
+		} catch (Exception e) {
+			CLogger.logHikivisionError("keepDoorClosed", e.getMessage());
+			return false;
+		}
+	}
+
+	public boolean closeDoor() {
+		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_XML);
+
+			RemoteControlDoor remoteDoorControl = new RemoteControlDoor("2.0", "close");
+
+			HttpEntity<String> entity = new HttpEntity<>(convertObjectToXml(remoteDoorControl), headers);
+
+			digestAuthRestTemplate.executeWithDigestAuth(deviceUri + REMOTE_CONTROL_DOOR_PATH, HttpMethod.PUT, entity);
+
+			CLogger.logHikivisionDebug("closeDoor", "OK");
+			return true;
+		} catch (Exception e) {
+			CLogger.logHikivisionError("closeDoor", e.getMessage());
+			return false;
+		}
+	}
+
+	public boolean openDoor() {
+		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_XML);
+
+			RemoteControlDoor remoteDoorControl = new RemoteControlDoor("2.0", "open");
+
+			HttpEntity<String> entity = new HttpEntity<>(convertObjectToXml(remoteDoorControl), headers);
+
+			digestAuthRestTemplate.executeWithDigestAuth(deviceUri + REMOTE_CONTROL_DOOR_PATH, HttpMethod.PUT, entity);
+
+			CLogger.logHikivisionDebug("openDoor", "OK");
+			return true;
+		} catch (Exception e) {
+			CLogger.logHikivisionError("openDoor", e.getMessage());
+			return false;
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	private <T> T deserializeXmlResponse(String xmlResponse, Class<T> responseType) throws JAXBException {
 		if (xmlResponse != null) {
@@ -317,6 +412,26 @@ public class HikvisionMinMoeService {
 			return (T) unmarshaller.unmarshal(new StringReader(xmlResponse));
 		}
 		return null;
+	}
+
+	public static <T> String convertObjectToXml(T object) throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(object.getClass());
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+		StringWriter writer = new StringWriter();
+		marshaller.marshal(object, writer);
+		return writer.toString();
+	}
+
+	public static String minutesToUtcString(int minutes) {
+		Duration duration = Duration.ofMinutes(minutes);
+
+		long hours = Math.abs(duration.toHours());
+		long mins = Math.abs(duration.toMinutes() % 60);
+		long secs = Math.abs(duration.getSeconds() % 60);
+
+		return String.format("CST%s%d:%02d:%02d", minutes < 0 ? "-" : "+", hours, mins, secs);
 	}
 
 }
