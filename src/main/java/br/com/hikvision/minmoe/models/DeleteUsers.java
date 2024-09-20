@@ -1,7 +1,11 @@
 package br.com.hikvision.minmoe.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import br.com.hikvision.minmoe.models.DeleteUsers.EmployeeNo;
 
 public class DeleteUsers {
 
@@ -30,6 +34,11 @@ public class DeleteUsers {
 
 		public UserInfoDelCondDetails(List<EmployeeNo> employeeNoList) {
 			this.employeeNoList = employeeNoList;
+		}
+
+		public UserInfoDelCondDetails() {
+			this.employeeNoList = new ArrayList<EmployeeNo>();
+			;
 		}
 
 		public List<EmployeeNo> getEmployeeNoList() {

@@ -1,8 +1,10 @@
 package br.com.thidi.middleware.utils;
 
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -10,12 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import br.com.thidi.middleware.configurations.RestTemplateConfiguration;
+import br.com.thidi.middleware.configurations.RestTemplateConfig;
 import br.com.thidi.middleware.resource.CLogger;
 
 public class DigestAuthRestTemplate {
 
-	private final RestTemplate restTemplate = RestTemplateConfiguration.createCustomRestTemplate();
+	private final RestTemplate restTemplate = RestTemplateConfig.restTemplate();
 	private final String username;
 	private final String password;
 
@@ -26,6 +28,7 @@ public class DigestAuthRestTemplate {
 
 	public <T> ResponseEntity<String> executeWithDigestAuth(String url, HttpMethod method, HttpEntity<T> entity) {
 		try {
+			CLogger.logHikivisionDebug("Execute initial request", "Entity: " + (entity == null ? "null" : entity.toString()));
 			ResponseEntity<String> initialResponse = restTemplate.exchange(url, method, entity, String.class);
 			if (initialResponse.getStatusCode().is2xxSuccessful()) {
 				return initialResponse;
@@ -43,7 +46,7 @@ public class DigestAuthRestTemplate {
 					if (entity == null) {
 						newHeaders.set("Authorization", digestAuthHeader);
 						HttpEntity<T> updatedEntity = new HttpEntity<>(null, newHeaders);
-						CLogger.logHikivisionDebug("Execute auth request", "\n\nEntity: " + updatedEntity.toString());
+						CLogger.logHikivisionDebug("Execute auth request", "Entity: " + (updatedEntity == null ? "null" : updatedEntity.toString()));
 						return restTemplate.exchange(url, method, updatedEntity, String.class);
 					} else {
 						HttpHeaders existingHeaders = entity.getHeaders();
@@ -57,16 +60,18 @@ public class DigestAuthRestTemplate {
 
 						HttpEntity<T> updatedEntity = new HttpEntity<>(entity.getBody(), newHeaders);
 
-						System.out.println(("Execute auth request" + "\n\nEntity: " + updatedEntity.toString()));
+						CLogger.logHikivisionDebug("Execute auth request", "Entity: " + (updatedEntity == null ? "null" : updatedEntity.toString()));
 
 						return restTemplate.exchange(url, method, updatedEntity, String.class);
 					}
 				}
 			} else {
 				CLogger.logHikivisionError("Execute initial request", ("Error during request: " + e.getMessage()));
+				e.printStackTrace();
 			}
 		} catch (Exception ex) {
 			CLogger.logHikivisionError("Execute initial request", ex.getMessage());
+			ex.printStackTrace();
 		}
 
 		return null;
@@ -102,9 +107,9 @@ public class DigestAuthRestTemplate {
 
 	private String calculateDigestAuthHeader(DigestParams params, String uri, String method) {
 		String nc = "00000001";
-		String cnonce = DigestAuthUtils.generateCnonce();
+		String cnonce = generateCnonce();
 
-		String response = DigestAuthUtils.calculateDigest(username, params.realm, password, method, uri, params.nonce, nc, cnonce, params.qop);
+		String response = calculateDigest(username, params.realm, password, method, uri, params.nonce, nc, cnonce, params.qop);
 
 		return String.format("Digest username=\"%s\", realm=\"%s\", nonce=\"%s\", uri=\"%s\", qop=%s, nc=%s, cnonce=\"%s\", response=\"%s\", opaque=\"%s\"", username, params.realm, params.nonce, uri, params.qop, nc, cnonce, response, params.opaque);
 	}
@@ -114,5 +119,19 @@ public class DigestAuthRestTemplate {
 		String nonce;
 		String qop;
 		String opaque;
+	}
+
+	public static String calculateDigest(String username, String realm, String password, String method, String uri, String nonce, String nc, String cnonce, String qop) {
+		String A1 = username + ":" + realm + ":" + password;
+		String ha1 = DigestUtils.md5Hex(A1);
+
+		String A2 = method + ":" + uri;
+		String ha2 = DigestUtils.md5Hex(A2);
+
+		return DigestUtils.md5Hex(ha1 + ":" + nonce + ":" + nc + ":" + cnonce + ":" + qop + ":" + ha2);
+	}
+
+	public static String generateCnonce() {
+		return UUID.randomUUID().toString();
 	}
 }

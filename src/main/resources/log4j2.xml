@@ -29,22 +29,6 @@
 	</Appenders>
 
 	<Loggers>
-
-		<Logger name="br.com.thidi" level="error" additivity="false">
-			<AppenderRef ref="LogToConsole" />
-			<AppenderRef ref="LogToFile" />
-		</Logger>
-
-		<Logger name="br.com.hikvision" level="error" additivity="false">
-			<AppenderRef ref="LogToConsole" />
-			<AppenderRef ref="LogToFile" />
-		</Logger>
-
-		<Logger name="br.com.seniorx" level="error" additivity="false">
-			<AppenderRef ref="LogToConsole" />
-			<AppenderRef ref="LogToFile" />
-		</Logger>
-
 		<Logger name="org.springframework.boot" level="info"
 			additivity="false">
 			<AppenderRef ref="LogToConsole" />
@@ -55,7 +39,7 @@
 			<AppenderRef ref="LogToConsole" />
 		</Logger>
 
-		<Root level="info">
+		<Root level="error">
 			<AppenderRef ref="LogToFile" />
 			<AppenderRef ref="LogToConsole" />
 		</Root>

@@ -66,11 +66,11 @@ public class SeniorHandlerService {
 	Calendar calendar = Calendar.getInstance();
 
 	public void start() {
-		executorService.scheduleAtFixedRate(() -> {
-			handleKeepAlive();
-		}, 0, interval, TimeUnit.SECONDS);
+//		executorService.scheduleAtFixedRate(() -> {
+//		}, 0, interval, TimeUnit.SECONDS);
 
 		executorService.scheduleAtFixedRate(() -> {
+			handleKeepAlive();
 			HandleDevicesPendencies();
 		}, 0, interval, TimeUnit.SECONDS);
 	}

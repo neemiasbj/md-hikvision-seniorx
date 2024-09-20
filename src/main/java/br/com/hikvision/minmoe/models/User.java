@@ -7,16 +7,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class User {
 
 	@JsonProperty("UserInfo")
-	private UserInfo userInfo;
+	private UserInfo UserInfo;
 
 	// Getters and Setters
 
 	public UserInfo getUserInfo() {
-		return userInfo;
+		return UserInfo;
 	}
 
 	public void setUserInfo(UserInfo userInfo) {
-		this.userInfo = userInfo;
+		this.UserInfo = userInfo;
 	}
 
 	public static class UserInfo {

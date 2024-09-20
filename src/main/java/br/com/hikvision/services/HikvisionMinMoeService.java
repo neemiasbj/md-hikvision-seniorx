@@ -20,7 +20,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 
 import br.com.hikvision.minmoe.enums.MinMoeCheckChannelType;
 import br.com.hikvision.minmoe.models.AcsConfigRequest;
@@ -48,25 +48,26 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 public class HikvisionMinMoeService {
 	DigestAuthRestTemplate digestAuthRestTemplate;
-	Gson gson = new Gson();
+	ObjectMapper objectMapper = new ObjectMapper();
 
 	private ManagerDevice device;
 	private String deviceUri;
 	private static final String DEVICE_INFO_PATH = "/ISAPI/System/deviceInfo";
 	private static final String SET_HOST_PATH = "/ISAPI/Event/notification/httpHosts";
 	private static final String SET_REMOTE_CHECK_PATH = "/ISAPI/AccessControl/AcsCfg?format=json";
+	private static final String SET_DATE_TIME_PATH = "/ISAPI/System/time";
 	private static final String INCLUDE_USER_PATH = "/ISAPI/AccessControl/UserInfo/SetUp?format=json";
-	private static final String EXCLUDE_USERS_PATH = "/ISAPI/AccessControl/UserInfo/Delete?format=json";
 	private static final String INCLUDE_FACE_PATH = "/ISAPI/Intelligent/FDLib/FaceDataRecord?format=json";
+	private static final String EXCLUDE_USERS_PATH = "/ISAPI/AccessControl/UserInfo/Delete?format=json";
 	private static final String EXCLUDE_FACE_PATH = "/ISAPI/Intelligent/FDLib/FDSearch/Delete?format=json&FDID=1&faceLibType=blackFD";
-	private static final String CHECK_FACE_PATH = "/ISAPI/Intelligent/FDLib/FDSearch?format=json";
-	private static final String DATE_TIME_PATH = "/ISAPI/System/time";
+	private static final String SEARCH_FACE_PATH = "/ISAPI/Intelligent/FDLib/FDSearch?format=json";
 	private static final String REMOTE_CONTROL_DOOR_PATH = "/ISAPI/AccessControl/RemoteControl/door/65535";
 
 	public HikvisionMinMoeService(ManagerDevice device) {
 		this.device = device;
 		this.deviceUri = buildDeviceUri();
 		digestAuthRestTemplate = new DigestAuthRestTemplate(device.getUsername(), device.getPassword());
+		objectMapper.setPropertyNamingStrategy(PropertyNamingStrategies.UPPER_CAMEL_CASE);
 	}
 
 	private String buildDeviceUri() {
@@ -159,8 +160,8 @@ public class HikvisionMinMoeService {
 			notification.setProtocolType("HTTP");
 			notification.setParameterFormatType("JSON");
 			notification.setAddressingFormatType("ipaddress");
-			notification.setIpAddress("177.81.228.104");
-			notification.setPortNo(55975);
+			notification.setIpAddress("192.168.0.80");
+			notification.setPortNo(80);
 			notification.setParameterFormatType("json");
 			notification.setHttpAuthenticationMethod("none");
 
@@ -211,7 +212,7 @@ public class HikvisionMinMoeService {
 			AcsConfigRequest request = new AcsConfigRequest();
 			request.setAcsCfg(acsCfg);
 
-			HttpEntity<String> entity = new HttpEntity<String>(gson.toJson(request));
+			HttpEntity<String> entity = new HttpEntity<String>(objectMapper.writeValueAsString(request));
 			ResponseEntity<String> response = digestAuthRestTemplate.executeWithDigestAuth(deviceUri + SET_REMOTE_CHECK_PATH, HttpMethod.PUT, entity);
 			System.out.println("setRemoteCheck response: " + response.getBody());
 
@@ -228,8 +229,8 @@ public class HikvisionMinMoeService {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 
-			HttpEntity<User> entity = new HttpEntity<>(user, headers);
-			digestAuthRestTemplate.executeWithDigestAuth(deviceUri + INCLUDE_USER_PATH, HttpMethod.PUT, entity);
+			HttpEntity<String> entity = new HttpEntity<>(objectMapper.writeValueAsString(user), headers);
+			ResponseEntity<String> response = digestAuthRestTemplate.executeWithDigestAuth(deviceUri + INCLUDE_USER_PATH, HttpMethod.PUT, entity);
 			return true;
 		} catch (Exception e) {
 			CLogger.logHikivisionError("addUsers", e.getMessage());
@@ -242,9 +243,10 @@ public class HikvisionMinMoeService {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 
-			DeleteUsers userInfoDelCond = new DeleteUsers();
+			DeleteUsers.UserInfoDelCondDetails userInfoDelCondDetails = new DeleteUsers.UserInfoDelCondDetails();
+			DeleteUsers userInfoDelCond = new DeleteUsers(userInfoDelCondDetails);
 
-			HttpEntity<DeleteUsers> entity = new HttpEntity<>(userInfoDelCond, headers);
+			HttpEntity<String> entity = new HttpEntity<>(objectMapper.writeValueAsString(userInfoDelCond), headers);
 			digestAuthRestTemplate.executeWithDigestAuth(deviceUri + EXCLUDE_USERS_PATH, HttpMethod.PUT, entity);
 			return true;
 		} catch (Exception e) {
@@ -262,7 +264,7 @@ public class HikvisionMinMoeService {
 
 			MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 
-			body.add("FaceDataRecord", gson.toJson(faceDataRequest));
+			body.add("FaceDataRecord", objectMapper.writeValueAsString(faceDataRequest));
 
 			Resource imageResource = new ByteArrayResource(imageBytes) {
 				@Override
@@ -292,9 +294,9 @@ public class HikvisionMinMoeService {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 
-			HttpEntity<SearchPhotoRequest> entity = new HttpEntity<>(searchPhoto, headers);
+			HttpEntity<String> entity = new HttpEntity<>(objectMapper.writeValueAsString(searchPhoto), headers);
 
-			ResponseEntity<String> response = digestAuthRestTemplate.executeWithDigestAuth(deviceUri + CHECK_FACE_PATH, HttpMethod.POST, entity);
+			ResponseEntity<String> response = digestAuthRestTemplate.executeWithDigestAuth(deviceUri + SEARCH_FACE_PATH, HttpMethod.POST, entity);
 
 			String jsonResponse = response.getBody();
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -337,7 +339,7 @@ public class HikvisionMinMoeService {
 
 			HttpEntity<String> entity = new HttpEntity<>(convertObjectToXml(datetime), headers);
 
-			digestAuthRestTemplate.executeWithDigestAuth(deviceUri + DATE_TIME_PATH, HttpMethod.PUT, entity);
+			digestAuthRestTemplate.executeWithDigestAuth(deviceUri + SET_DATE_TIME_PATH, HttpMethod.PUT, entity);
 
 			CLogger.logHikivisionDebug("setDateTime", "OK");
 			return true;

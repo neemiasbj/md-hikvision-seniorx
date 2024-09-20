@@ -23,7 +23,6 @@ public class UtilProperties {
 
     protected UtilProperties() {
         props = new Properties();
-        // Inicializar o placeholderHelper com os valores diretos
         placeholderHelper = new PropertyPlaceholderHelper("${", "}", ":", true);
         loadProperties();
     }
