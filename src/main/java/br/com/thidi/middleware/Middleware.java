@@ -1,39 +1,43 @@
 package br.com.thidi.middleware;
 
 import java.io.InputStream;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+import java.util.Collections;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.slf4j.MDC;
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.server.ConfigurableWebServerFactory;
-import org.springframework.boot.web.server.WebServerFactoryCustomizer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 
-import br.com.seniorx.services.SeniorHandlerService;
-import br.com.seniorx.services.SeniorWebSocketService;
 import br.com.thidi.middleware.resource.CLogger;
 import br.com.thidi.middleware.services.PropertiesService;
 import br.com.thidi.middleware.utils.PropertiesUtilImpl;
-import jakarta.annotation.PostConstruct;
 
 @SpringBootApplication
-@ComponentScan(basePackages = { "br.com.hikivision.seniorx.controller" })
-public class SeniorXMiddleware {
+public class Middleware extends Thread {
 
 	static PropertiesService ps = new PropertiesService();
+	private static Logger logger = LogManager.getLogger();
 
-	@Bean
-	public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {
-		return factory -> factory.setPort(Integer.valueOf(PropertiesUtilImpl.getValor("api.port") == null ? "8080" : PropertiesUtilImpl.getValor("api.port"))); // Aqui você define a porta manualmente
+	@Override
+	public void run() {
+		startMiddleware();
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(SeniorXMiddleware.class, args);
+		Middleware c = new Middleware();
+		c.run();
 	}
 
-	@PostConstruct
-	public void init() {
+	public void startMiddleware() {
+
+		RuntimeMXBean rt = ManagementFactory.getRuntimeMXBean();
+		String pid = rt.getName();
+		MDC.put("PID", pid);
 
 		CLogger.logPropertiesInfo("Conex", "Versão: " + getVersion());
 		CLogger.logPropertiesInfo("FILE CONFIG DATA", "api.port: " + PropertiesUtilImpl.getValor("api.port"));
@@ -47,12 +51,22 @@ public class SeniorXMiddleware {
 		CLogger.logPropertiesInfo("FILE CONFIG DATA", "time.keep.alive.senior.seconds: " + PropertiesUtilImpl.getValor("time.keep.alive.senior.seconds"));
 		CLogger.logPropertiesInfo("FILE CONFIG DATA", "time.waiting.resttemplate.seconds: " + PropertiesUtilImpl.getValor("time.waiting.resttemplate.seconds"));
 
-		SeniorWebSocketService ws = new SeniorWebSocketService();
-		ws.start();
+		SpringApplication app = new SpringApplication(Middleware.class);
+		app.setBannerMode(Banner.Mode.OFF);
+		app.setDefaultProperties(Collections.singletonMap("server.port", PropertiesUtilImpl.getValor("api.port")));
 
-		SeniorHandlerService shs = new SeniorHandlerService();
-		shs.start();
+		app.run();
 
+		while (true) {
+
+			try {
+				Thread.sleep(1000 * 60 * 30);
+				logger.info("CONEX ALIVE");
+			} catch (Exception e) {
+				// e.printStackTrace();
+			}
+
+		}
 	};
 
 	public synchronized String getVersion() {

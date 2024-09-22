@@ -13,8 +13,8 @@ public class ServicesStarterComponent {
 	@Autowired
 	private SeniorHandlerService seniorHandlerService;
 
-	@PostConstruct
-	public void init() {
-		seniorHandlerService.start();
-	}
+//	@PostConstruct
+//	public void init() {
+//		seniorHandlerService.start();
+//	}
 }

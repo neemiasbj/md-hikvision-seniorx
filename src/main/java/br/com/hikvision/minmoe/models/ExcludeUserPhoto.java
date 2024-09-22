@@ -2,7 +2,7 @@ package br.com.hikvision.minmoe.models;
 
 import java.util.List;
 
-public class ExcludePhotoRequest {
+public class ExcludeUserPhoto {
 
 	private List<Fpid> FPID;
 

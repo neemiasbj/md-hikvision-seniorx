@@ -2,6 +2,7 @@ package br.com.thidi.middleware.controllers;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,11 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/device/minmoe")
 public class MinMoeController {
 
-	@PostMapping("/Object")
+	@Autowired
+	public MinMoeController() {
+	}
+
+	@PostMapping("/webhook")
 	public ResponseEntity<String> receiveAndValidate(@Valid @RequestBody Object requestBody) {
 		if (requestBody instanceof Map) {
 			Map<?, ?> bodyMap = (Map<?, ?>) requestBody;

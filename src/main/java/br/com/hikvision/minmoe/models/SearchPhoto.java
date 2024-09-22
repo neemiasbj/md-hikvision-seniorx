@@ -1,6 +1,6 @@
 package br.com.hikvision.minmoe.models;
 
-public class SearchPhotoRequest {
+public class SearchPhoto {
 
 	private int searchResultPosition;
 	private int maxResults;

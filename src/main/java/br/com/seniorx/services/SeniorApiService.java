@@ -19,6 +19,7 @@ import com.google.gson.JsonDeserializer;
 
 import br.com.seniorx.models.AllPendency;
 import br.com.seniorx.models.AreaControlList;
+import br.com.seniorx.models.CardList;
 import br.com.seniorx.models.Event;
 import br.com.seniorx.models.ManagerDevice;
 import br.com.seniorx.models.PendencyExecuted;
@@ -45,6 +46,7 @@ public class SeniorApiService {
 	private static String uriPendencyUpdate = String.format("%s/pendency/update", seniorEndpoint);
 	private static String uriPendencySuccess = String.format("%s/pendency/success", seniorEndpoint);
 	private static String uriDeviceAllowedPhotos = String.format("%s/device/access/${id}/photo", seniorEndpoint);
+	private static String uriDeviceAllowedCards = String.format("%s/device/access/${id}/card", seniorEndpoint);
 	private static String uriDeviceStatus = String.format("%s/device/status", seniorEndpoint);
 	private static String uriAccessRequest = String.format("%s/device/accessrequest", seniorEndpoint);
 	private static String uriClockIn = String.format("%s/notify/person/clockin", seniorEndpoint);
@@ -170,7 +172,6 @@ public class SeniorApiService {
 		try {
 			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
 			ResponseEntity<AllPendency> response = restTemplate.exchange(uriDevicePendencies + "/" + deviceId, HttpMethod.GET, entity, AllPendency.class);
-			System.out.println(response.getBody());
 
 			AllPendency allPendencies = response.getBody();
 			return allPendencies;
@@ -237,16 +238,30 @@ public class SeniorApiService {
 
 	}
 
-	public List<PersonPhotoTemplates> getCredentialFacialList() {
+	public List<PersonPhotoTemplates> getDeviceAllowedFacialList() {
 		try {
 			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
-			ResponseEntity<List<PersonPhotoTemplates>> response = restTemplate.exchange(uriDeviceAllowedPhotos.replace("${id}", device.getId().toString()), HttpMethod.GET, entity, new ParameterizedTypeReference<List<PersonPhotoTemplates>>() {
+			String url = uriDeviceAllowedPhotos.replace("${id}", device.getId().toString());
+			ResponseEntity<List<PersonPhotoTemplates>> response = restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<List<PersonPhotoTemplates>>() {
 			});
 			System.out.println(response.getBody());
 			return response.getBody();
 		} catch (Exception e) {
 			CLogger.logSeniorError("getCredentialFacialList", "ERROR", e);
 			return new ArrayList<PersonPhotoTemplates>();
+		}
+	}
+
+	public List<CardList> getDeviceAllowedCardList() {
+		try {
+			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
+			ResponseEntity<List<CardList>> response = restTemplate.exchange(uriDeviceAllowedCards.replace("${id}", device.getId().toString()), HttpMethod.GET, entity, new ParameterizedTypeReference<List<CardList>>() {
+			});
+			System.out.println(response.getBody());
+			return response.getBody();
+		} catch (Exception e) {
+			CLogger.logSeniorError("getCredentialFacialList", "ERROR", e);
+			return new ArrayList<CardList>();
 		}
 	}
 
