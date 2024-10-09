@@ -61,7 +61,7 @@ public class Middleware extends Thread {
 
 			try {
 				Thread.sleep(1000 * 60 * 30);
-				logger.info("CONEX ALIVE");
+				logger.info("HIKVICION MIDDLEWARE ALIVE");
 			} catch (Exception e) {
 				// e.printStackTrace();
 			}
@@ -75,7 +75,7 @@ public class Middleware extends Thread {
 
 		try {
 			Properties p = new Properties();
-			InputStream is = getClass().getResourceAsStream("/META-INF/maven/br.com.telematica/conex/pom.properties");
+			InputStream is = getClass().getResourceAsStream("/META-INF/maven/pom.properties");
 			if (is != null) {
 				p.load(is);
 				version = p.getProperty("version", "");
