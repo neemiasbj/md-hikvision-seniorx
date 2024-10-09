@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * HealthcheckResponse
@@ -79,7 +79,7 @@ public class HealthcheckResponse {
    * Get status
    * @return status
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public StatusEnum getStatus() {
     return status;
   }
@@ -105,7 +105,7 @@ public class HealthcheckResponse {
    * Get checks
    * @return checks
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public List<HealthcheckItemResponse> getChecks() {
     return checks;
   }

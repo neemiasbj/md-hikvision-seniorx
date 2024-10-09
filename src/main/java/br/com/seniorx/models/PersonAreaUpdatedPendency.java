@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * PersonAreaUpdatedPendency
@@ -35,7 +35,7 @@ public class PersonAreaUpdatedPendency {
    * Identificador da pendência
    * @return pendencyId
   **/
-  @ApiModelProperty(value = "Identificador da pendência")
+  @Schema(description  = "Identificador da pendência")
   public Long getPendencyId() {
     return pendencyId;
   }
@@ -53,7 +53,7 @@ public class PersonAreaUpdatedPendency {
    * Identificador do dispositivo gerenciador
    * @return managerDeviceId
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+  @Schema(description  = "Identificador do dispositivo gerenciador")
   public Long getManagerDeviceId() {
     return managerDeviceId;
   }
@@ -71,7 +71,7 @@ public class PersonAreaUpdatedPendency {
    * Identificador da pessoa
    * @return personId
   **/
-  @ApiModelProperty(value = "Identificador da pessoa")
+  @Schema(description  = "Identificador da pessoa")
   public Long getPersonId() {
     return personId;
   }
@@ -89,7 +89,7 @@ public class PersonAreaUpdatedPendency {
    * Número do cartão
    * @return cardNumber
   **/
-  @ApiModelProperty(value = "Número do cartão")
+  @Schema(description  = "Número do cartão")
   public Long getCardNumber() {
     return cardNumber;
   }
@@ -107,7 +107,7 @@ public class PersonAreaUpdatedPendency {
    * Identificador da área controlada
    * @return areaControl
   **/
-  @ApiModelProperty(value = "Identificador da área controlada")
+  @Schema(description  = "Identificador da área controlada")
   public Long getAreaControl() {
     return areaControl;
   }

@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * VehicleAccessRequest
@@ -90,7 +90,7 @@ public class VehicleAccessRequest {
    * Identificador da leitora
    * @return readerId
   **/
-  @ApiModelProperty(value = "Identificador da leitora")
+  @Schema(description  = "Identificador da leitora")
   public Long getReaderId() {
     return readerId;
   }
@@ -108,7 +108,7 @@ public class VehicleAccessRequest {
    * Formato da credencial do veículo
    * @return vehicleCredentialFormat
   **/
-  @ApiModelProperty(value = "Formato da credencial do veículo")
+  @Schema(description  = "Formato da credencial do veículo")
   public VehicleCredentialFormatEnum getVehicleCredentialFormat() {
     return vehicleCredentialFormat;
   }
@@ -126,7 +126,7 @@ public class VehicleAccessRequest {
    * Credencial do veículo
    * @return vehicleCredential
   **/
-  @ApiModelProperty(value = "Credencial do veículo")
+  @Schema(description  = "Credencial do veículo")
   public String getVehicleCredential() {
     return vehicleCredential;
   }
@@ -144,7 +144,7 @@ public class VehicleAccessRequest {
    * Número do cartão da pessoa autorizadora
    * @return authorizerPersonCardNumber
   **/
-  @ApiModelProperty(value = "Número do cartão da pessoa autorizadora")
+  @Schema(description  = "Número do cartão da pessoa autorizadora")
   public Long getAuthorizerPersonCardNumber() {
     return authorizerPersonCardNumber;
   }
@@ -162,7 +162,7 @@ public class VehicleAccessRequest {
    * Identificador da pessoa autorizadora
    * @return authorizerPersonId
   **/
-  @ApiModelProperty(value = "Identificador da pessoa autorizadora")
+  @Schema(description  = "Identificador da pessoa autorizadora")
   public Long getAuthorizerPersonId() {
     return authorizerPersonId;
   }
@@ -180,7 +180,7 @@ public class VehicleAccessRequest {
    * Data e hora da requisição
    * @return requestDateTime
   **/
-  @ApiModelProperty(value = "Data e hora da requisição")
+  @Schema(description  = "Data e hora da requisição")
   public OffsetDateTime getRequestDateTime() {
     return requestDateTime;
   }

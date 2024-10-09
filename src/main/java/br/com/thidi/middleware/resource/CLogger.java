@@ -5,14 +5,14 @@ import org.apache.logging.log4j.Logger;
 
 public class CLogger {
 
-	private static final Logger SENIOR_LOGGER = LogManager.getLogger("SENIOR_LOGGER");
-	private static final Logger HIKIVISION_LOGGER = LogManager.getLogger("HIKIVISION_LOGGER");
-	private static final Logger WEBSOCKET_LOGGER = LogManager.getLogger("WEBSOCKET_LOGGER");
-	private static final Logger SPRING_LOGGER = LogManager.getLogger("SPRING_LOGGER");
-	private static final Logger LOGGER = LogManager.getLogger("LOGGER");
-	private static final Logger PROPERTIES = LogManager.getLogger("PROPERTIES");
-	private static final Logger FILE = LogManager.getLogger("FILE");
-	private static final Logger GENERAL = LogManager.getLogger("GENERAL");
+	private static final Logger SENIOR_LOGGER = LogManager.getLogger("");
+	private static final Logger HIKIVISION_LOGGER = LogManager.getLogger("");
+	private static final Logger WEBSOCKET_LOGGER = LogManager.getLogger("");
+	private static final Logger SPRING_LOGGER = LogManager.getLogger("");
+	private static final Logger LOGGER = LogManager.getLogger("");
+	private static final Logger PROPERTIES = LogManager.getLogger("");
+	private static final Logger FILE = LogManager.getLogger("");
+	private static final Logger GENERAL = LogManager.getLogger("");
 
 	public static void logWebSocketInfo(String func, String message) {
 		String logMessage = getFormattedLogMessage(func, message);

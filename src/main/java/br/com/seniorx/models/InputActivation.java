@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * InputActivation
@@ -26,7 +26,7 @@ public class InputActivation {
    * Get outputId
    * @return outputId
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Long getOutputId() {
     return outputId;
   }
@@ -44,7 +44,7 @@ public class InputActivation {
    * Quantidade em milissegundos de tempo em que a ativação será executada (zero é para sempre)
    * @return activationTime
   **/
-  @ApiModelProperty(value = "Quantidade em milissegundos de tempo em que a ativação será executada (zero é para sempre)")
+  @Schema(description  = "Quantidade em milissegundos de tempo em que a ativação será executada (zero é para sempre)")
   public Integer getActivationTime() {
     return activationTime;
   }

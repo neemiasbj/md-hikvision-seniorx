@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class AccessBiometry {
 	/**
@@ -130,7 +130,7 @@ public class AccessBiometry {
 	 * 
 	 * @return biometrySecurityLevel
 	 **/
-	@ApiModelProperty(value = "Nível de segurança biométrica")
+	@Schema(description  = "Nível de segurança biométrica")
 	public Integer getBiometrySecurityLevel() {
 		return biometrySecurityLevel;
 	}
@@ -157,7 +157,7 @@ public class AccessBiometry {
 	 * 
 	 * @return templateList
 	 **/
-	@ApiModelProperty(value = "Caracteres codificados em base64")
+	@Schema(description  = "Caracteres codificados em base64")
 	public List<String> getTemplateList() {
 		return templateList;
 	}
@@ -176,7 +176,7 @@ public class AccessBiometry {
 	 * 
 	 * @return personId
 	 **/
-	@ApiModelProperty(value = "Identificador da pessoa")
+	@Schema(description  = "Identificador da pessoa")
 	public Long getPersonId() {
 		return personId;
 	}
@@ -203,7 +203,7 @@ public class AccessBiometry {
 	 * 
 	 * @return cardList
 	 **/
-	@ApiModelProperty(value = "Lista de cartões")
+	@Schema(description  = "Lista de cartões")
 	public List<CardAndTechnology> getCardList() {
 		return cardList;
 	}

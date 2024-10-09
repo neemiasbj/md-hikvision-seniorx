@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * DriverDateTime
@@ -23,7 +23,7 @@ public class DriverDateTime {
    * Get dateTime
    * @return dateTime
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public String getDateTime() {
     return dateTime;
   }

@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class ApolloIncludeCardPendency {
 	@SerializedName("pendencyId")
@@ -162,7 +162,7 @@ public class ApolloIncludeCardPendency {
 	 * 
 	 * @return pendencyId
 	 **/
-	@ApiModelProperty(value = "Identificador da pendência")
+	@Schema(description  = "Identificador da pendência")
 	public Long getPendencyId() {
 		return pendencyId;
 	}
@@ -181,7 +181,7 @@ public class ApolloIncludeCardPendency {
 	 * 
 	 * @return managerDeviceId
 	 **/
-	@ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+	@Schema(description  = "Identificador do dispositivo gerenciador")
 	public Long getManagerDeviceId() {
 		return managerDeviceId;
 	}
@@ -200,7 +200,7 @@ public class ApolloIncludeCardPendency {
 	 * 
 	 * @return cardNumber
 	 **/
-	@ApiModelProperty(value = "Número físico do cartão")
+	@Schema(description  = "Número físico do cartão")
 	public Long getCardNumber() {
 		return cardNumber;
 	}
@@ -219,7 +219,7 @@ public class ApolloIncludeCardPendency {
 	 * 
 	 * @return cardTechnology
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public CardTechnologyEnum getCardTechnology() {
 		return cardTechnology;
 	}
@@ -238,7 +238,7 @@ public class ApolloIncludeCardPendency {
 	 * 
 	 * @return startValidity
 	 **/
-	@ApiModelProperty(value = "Data de início da validade")
+	@Schema(description  = "Data de início da validade")
 	public OffsetDateTime getStartValidity() {
 		return startValidity;
 	}
@@ -257,7 +257,7 @@ public class ApolloIncludeCardPendency {
 	 * 
 	 * @return finishValidity
 	 **/
-	@ApiModelProperty(value = "Data final da validade")
+	@Schema(description  = "Data final da validade")
 	public OffsetDateTime getFinishValidity() {
 		return finishValidity;
 	}
@@ -276,7 +276,7 @@ public class ApolloIncludeCardPendency {
 	 * 
 	 * @return checkAntiPassback
 	 **/
-	@ApiModelProperty(value = "Valida anti-dupla")
+	@Schema(description  = "Valida anti-dupla")
 	public Boolean isCheckAntiPassback() {
 		return checkAntiPassback;
 	}
@@ -295,7 +295,7 @@ public class ApolloIncludeCardPendency {
 	 * 
 	 * @return ownerType
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public OwnerTypeEnum getOwnerType() {
 		return ownerType;
 	}
@@ -314,7 +314,7 @@ public class ApolloIncludeCardPendency {
 	 * 
 	 * @return ownerId
 	 **/
-	@ApiModelProperty(value = "Identificador do proprietário da credencial (pessoa ou veículo)")
+	@Schema(description  = "Identificador do proprietário da credencial (pessoa ou veículo)")
 	public Long getOwnerId() {
 		return ownerId;
 	}
@@ -333,7 +333,7 @@ public class ApolloIncludeCardPendency {
 	 * 
 	 * @return areaId
 	 **/
-	@ApiModelProperty(value = "Identificador da área")
+	@Schema(description  = "Identificador da área")
 	public Long getAreaId() {
 		return areaId;
 	}
@@ -352,7 +352,7 @@ public class ApolloIncludeCardPendency {
 	 * 
 	 * @return isVisitor
 	 **/
-	@ApiModelProperty(value = "Informa se é um visitante")
+	@Schema(description  = "Informa se é um visitante")
 	public Boolean isIsVisitor() {
 		return isVisitor;
 	}
@@ -371,7 +371,7 @@ public class ApolloIncludeCardPendency {
 	 * 
 	 * @return isEscort
 	 **/
-	@ApiModelProperty(value = "Informa se é um autorizador")
+	@Schema(description  = "Informa se é um autorizador")
 	public Boolean isIsEscort() {
 		return isEscort;
 	}
@@ -398,7 +398,7 @@ public class ApolloIncludeCardPendency {
 	 * 
 	 * @return accessLevel
 	 **/
-	@ApiModelProperty(value = "Níveis de acesso")
+	@Schema(description  = "Níveis de acesso")
 	public List<Long> getAccessLevel() {
 		return accessLevel;
 	}

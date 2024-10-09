@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class AccessLevelList {
 	@SerializedName("id")
@@ -25,7 +25,7 @@ public class AccessLevelList {
 	 * 
 	 * @return id
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public Long getId() {
 		return id;
 	}
@@ -52,7 +52,7 @@ public class AccessLevelList {
 	 * 
 	 * @return readerAndTimezoneList
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public List<ReaderAndTimezone> getReaderAndTimezoneList() {
 		return readerAndTimezoneList;
 	}

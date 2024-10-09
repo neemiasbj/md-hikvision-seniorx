@@ -6,13 +6,12 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Propriedade extensíveis
  */
-@ApiModel(description = "Propriedade extensíveis")
+@Schema(description = "Propriedade extensíveis")
 
 public class ExtensibleConfiguration {
 	@SerializedName("id")
@@ -34,7 +33,7 @@ public class ExtensibleConfiguration {
 	 * 
 	 * @return id
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description = "")
 	public Long getId() {
 		return id;
 	}
@@ -53,7 +52,7 @@ public class ExtensibleConfiguration {
 	 * 
 	 * @return name
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description = "")
 	public String getName() {
 		return name;
 	}
@@ -80,7 +79,7 @@ public class ExtensibleConfiguration {
 	 * 
 	 * @return extensiblePropertyList
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description = "")
 	public List<ExtensibleProperty> getExtensiblePropertyList() {
 		return extensiblePropertyList;
 	}
@@ -98,7 +97,9 @@ public class ExtensibleConfiguration {
 			return false;
 		}
 		ExtensibleConfiguration extensibleConfiguration = (ExtensibleConfiguration) o;
-		return Objects.equals(this.id, extensibleConfiguration.id) && Objects.equals(this.name, extensibleConfiguration.name) && Objects.equals(this.extensiblePropertyList, extensibleConfiguration.extensiblePropertyList);
+		return Objects.equals(this.id, extensibleConfiguration.id)
+				&& Objects.equals(this.name, extensibleConfiguration.name)
+				&& Objects.equals(this.extensiblePropertyList, extensibleConfiguration.extensiblePropertyList);
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * IncludeCardPendency
@@ -144,7 +144,7 @@ public class IncludeCardPendency {
    * Identificador da pendência
    * @return pendencyId
   **/
-  @ApiModelProperty(value = "Identificador da pendência")
+  @Schema(description  = "Identificador da pendência")
   public Long getPendencyId() {
     return pendencyId;
   }
@@ -162,7 +162,7 @@ public class IncludeCardPendency {
    * Identificador do dispositivo gerenciador
    * @return managerDeviceId
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+  @Schema(description  = "Identificador do dispositivo gerenciador")
   public Long getManagerDeviceId() {
     return managerDeviceId;
   }
@@ -180,7 +180,7 @@ public class IncludeCardPendency {
    * Número do cartão
    * @return cardNumber
   **/
-  @ApiModelProperty(value = "Número do cartão")
+  @Schema(description  = "Número do cartão")
   public Long getCardNumber() {
     return cardNumber;
   }
@@ -198,7 +198,7 @@ public class IncludeCardPendency {
    * Get cardTechnology
    * @return cardTechnology
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public CardTechnologyEnum getCardTechnology() {
     return cardTechnology;
   }
@@ -224,7 +224,7 @@ public class IncludeCardPendency {
    * Lista das leitoras onde o cartão possui permissão
    * @return readerIdList
   **/
-  @ApiModelProperty(value = "Lista das leitoras onde o cartão possui permissão")
+  @Schema(description  = "Lista das leitoras onde o cartão possui permissão")
   public List<Integer> getReaderIdList() {
     return readerIdList;
   }
@@ -242,7 +242,7 @@ public class IncludeCardPendency {
    * Get ownerType
    * @return ownerType
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public OwnerTypeEnum getOwnerType() {
     return ownerType;
   }
@@ -260,7 +260,7 @@ public class IncludeCardPendency {
    * Identificador do proprietário da credencial (pessoa ou veículo)
    * @return ownerId
   **/
-  @ApiModelProperty(value = "Identificador do proprietário da credencial (pessoa ou veículo)")
+  @Schema(description  = "Identificador do proprietário da credencial (pessoa ou veículo)")
   public Long getOwnerId() {
     return ownerId;
   }

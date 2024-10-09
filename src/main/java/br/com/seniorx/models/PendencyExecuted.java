@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * PendencyExecuted
@@ -23,7 +23,7 @@ public class PendencyExecuted {
    * Identificador da pendência
    * @return pendencyId
   **/
-  @ApiModelProperty(value = "Identificador da pendência")
+  @Schema(description  = "Identificador da pendência")
   public Long getPendencyId() {
     return pendencyId;
   }

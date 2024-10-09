@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class CardAndTechnology {
 	@SerializedName("cardNumber")
@@ -79,7 +79,7 @@ public class CardAndTechnology {
 	 * 
 	 * @return cardNumber
 	 **/
-	@ApiModelProperty(value = "Número do cartão")
+	@Schema(description  = "Número do cartão")
 	public Long getCardNumber() {
 		return cardNumber;
 	}
@@ -98,7 +98,7 @@ public class CardAndTechnology {
 	 * 
 	 * @return cardTechnology
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public CardTechnologyEnum getCardTechnology() {
 		return cardTechnology;
 	}

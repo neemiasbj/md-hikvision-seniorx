@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * ModuleDevice
@@ -123,7 +123,7 @@ public class ModuleDevice {
    * Identificador do dispositivo
    * @return id
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo")
+  @Schema(description  = "Identificador do dispositivo")
   public Long getId() {
     return id;
   }
@@ -141,7 +141,7 @@ public class ModuleDevice {
    * Identificador da área
    * @return areaId
   **/
-  @ApiModelProperty(value = "Identificador da área")
+  @Schema(description  = "Identificador da área")
   public Long getAreaId() {
     return areaId;
   }
@@ -159,7 +159,7 @@ public class ModuleDevice {
    * Get deviceType
    * @return deviceType
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public DeviceTypeEnum getDeviceType() {
     return deviceType;
   }
@@ -177,7 +177,7 @@ public class ModuleDevice {
    * Endereço
    * @return address
   **/
-  @ApiModelProperty(value = "Endereço")
+  @Schema(description  = "Endereço")
   public Integer getAddress() {
     return address;
   }
@@ -195,7 +195,7 @@ public class ModuleDevice {
    * Número da porta
    * @return portNumber
   **/
-  @ApiModelProperty(value = "Número da porta")
+  @Schema(description  = "Número da porta")
   public Integer getPortNumber() {
     return portNumber;
   }
@@ -221,7 +221,7 @@ public class ModuleDevice {
    * Leitora
    * @return reader
   **/
-  @ApiModelProperty(value = "Leitora")
+  @Schema(description  = "Leitora")
   public List<ReaderDevice> getReader() {
     return reader;
   }
@@ -247,7 +247,7 @@ public class ModuleDevice {
    * Dispositivo de saída
    * @return output
   **/
-  @ApiModelProperty(value = "Dispositivo de saída")
+  @Schema(description  = "Dispositivo de saída")
   public List<OutputDevice> getOutput() {
     return output;
   }
@@ -273,7 +273,7 @@ public class ModuleDevice {
    * Dispositivo de entrada
    * @return intput
   **/
-  @ApiModelProperty(value = "Dispositivo de entrada")
+  @Schema(description  = "Dispositivo de entrada")
   public List<InputDevice> getIntput() {
     return intput;
   }

@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class ActiveDeviceOutputPendency {
 	@SerializedName("pendencyId")
@@ -29,7 +29,7 @@ public class ActiveDeviceOutputPendency {
 	 * 
 	 * @return pendencyId
 	 **/
-	@ApiModelProperty(value = "Identificador da pendência")
+	@Schema(description  = "Identificador da pendência")
 	public Long getPendencyId() {
 		return pendencyId;
 	}
@@ -48,7 +48,7 @@ public class ActiveDeviceOutputPendency {
 	 * 
 	 * @return managerDeviceId
 	 **/
-	@ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+	@Schema(description  = "Identificador do dispositivo gerenciador")
 	public Long getManagerDeviceId() {
 		return managerDeviceId;
 	}
@@ -67,7 +67,7 @@ public class ActiveDeviceOutputPendency {
 	 * 
 	 * @return deviceId
 	 **/
-	@ApiModelProperty(value = "Identificador do dispositivo")
+	@Schema(description  = "Identificador do dispositivo")
 	public Long getDeviceId() {
 		return deviceId;
 	}
@@ -86,7 +86,7 @@ public class ActiveDeviceOutputPendency {
 	 * 
 	 * @return activationTime
 	 **/
-	@ApiModelProperty(value = "Tempo de ativação em milissegundos")
+	@Schema(description  = "Tempo de ativação em milissegundos")
 	public Long getActivationTime() {
 		return activationTime;
 	}

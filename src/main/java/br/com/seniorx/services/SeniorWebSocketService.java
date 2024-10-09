@@ -7,14 +7,14 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
 
-import br.com.thidi.middleware.utils.UtilPropertiesImpl;
+import br.com.thidi.middleware.utils.MiddlewareUtilPropertiesImpl;
 import jakarta.websocket.ClientEndpoint;
 
 @Service
 @ClientEndpoint
 public class SeniorWebSocketService extends Thread {
 
-	private static String websocketUri = UtilPropertiesImpl.getValor("senior.websocket.uri");
+	private static String websocketUri = MiddlewareUtilPropertiesImpl.getValor("senior.websocket.uri");
 
 	private SeniorWebSocketClient webSocketClient;
 

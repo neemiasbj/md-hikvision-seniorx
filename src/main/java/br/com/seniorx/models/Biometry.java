@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class Biometry {
 	/**
@@ -106,7 +106,7 @@ public class Biometry {
 	 * 
 	 * @return manufacturer
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public ManufacturerEnum getManufacturer() {
 		return manufacturer;
 	}
@@ -125,7 +125,7 @@ public class Biometry {
 	 * 
 	 * @return biometrySecurityLevel
 	 **/
-	@ApiModelProperty(value = "Nível de segurança biométrica")
+	@Schema(description  = "Nível de segurança biométrica")
 	public Integer getBiometrySecurityLevel() {
 		return biometrySecurityLevel;
 	}
@@ -152,7 +152,7 @@ public class Biometry {
 	 * 
 	 * @return templateList
 	 **/
-	@ApiModelProperty(value = "Caracteres codificados em base64")
+	@Schema(description  = "Caracteres codificados em base64")
 	public List<String> getTemplateList() {
 		return templateList;
 	}

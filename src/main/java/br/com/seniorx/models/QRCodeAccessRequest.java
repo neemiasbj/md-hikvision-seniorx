@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * QRCodeAccessRequest
@@ -30,7 +30,7 @@ public class QRCodeAccessRequest {
    * Get readerId
    * @return readerId
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Long getReaderId() {
     return readerId;
   }
@@ -48,7 +48,7 @@ public class QRCodeAccessRequest {
    * Get qrcode
    * @return qrcode
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public String getQrcode() {
     return qrcode;
   }
@@ -66,7 +66,7 @@ public class QRCodeAccessRequest {
    * Get requestDateTime
    * @return requestDateTime
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public OffsetDateTime getRequestDateTime() {
     return requestDateTime;
   }

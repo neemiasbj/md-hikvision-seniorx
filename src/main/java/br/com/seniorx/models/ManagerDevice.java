@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * ManagerDevice
@@ -156,7 +156,7 @@ public class ManagerDevice {
 	 * 
 	 * @return id
 	 **/
-	@ApiModelProperty(value = "Identificador do dispositivo")
+	@Schema(description  = "Identificador do dispositivo")
 	public Long getId() {
 		return id;
 	}
@@ -175,7 +175,7 @@ public class ManagerDevice {
 	 * 
 	 * @return areaId
 	 **/
-	@ApiModelProperty(value = "Identificador da área")
+	@Schema(description  = "Identificador da área")
 	public Long getAreaId() {
 		return areaId;
 	}
@@ -194,7 +194,7 @@ public class ManagerDevice {
 	 * 
 	 * @return networkIdentification
 	 **/
-	@ApiModelProperty(value = "Endereço de rede")
+	@Schema(description  = "Endereço de rede")
 	public String getNetworkIdentification() {
 		return networkIdentification;
 	}
@@ -213,7 +213,7 @@ public class ManagerDevice {
 	 * 
 	 * @return networkPort
 	 **/
-	@ApiModelProperty(value = "Porta")
+	@Schema(description  = "Porta")
 	public Integer getNetworkPort() {
 		return networkPort;
 	}
@@ -232,7 +232,7 @@ public class ManagerDevice {
 	 * 
 	 * @return deviceType
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public DeviceTypeEnum getDeviceType() {
 		return deviceType;
 	}
@@ -251,7 +251,7 @@ public class ManagerDevice {
 	 * 
 	 * @return displayMessage
 	 **/
-	@ApiModelProperty(value = "Mensagem do display")
+	@Schema(description  = "Mensagem do display")
 	public String getDisplayMessage() {
 		return displayMessage;
 	}
@@ -272,7 +272,7 @@ public class ManagerDevice {
 	 * 
 	 * @return numberOfCardRecords
 	 **/
-	@ApiModelProperty(value = "Quantidade de crachás controlados: informa a quantidade máxima de crachás que serão controlados simultaneamente. Campo disponível somente para dispositivos Apollo")
+	@Schema(description  = "Quantidade de crachás controlados: informa a quantidade máxima de crachás que serão controlados simultaneamente. Campo disponível somente para dispositivos Apollo")
 	public Integer getNumberOfCardRecords() {
 		return numberOfCardRecords;
 	}
@@ -293,7 +293,7 @@ public class ManagerDevice {
 	 * 
 	 * @return turnstileBypassTime
 	 **/
-	@ApiModelProperty(value = "Tempo burla catraca em segundos: indica o tempo que deve passar para gerar um evento de burla catraca. Campo disponível somente para dispositivos de controle de acesso (Apollo ou SDK)")
+	@Schema(description  = "Tempo burla catraca em segundos: indica o tempo que deve passar para gerar um evento de burla catraca. Campo disponível somente para dispositivos de controle de acesso (Apollo ou SDK)")
 	public Integer getTurnstileBypassTime() {
 		return turnstileBypassTime;
 	}
@@ -320,7 +320,7 @@ public class ManagerDevice {
 	 * 
 	 * @return module
 	 **/
-	@ApiModelProperty(value = "Módulo")
+	@Schema(description  = "Módulo")
 	public List<ModuleDevice> getModule() {
 		return module;
 	}
@@ -347,7 +347,7 @@ public class ManagerDevice {
 	 * 
 	 * @return reader
 	 **/
-	@ApiModelProperty(value = "Leitora")
+	@Schema(description  = "Leitora")
 	public List<ReaderDevice> getReader() {
 		return reader;
 	}
@@ -374,7 +374,7 @@ public class ManagerDevice {
 	 * 
 	 * @return output
 	 **/
-	@ApiModelProperty(value = "Dispositivo de saída")
+	@Schema(description  = "Dispositivo de saída")
 	public List<OutputDevice> getOutput() {
 		return output;
 	}
@@ -401,7 +401,7 @@ public class ManagerDevice {
 	 * 
 	 * @return intput
 	 **/
-	@ApiModelProperty(value = "Dispositivo de entrada")
+	@Schema(description  = "Dispositivo de entrada")
 	public List<InputDevice> getIntput() {
 		return intput;
 	}
@@ -430,7 +430,7 @@ public class ManagerDevice {
 	 * 
 	 * @return accessMessage
 	 **/
-	@ApiModelProperty(value = "Mensagem de acesso: informa o texto que aparecerá no visor do dispositivo quando cada evento de acesso ocorrer. As mensagens estão disponíveis somente para dispositivos de controle de acesso (Apollo ou SDK)")
+	@Schema(description  = "Mensagem de acesso: informa o texto que aparecerá no visor do dispositivo quando cada evento de acesso ocorrer. As mensagens estão disponíveis somente para dispositivos de controle de acesso (Apollo ou SDK)")
 	public List<AccessMessage> getAccessMessage() {
 		return accessMessage;
 	}
@@ -457,7 +457,7 @@ public class ManagerDevice {
 	 * 
 	 * @return portConfiguration
 	 **/
-	@ApiModelProperty(value = "Configuração da porta")
+	@Schema(description  = "Configuração da porta")
 	public List<PortConfiguration> getPortConfiguration() {
 		return portConfiguration;
 	}
@@ -476,7 +476,7 @@ public class ManagerDevice {
 	 * 
 	 * @return repConfiguration
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public RepConfiguration getRepConfiguration() {
 		return repConfiguration;
 	}
@@ -495,7 +495,7 @@ public class ManagerDevice {
 	 * 
 	 * @return extensibleConfiguration
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public ExtensibleConfiguration getExtensibleConfiguration() {
 		return extensibleConfiguration;
 	}
@@ -514,7 +514,7 @@ public class ManagerDevice {
 	 * 
 	 * @return username
 	 **/
-	@ApiModelProperty(value = "Usuário")
+	@Schema(description  = "Usuário")
 	public String getUsername() {
 		return username;
 	}
@@ -533,7 +533,7 @@ public class ManagerDevice {
 	 * 
 	 * @return password
 	 **/
-	@ApiModelProperty(value = "Senha")
+	@Schema(description  = "Senha")
 	public String getPassword() {
 		return password;
 	}

@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * InputStatusField
@@ -77,7 +77,7 @@ public class InputStatusField {
    * Identificador do dispositivo
    * @return inputDeviceId
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo")
+  @Schema(description  = "Identificador do dispositivo")
   public Long getInputDeviceId() {
     return inputDeviceId;
   }
@@ -95,7 +95,7 @@ public class InputStatusField {
    * Get status
    * @return status
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public StatusEnum getStatus() {
     return status;
   }

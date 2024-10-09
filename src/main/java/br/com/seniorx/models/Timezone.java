@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Timezone
@@ -50,7 +50,7 @@ public class Timezone {
    * Get start
    * @return start
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public String getStart() {
     return start;
   }
@@ -68,7 +68,7 @@ public class Timezone {
    * Get end
    * @return end
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public String getEnd() {
     return end;
   }
@@ -86,7 +86,7 @@ public class Timezone {
    * Get monday
    * @return monday
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Boolean isMonday() {
     return monday;
   }
@@ -104,7 +104,7 @@ public class Timezone {
    * Get tuesday
    * @return tuesday
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Boolean isTuesday() {
     return tuesday;
   }
@@ -122,7 +122,7 @@ public class Timezone {
    * Get wednesday
    * @return wednesday
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Boolean isWednesday() {
     return wednesday;
   }
@@ -140,7 +140,7 @@ public class Timezone {
    * Get thursday
    * @return thursday
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Boolean isThursday() {
     return thursday;
   }
@@ -158,7 +158,7 @@ public class Timezone {
    * Get friday
    * @return friday
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Boolean isFriday() {
     return friday;
   }
@@ -176,7 +176,7 @@ public class Timezone {
    * Get saturday
    * @return saturday
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Boolean isSaturday() {
     return saturday;
   }
@@ -194,7 +194,7 @@ public class Timezone {
    * Get sunday
    * @return sunday
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Boolean isSunday() {
     return sunday;
   }
@@ -212,7 +212,7 @@ public class Timezone {
    * Get holiday
    * @return holiday
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Boolean isHoliday() {
     return holiday;
   }

@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Resource
@@ -138,7 +138,7 @@ public class Resource {
    * Identificador do dispositivo
    * @return deviceId
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo")
+  @Schema(description  = "Identificador do dispositivo")
   public Long getDeviceId() {
     return deviceId;
   }
@@ -156,7 +156,7 @@ public class Resource {
    * Data da notificação em UTC
    * @return date
   **/
-  @ApiModelProperty(value = "Data da notificação em UTC")
+  @Schema(description  = "Data da notificação em UTC")
   public OffsetDateTime getDate() {
     return date;
   }
@@ -174,7 +174,7 @@ public class Resource {
    * Offset em minutos
    * @return timezoneOffset
   **/
-  @ApiModelProperty(value = "Offset em minutos")
+  @Schema(description  = "Offset em minutos")
   public Integer getTimezoneOffset() {
     return timezoneOffset;
   }
@@ -192,7 +192,7 @@ public class Resource {
    * Get status
    * @return status
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public StatusEnum getStatus() {
     return status;
   }
@@ -210,7 +210,7 @@ public class Resource {
    * Tipo de recurso
    * @return resourceType
   **/
-  @ApiModelProperty(value = "Tipo de recurso")
+  @Schema(description  = "Tipo de recurso")
   public ResourceTypeEnum getResourceType() {
     return resourceType;
   }
@@ -228,7 +228,7 @@ public class Resource {
    * Percentual de uso do recurso
    * @return resourcePercent
   **/
-  @ApiModelProperty(value = "Percentual de uso do recurso")
+  @Schema(description  = "Percentual de uso do recurso")
   public Integer getResourcePercent() {
     return resourcePercent;
   }

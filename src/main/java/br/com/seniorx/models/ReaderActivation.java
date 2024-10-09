@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * ReaderActivation
@@ -29,7 +29,7 @@ public class ReaderActivation {
    * 0&#x3D;Acesso Permitido, 1&#x3D;Acesso Negado
    * @return actionEventType
   **/
-  @ApiModelProperty(value = "0=Acesso Permitido, 1=Acesso Negado")
+  @Schema(description  = "0=Acesso Permitido, 1=Acesso Negado")
   public Integer getActionEventType() {
     return actionEventType;
   }
@@ -47,7 +47,7 @@ public class ReaderActivation {
    * Get outputId
    * @return outputId
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Long getOutputId() {
     return outputId;
   }
@@ -65,7 +65,7 @@ public class ReaderActivation {
    * Quantidade em milissegundos de tempo em que a ativação será executada (zero é para sempre)
    * @return activationTime
   **/
-  @ApiModelProperty(value = "Quantidade em milissegundos de tempo em que a ativação será executada (zero é para sempre)")
+  @Schema(description  = "Quantidade em milissegundos de tempo em que a ativação será executada (zero é para sempre)")
   public Integer getActivationTime() {
     return activationTime;
   }

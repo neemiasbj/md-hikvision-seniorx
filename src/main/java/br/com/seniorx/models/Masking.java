@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Masking
@@ -38,7 +38,7 @@ public class Masking {
    * Get startTime
    * @return startTime
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public String getStartTime() {
     return startTime;
   }
@@ -56,7 +56,7 @@ public class Masking {
    * Get finishTime
    * @return finishTime
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public String getFinishTime() {
     return finishTime;
   }
@@ -74,7 +74,7 @@ public class Masking {
    * Get normalDay
    * @return normalDay
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Boolean isNormalDay() {
     return normalDay;
   }
@@ -92,7 +92,7 @@ public class Masking {
    * Get saturday
    * @return saturday
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Boolean isSaturday() {
     return saturday;
   }
@@ -110,7 +110,7 @@ public class Masking {
    * Get sunday
    * @return sunday
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Boolean isSunday() {
     return sunday;
   }
@@ -128,7 +128,7 @@ public class Masking {
    * Get holiday
    * @return holiday
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Boolean isHoliday() {
     return holiday;
   }

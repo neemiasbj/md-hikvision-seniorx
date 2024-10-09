@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class BlockDevicePendency {
 	@SerializedName("pendencyId")
@@ -26,7 +26,7 @@ public class BlockDevicePendency {
 	 * 
 	 * @return pendencyId
 	 **/
-	@ApiModelProperty(value = "Identificador da pendência")
+	@Schema(description  = "Identificador da pendência")
 	public Long getPendencyId() {
 		return pendencyId;
 	}
@@ -45,7 +45,7 @@ public class BlockDevicePendency {
 	 * 
 	 * @return managerDeviceId
 	 **/
-	@ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+	@Schema(description  = "Identificador do dispositivo gerenciador")
 	public Long getManagerDeviceId() {
 		return managerDeviceId;
 	}
@@ -64,7 +64,7 @@ public class BlockDevicePendency {
 	 * 
 	 * @return deviceId
 	 **/
-	@ApiModelProperty(value = "Identificador do dispositivo")
+	@Schema(description  = "Identificador do dispositivo")
 	public Long getDeviceId() {
 		return deviceId;
 	}

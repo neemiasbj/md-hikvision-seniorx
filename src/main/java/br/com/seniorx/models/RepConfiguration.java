@@ -4,13 +4,12 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Propriedades do REP
  */
-@ApiModel(description = "Propriedades do REP")
+@Schema(description = "Propriedades do REP")
 
 public class RepConfiguration {
   @SerializedName("id")
@@ -43,7 +42,7 @@ public class RepConfiguration {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Long getId() {
     return id;
   }
@@ -61,7 +60,7 @@ public class RepConfiguration {
    * Nome da empresa
    * @return companyName
   **/
-  @ApiModelProperty(value = "Nome da empresa")
+  @Schema(description  = "Nome da empresa")
   public String getCompanyName() {
     return companyName;
   }
@@ -79,7 +78,7 @@ public class RepConfiguration {
    * Get cnpj
    * @return cnpj
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public String getCnpj() {
     return cnpj;
   }
@@ -97,7 +96,7 @@ public class RepConfiguration {
    * Get cpf
    * @return cpf
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public String getCpf() {
     return cpf;
   }
@@ -115,7 +114,7 @@ public class RepConfiguration {
    * Get cei
    * @return cei
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public String getCei() {
     return cei;
   }
@@ -133,7 +132,7 @@ public class RepConfiguration {
    * Endereço
    * @return address
   **/
-  @ApiModelProperty(value = "Endereço")
+  @Schema(description  = "Endereço")
   public String getAddress() {
     return address;
   }
@@ -151,7 +150,7 @@ public class RepConfiguration {
    * Get taxNumber
    * @return taxNumber
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public String getTaxNumber() {
     return taxNumber;
   }

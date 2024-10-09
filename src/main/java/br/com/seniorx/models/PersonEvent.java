@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * PersonEvent
@@ -45,7 +45,7 @@ public class PersonEvent {
    * Identificador de pessoa
    * @return personId
   **/
-  @ApiModelProperty(value = "Identificador de pessoa")
+  @Schema(description  = "Identificador de pessoa")
   public Long getPersonId() {
     return personId;
   }
@@ -63,7 +63,7 @@ public class PersonEvent {
    * Identificador de dispositivos
    * @return deviceId
   **/
-  @ApiModelProperty(value = "Identificador de dispositivos")
+  @Schema(description  = "Identificador de dispositivos")
   public Long getDeviceId() {
     return deviceId;
   }
@@ -81,7 +81,7 @@ public class PersonEvent {
    * Data da notificação em UTC
    * @return date
   **/
-  @ApiModelProperty(value = "Data da notificação em UTC")
+  @Schema(description  = "Data da notificação em UTC")
   public OffsetDateTime getDate() {
     return date;
   }
@@ -99,7 +99,7 @@ public class PersonEvent {
    * Offset em minutos
    * @return timezoneOffset
   **/
-  @ApiModelProperty(value = "Offset em minutos")
+  @Schema(description  = "Offset em minutos")
   public Integer getTimezoneOffset() {
     return timezoneOffset;
   }
@@ -117,7 +117,7 @@ public class PersonEvent {
    * Informa se a temperatura da pessoa está normal
    * @return normalTemperature
   **/
-  @ApiModelProperty(value = "Informa se a temperatura da pessoa está normal")
+  @Schema(description  = "Informa se a temperatura da pessoa está normal")
   public Boolean isNormalTemperature() {
     return normalTemperature;
   }
@@ -135,7 +135,7 @@ public class PersonEvent {
    * Informa o valor da temperatura
    * @return temperature
   **/
-  @ApiModelProperty(value = "Informa o valor da temperatura")
+  @Schema(description  = "Informa o valor da temperatura")
   public Float getTemperature() {
     return temperature;
   }
@@ -153,7 +153,7 @@ public class PersonEvent {
    * Informa se a pessoa está com máscara
    * @return withMask
   **/
-  @ApiModelProperty(value = "Informa se a pessoa está com máscara")
+  @Schema(description  = "Informa se a pessoa está com máscara")
   public Boolean isWithMask() {
     return withMask;
   }
@@ -171,7 +171,7 @@ public class PersonEvent {
    * Informa se o acesso foi permitido
    * @return accessAllowed
   **/
-  @ApiModelProperty(value = "Informa se o acesso foi permitido")
+  @Schema(description  = "Informa se o acesso foi permitido")
   public Boolean isAccessAllowed() {
     return accessAllowed;
   }

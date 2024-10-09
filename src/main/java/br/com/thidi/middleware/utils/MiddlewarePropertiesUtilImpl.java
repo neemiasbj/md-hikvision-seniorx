@@ -2,9 +2,9 @@ package br.com.thidi.middleware.utils;
 
 import java.util.Properties;
 
-public class PropertiesUtilImpl {
+public class MiddlewarePropertiesUtilImpl {
 
-    private static UtilProperties loader = new UtilProperties();
+    private static MiddlewareUtilProperties loader = new MiddlewareUtilProperties();
 
     public static String getValor(String chave) {
         loader.reloadProperties(); 

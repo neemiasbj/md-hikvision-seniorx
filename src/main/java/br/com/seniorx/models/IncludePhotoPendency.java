@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * IncludePhotoPendency
@@ -37,7 +37,7 @@ public class IncludePhotoPendency extends AbstractPendency {
 	 * 
 	 * @return personId
 	 **/
-	@ApiModelProperty(value = "Identificador da pessoa")
+	@Schema(description  = "Identificador da pessoa")
 	public Long getPersonId() {
 		return personId;
 	}
@@ -56,7 +56,7 @@ public class IncludePhotoPendency extends AbstractPendency {
 	 * 
 	 * @return personName
 	 **/
-	@ApiModelProperty(value = "Nome da pessoa")
+	@Schema(description  = "Nome da pessoa")
 	public String getPersonName() {
 		return personName;
 	}
@@ -75,7 +75,7 @@ public class IncludePhotoPendency extends AbstractPendency {
 	 * 
 	 * @return photoUrl
 	 **/
-	@ApiModelProperty(value = "URL da foto")
+	@Schema(description  = "URL da foto")
 	public String getPhotoUrl() {
 		return photoUrl;
 	}
@@ -102,7 +102,7 @@ public class IncludePhotoPendency extends AbstractPendency {
 	 * 
 	 * @return cardList
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public List<CardInformation> getCardList() {
 		return cardList;
 	}

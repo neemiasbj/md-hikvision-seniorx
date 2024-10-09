@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * HolidayList
@@ -28,7 +28,7 @@ public class HolidayList {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Long getId() {
     return id;
   }
@@ -54,7 +54,7 @@ public class HolidayList {
    * Get holiday
    * @return holiday
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public List<String> getHoliday() {
     return holiday;
   }

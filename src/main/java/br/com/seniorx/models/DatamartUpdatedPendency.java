@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * DatamartUpdatedPendency
@@ -86,7 +86,7 @@ public class DatamartUpdatedPendency {
    * Identificador da pendência
    * @return pendencyId
   **/
-  @ApiModelProperty(value = "Identificador da pendência")
+  @Schema(description  = "Identificador da pendência")
   public Long getPendencyId() {
     return pendencyId;
   }
@@ -104,7 +104,7 @@ public class DatamartUpdatedPendency {
    * Identificador do driver
    * @return driverId
   **/
-  @ApiModelProperty(value = "Identificador do driver")
+  @Schema(description  = "Identificador do driver")
   public Long getDriverId() {
     return driverId;
   }
@@ -122,7 +122,7 @@ public class DatamartUpdatedPendency {
    * Get datamartObjectType
    * @return datamartObjectType
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public DatamartObjectTypeEnum getDatamartObjectType() {
     return datamartObjectType;
   }

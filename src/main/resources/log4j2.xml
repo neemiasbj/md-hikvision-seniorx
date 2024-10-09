@@ -35,7 +35,8 @@
 			<AppenderRef ref="LogToFile" />
 		</Logger>
 
-		<Logger name="br.com.hikvision" level="error" additivity="false">
+		<Logger name="br.com.hikvision" level="error"
+			additivity="false">
 			<AppenderRef ref="LogToConsole" />
 			<AppenderRef ref="LogToFile" />
 		</Logger>
@@ -55,7 +56,34 @@
 			<AppenderRef ref="LogToConsole" />
 		</Logger>
 
-		<Root level="info">
+		<Logger name="SENIOR_LOGGER" level="error" additivity="false">
+			<AppenderRef ref="LogToConsole" />
+		</Logger>
+		<Logger name="HIKIVISION_LOGGER" level="error"
+			additivity="false">
+			<AppenderRef ref="LogToConsole" />
+		</Logger>
+		<Logger name="WEBSOCKET_LOGGER" level="error"
+			additivity="false">
+			<AppenderRef ref="LogToConsole" />
+		</Logger>
+		<Logger name="SPRING_LOGGER" level="error" additivity="false">
+			<AppenderRef ref="LogToConsole" />
+		</Logger>
+		<Logger name="LOGGER" level="error" additivity="false">
+			<AppenderRef ref="LogToConsole" />
+		</Logger>
+		<Logger name="PROPERTIES" level="error" additivity="false">
+			<AppenderRef ref="LogToConsole" />
+		</Logger>
+		<Logger name="FILE" level="error" additivity="false">
+			<AppenderRef ref="LogToConsole" />
+		</Logger>
+		<Logger name="GENERAL" level="error" additivity="false">
+			<AppenderRef ref="LogToConsole" />
+		</Logger>
+
+		<Root level="error">
 			<AppenderRef ref="LogToFile" />
 			<AppenderRef ref="LogToConsole" />
 		</Root>

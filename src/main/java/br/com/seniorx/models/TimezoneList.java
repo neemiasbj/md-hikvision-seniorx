@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * TimezoneList
@@ -28,7 +28,7 @@ public class TimezoneList {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Long getId() {
     return id;
   }
@@ -54,7 +54,7 @@ public class TimezoneList {
    * Get timezone
    * @return timezone
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public List<Timezone> getTimezone() {
     return timezone;
   }

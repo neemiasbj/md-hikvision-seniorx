@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * DeviceDisplayMessagePendency
@@ -86,7 +86,7 @@ public class DeviceDisplayMessagePendency {
    * Identificador da pendência
    * @return pendencyId
   **/
-  @ApiModelProperty(value = "Identificador da pendência")
+  @Schema(description  = "Identificador da pendência")
   public Long getPendencyId() {
     return pendencyId;
   }
@@ -104,7 +104,7 @@ public class DeviceDisplayMessagePendency {
    * Identificador do dispositivo gerenciador
    * @return managerDeviceId
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+  @Schema(description  = "Identificador do dispositivo gerenciador")
   public Long getManagerDeviceId() {
     return managerDeviceId;
   }
@@ -122,7 +122,7 @@ public class DeviceDisplayMessagePendency {
    * Mensagem
    * @return message
   **/
-  @ApiModelProperty(value = "Mensagem")
+  @Schema(description  = "Mensagem")
   public String getMessage() {
     return message;
   }
@@ -140,7 +140,7 @@ public class DeviceDisplayMessagePendency {
    * Duração do tempo de exibição da mensagem (precisão de milissegundos)
    * @return duration
   **/
-  @ApiModelProperty(value = "Duração do tempo de exibição da mensagem (precisão de milissegundos)")
+  @Schema(description  = "Duração do tempo de exibição da mensagem (precisão de milissegundos)")
   public Long getDuration() {
     return duration;
   }
@@ -158,7 +158,7 @@ public class DeviceDisplayMessagePendency {
    * Get mode
    * @return mode
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public ModeEnum getMode() {
     return mode;
   }

@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 
-public class UtilPropertiesValid {
+public class MiddlewareUtilPropertiesValid {
 
 	private String prop;
 	private String value;
 
-	public UtilPropertiesValid(String prop, String value) {
+	public MiddlewareUtilPropertiesValid(String prop, String value) {
 		this.prop = prop;
 		this.value = value;
 	}
@@ -39,10 +39,10 @@ public class UtilPropertiesValid {
 
 	public static String personalizeMessageAsJSON() {
         Gson gson = new Gson();
-        Properties prop = PropertiesUtilImpl.getProperties(); // Recarregar propriedades
+        Properties prop = MiddlewarePropertiesUtilImpl.getProperties(); // Recarregar propriedades
 
-        List<UtilPropertiesValid> propriedadesList = prop.entrySet().stream()
-                .map(entry -> new UtilPropertiesValid(entry.getKey().toString(), entry.getValue().toString()))
+        List<MiddlewareUtilPropertiesValid> propriedadesList = prop.entrySet().stream()
+                .map(entry -> new MiddlewareUtilPropertiesValid(entry.getKey().toString(), entry.getValue().toString()))
                 .collect(Collectors.toList());
         return gson.toJson(propriedadesList);
     }

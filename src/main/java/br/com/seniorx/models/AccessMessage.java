@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class AccessMessage {
 
@@ -156,7 +156,7 @@ public class AccessMessage {
 	 * 
 	 * @return accessType
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public AccessTypeEnum getAccessType() {
 		return accessType;
 	}
@@ -175,7 +175,7 @@ public class AccessMessage {
 	 * 
 	 * @return message
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public String getMessage() {
 		return message;
 	}

@@ -14,14 +14,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.util.PropertyPlaceholderHelper;
 import org.springframework.util.SystemPropertyUtils;
 
-public class UtilProperties {
+public class MiddlewareUtilProperties {
 
-    private static final Logger logger = LogManager.getLogger(UtilProperties.class);
+    private static final Logger logger = LogManager.getLogger(MiddlewareUtilProperties.class);
     private Properties props;
     private final String propertiesFileName = "application.properties";
     private final PropertyPlaceholderHelper placeholderHelper;
 
-    protected UtilProperties() {
+    protected MiddlewareUtilProperties() {
         props = new Properties();
         // Inicializar o placeholderHelper com os valores diretos
         placeholderHelper = new PropertyPlaceholderHelper("${", "}", ":", true);

@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * CollectEventStatus
@@ -32,7 +32,7 @@ public class CollectEventStatus {
    * Identificador da pendência
    * @return pendencyId
   **/
-  @ApiModelProperty(value = "Identificador da pendência")
+  @Schema(description  = "Identificador da pendência")
   public Long getPendencyId() {
     return pendencyId;
   }
@@ -50,7 +50,7 @@ public class CollectEventStatus {
    * Identificador do dispositivo gerenciador
    * @return managerDeviceId
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+  @Schema(description  = "Identificador do dispositivo gerenciador")
   public Long getManagerDeviceId() {
     return managerDeviceId;
   }
@@ -68,7 +68,7 @@ public class CollectEventStatus {
    * Get accessEventCount
    * @return accessEventCount
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Long getAccessEventCount() {
     return accessEventCount;
   }
@@ -86,7 +86,7 @@ public class CollectEventStatus {
    * Get alarmEventCount
    * @return alarmEventCount
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Long getAlarmEventCount() {
     return alarmEventCount;
   }

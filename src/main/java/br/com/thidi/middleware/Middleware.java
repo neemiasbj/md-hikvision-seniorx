@@ -15,7 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.com.thidi.middleware.resource.CLogger;
 import br.com.thidi.middleware.services.PropertiesService;
-import br.com.thidi.middleware.utils.PropertiesUtilImpl;
+import br.com.thidi.middleware.utils.MiddlewarePropertiesUtilImpl;
 
 @SpringBootApplication
 public class Middleware extends Thread {
@@ -39,21 +39,21 @@ public class Middleware extends Thread {
 		String pid = rt.getName();
 		MDC.put("PID", pid);
 
-		CLogger.logPropertiesInfo("Conex", "Versão: " + getVersion());
-		CLogger.logPropertiesInfo("FILE CONFIG DATA", "api.port: " + PropertiesUtilImpl.getValor("api.port"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.senior.websocket.reconnect.interval.seconds: " + PropertiesUtilImpl.getValor("senior.websocket.reconnect.interval.seconds"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.partner_key: " + PropertiesUtilImpl.getValor("senior.partner_key"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.driver_key: " + PropertiesUtilImpl.getValor("senior.driver_key"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.api.sdk.uri: " + PropertiesUtilImpl.getValor("senior.api.sdk.uri"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.api.sdk.timeout: " + PropertiesUtilImpl.getValor("senior.api.sdk.timeout"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.websocket.uri: " + PropertiesUtilImpl.getValor("senior.websocket.uri"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA", "time.pooling.pendency.seconds: " + PropertiesUtilImpl.getValor("time.pooling.pendency.seconds"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA", "time.keep.alive.senior.seconds: " + PropertiesUtilImpl.getValor("time.keep.alive.senior.seconds"));
-		CLogger.logPropertiesInfo("FILE CONFIG DATA", "time.waiting.resttemplate.seconds: " + PropertiesUtilImpl.getValor("time.waiting.resttemplate.seconds"));
+		CLogger.logPropertiesInfo("Middleware Hikvision - SeniorX", "Versão: " + getVersion());
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "api.port: " + MiddlewarePropertiesUtilImpl.getValor("api.port"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.senior.websocket.reconnect.interval.seconds: " + MiddlewarePropertiesUtilImpl.getValor("senior.websocket.reconnect.interval.seconds"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.partner_key: " + MiddlewarePropertiesUtilImpl.getValor("senior.partner_key"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.driver_key: " + MiddlewarePropertiesUtilImpl.getValor("senior.driver_key"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.api.sdk.uri: " + MiddlewarePropertiesUtilImpl.getValor("senior.api.sdk.uri"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.api.sdk.timeout: " + MiddlewarePropertiesUtilImpl.getValor("senior.api.sdk.timeout"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "senior.websocket.uri: " + MiddlewarePropertiesUtilImpl.getValor("senior.websocket.uri"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "time.pooling.pendency.seconds: " + MiddlewarePropertiesUtilImpl.getValor("time.pooling.pendency.seconds"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "time.keep.alive.senior.seconds: " + MiddlewarePropertiesUtilImpl.getValor("time.keep.alive.senior.seconds"));
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "time.waiting.resttemplate.seconds: " + MiddlewarePropertiesUtilImpl.getValor("time.waiting.resttemplate.seconds"));
 
 		SpringApplication app = new SpringApplication(Middleware.class);
-		app.setBannerMode(Banner.Mode.OFF);
-		app.setDefaultProperties(Collections.singletonMap("server.port", PropertiesUtilImpl.getValor("api.port")));
+//		app.setBannerMode(Banner.Mode.OFF);
+		app.setDefaultProperties(Collections.singletonMap("server.port", MiddlewarePropertiesUtilImpl.getValor("api.port")));
 
 		app.run();
 

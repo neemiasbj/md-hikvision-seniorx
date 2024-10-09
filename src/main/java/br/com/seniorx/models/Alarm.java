@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class Alarm {
 	@SerializedName("deviceId")
@@ -132,7 +132,7 @@ public class Alarm {
 	 * 
 	 * @return deviceId
 	 **/
-	@ApiModelProperty(value = "Identificador do dispositivo")
+	@Schema(description  = "Identificador do dispositivo")
 	public Long getDeviceId() {
 		return deviceId;
 	}
@@ -151,7 +151,7 @@ public class Alarm {
 	 * 
 	 * @return date
 	 **/
-	@ApiModelProperty(value = "Data da notificação em UTC")
+	@Schema(description  = "Data da notificação em UTC")
 	public OffsetDateTime getDate() {
 		return date;
 	}
@@ -170,7 +170,7 @@ public class Alarm {
 	 * 
 	 * @return timezoneOffset
 	 **/
-	@ApiModelProperty(value = "Offset em minutos")
+	@Schema(description  = "Offset em minutos")
 	public Integer getTimezoneOffset() {
 		return timezoneOffset;
 	}
@@ -189,7 +189,7 @@ public class Alarm {
 	 * 
 	 * @return status
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public StatusEnum getStatus() {
 		return status;
 	}
@@ -208,7 +208,7 @@ public class Alarm {
 	 * 
 	 * @return inputState
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public InputStateEnum getInputState() {
 		return inputState;
 	}

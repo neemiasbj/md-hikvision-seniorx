@@ -3,8 +3,8 @@ package br.com.hikvision.minmoe.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonIgnoreProperties(ignoreUnknown = true) // This will ignore any unknown fields in the JSON response
-public class RequestExecutionResponse {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class RequestExecutionResponseJson {
 
 	@JsonProperty("statusCode")
 	private int statusCode;

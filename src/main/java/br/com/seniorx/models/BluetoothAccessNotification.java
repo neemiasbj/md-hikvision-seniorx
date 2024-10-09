@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class BluetoothAccessNotification {
 	@SerializedName("deviceId")
@@ -267,7 +267,7 @@ public class BluetoothAccessNotification {
 	 * 
 	 * @return deviceId
 	 **/
-	@ApiModelProperty(value = "Identificador do dispositivo")
+	@Schema(description  = "Identificador do dispositivo")
 	public Long getDeviceId() {
 		return deviceId;
 	}
@@ -286,7 +286,7 @@ public class BluetoothAccessNotification {
 	 * 
 	 * @return date
 	 **/
-	@ApiModelProperty(value = "Data da notificação em UTC")
+	@Schema(description  = "Data da notificação em UTC")
 	public OffsetDateTime getDate() {
 		return date;
 	}
@@ -305,7 +305,7 @@ public class BluetoothAccessNotification {
 	 * 
 	 * @return timezoneOffset
 	 **/
-	@ApiModelProperty(value = "Offset em minutos")
+	@Schema(description  = "Offset em minutos")
 	public Integer getTimezoneOffset() {
 		return timezoneOffset;
 	}
@@ -324,7 +324,7 @@ public class BluetoothAccessNotification {
 	 * 
 	 * @return status
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public StatusEnum getStatus() {
 		return status;
 	}
@@ -343,7 +343,7 @@ public class BluetoothAccessNotification {
 	 * 
 	 * @return accessType
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public AccessTypeEnum getAccessType() {
 		return accessType;
 	}
@@ -362,7 +362,7 @@ public class BluetoothAccessNotification {
 	 * 
 	 * @return accessDirection
 	 **/
-	@ApiModelProperty(value = "")
+	@Schema(description  = "")
 	public AccessDirectionEnum getAccessDirection() {
 		return accessDirection;
 	}
@@ -381,7 +381,7 @@ public class BluetoothAccessNotification {
 	 * 
 	 * @return credentialId
 	 **/
-	@ApiModelProperty(value = "Identificador da credencial")
+	@Schema(description  = "Identificador da credencial")
 	public Long getCredentialId() {
 		return credentialId;
 	}

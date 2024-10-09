@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * ReaderDevice
@@ -440,7 +440,7 @@ public class ReaderDevice {
    * Identificador do dispositivo
    * @return id
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo")
+  @Schema(description  = "Identificador do dispositivo")
   public Long getId() {
     return id;
   }
@@ -458,7 +458,7 @@ public class ReaderDevice {
    * Identificador da área
    * @return areaId
   **/
-  @ApiModelProperty(value = "Identificador da área")
+  @Schema(description  = "Identificador da área")
   public Long getAreaId() {
     return areaId;
   }
@@ -484,7 +484,7 @@ public class ReaderDevice {
    * Dispositivo de saída
    * @return output
   **/
-  @ApiModelProperty(value = "Dispositivo de saída")
+  @Schema(description  = "Dispositivo de saída")
   public List<OutputDevice> getOutput() {
     return output;
   }
@@ -510,7 +510,7 @@ public class ReaderDevice {
    * Dispositivo de entrada
    * @return intput
   **/
-  @ApiModelProperty(value = "Dispositivo de entrada")
+  @Schema(description  = "Dispositivo de entrada")
   public List<InputDevice> getIntput() {
     return intput;
   }
@@ -528,7 +528,7 @@ public class ReaderDevice {
    * Get readerTechnology
    * @return readerTechnology
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public ReaderTechnologyEnum getReaderTechnology() {
     return readerTechnology;
   }
@@ -546,7 +546,7 @@ public class ReaderDevice {
    * Get readerDirection
    * @return readerDirection
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public ReaderDirectionEnum getReaderDirection() {
     return readerDirection;
   }
@@ -564,7 +564,7 @@ public class ReaderDevice {
    * Get biometricManufacturer
    * @return biometricManufacturer
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public BiometricManufacturerEnum getBiometricManufacturer() {
     return biometricManufacturer;
   }
@@ -582,7 +582,7 @@ public class ReaderDevice {
    * Get biometricValidation
    * @return biometricValidation
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public BiometricValidationEnum getBiometricValidation() {
     return biometricValidation;
   }
@@ -600,7 +600,7 @@ public class ReaderDevice {
    * Nível de conferência
    * @return biometricSecurityLevel
   **/
-  @ApiModelProperty(value = "Nível de conferência")
+  @Schema(description  = "Nível de conferência")
   public Integer getBiometricSecurityLevel() {
     return biometricSecurityLevel;
   }
@@ -618,7 +618,7 @@ public class ReaderDevice {
    * Leitora biométrica que será utilizado por este leitor para validar a biometria 1:1
    * @return biometricReaderId
   **/
-  @ApiModelProperty(value = "Leitora biométrica que será utilizado por este leitor para validar a biometria 1:1")
+  @Schema(description  = "Leitora biométrica que será utilizado por este leitor para validar a biometria 1:1")
   public Long getBiometricReaderId() {
     return biometricReaderId;
   }
@@ -636,7 +636,7 @@ public class ReaderDevice {
    * Endereço
    * @return physicalAddress
   **/
-  @ApiModelProperty(value = "Endereço")
+  @Schema(description  = "Endereço")
   public Integer getPhysicalAddress() {
     return physicalAddress;
   }
@@ -654,7 +654,7 @@ public class ReaderDevice {
    * Local físico de origem
    * @return areaLeaving
   **/
-  @ApiModelProperty(value = "Local físico de origem")
+  @Schema(description  = "Local físico de origem")
   public Long getAreaLeaving() {
     return areaLeaving;
   }
@@ -672,7 +672,7 @@ public class ReaderDevice {
    * Local físico de destino
    * @return areaEntering
   **/
-  @ApiModelProperty(value = "Local físico de destino")
+  @Schema(description  = "Local físico de destino")
   public Long getAreaEntering() {
     return areaEntering;
   }
@@ -698,7 +698,7 @@ public class ReaderDevice {
    * Lista de formato de cartão
    * @return cardFormatList
   **/
-  @ApiModelProperty(value = "Lista de formato de cartão")
+  @Schema(description  = "Lista de formato de cartão")
   public List<Long> getCardFormatList() {
     return cardFormatList;
   }
@@ -716,7 +716,7 @@ public class ReaderDevice {
    * Tempo
    * @return strikeTime
   **/
-  @ApiModelProperty(value = "Tempo")
+  @Schema(description  = "Tempo")
   public Integer getStrikeTime() {
     return strikeTime;
   }
@@ -734,7 +734,7 @@ public class ReaderDevice {
    * Tempo aberto
    * @return heldOpenTime
   **/
-  @ApiModelProperty(value = "Tempo aberto")
+  @Schema(description  = "Tempo aberto")
   public Integer getHeldOpenTime() {
     return heldOpenTime;
   }
@@ -752,7 +752,7 @@ public class ReaderDevice {
    * Get offlineMode
    * @return offlineMode
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public OfflineModeEnum getOfflineMode() {
     return offlineMode;
   }
@@ -770,7 +770,7 @@ public class ReaderDevice {
    * Get accessMode
    * @return accessMode
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public AccessModeEnum getAccessMode() {
     return accessMode;
   }
@@ -788,7 +788,7 @@ public class ReaderDevice {
    * É o tempo mínimo de acesso para o mesmo destino, a fim de evitar que duas pessoas utilizem o mesmo cartão para acessar o mesmo local
    * @return antiPassbackTime
   **/
-  @ApiModelProperty(value = "É o tempo mínimo de acesso para o mesmo destino, a fim de evitar que duas pessoas utilizem o mesmo cartão para acessar o mesmo local")
+  @Schema(description  = "É o tempo mínimo de acesso para o mesmo destino, a fim de evitar que duas pessoas utilizem o mesmo cartão para acessar o mesmo local")
   public Integer getAntiPassbackTime() {
     return antiPassbackTime;
   }
@@ -806,7 +806,7 @@ public class ReaderDevice {
    * Ativa o emparelhamento
    * @return enablePairing
   **/
-  @ApiModelProperty(value = "Ativa o emparelhamento")
+  @Schema(description  = "Ativa o emparelhamento")
   public Boolean isEnablePairing() {
     return enablePairing;
   }
@@ -824,7 +824,7 @@ public class ReaderDevice {
    * Valida veículo
    * @return validateVehicle
   **/
-  @ApiModelProperty(value = "Valida veículo")
+  @Schema(description  = "Valida veículo")
   public Boolean isValidateVehicle() {
     return validateVehicle;
   }
@@ -850,7 +850,7 @@ public class ReaderDevice {
    * Leitoras ativas
    * @return activations
   **/
-  @ApiModelProperty(value = "Leitoras ativas")
+  @Schema(description  = "Leitoras ativas")
   public List<ReaderActivation> getActivations() {
     return activations;
   }
@@ -868,7 +868,7 @@ public class ReaderDevice {
    * Get extensibleConfiguration
    * @return extensibleConfiguration
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public ExtensibleConfiguration getExtensibleConfiguration() {
     return extensibleConfiguration;
   }
@@ -886,7 +886,7 @@ public class ReaderDevice {
    * Identificador do sensor de urna
    * @return urnSensor
   **/
-  @ApiModelProperty(value = "Identificador do sensor de urna")
+  @Schema(description  = "Identificador do sensor de urna")
   public Long getUrnSensor() {
     return urnSensor;
   }
@@ -904,7 +904,7 @@ public class ReaderDevice {
    * Tempo sensor urna
    * @return urnSensorTime
   **/
-  @ApiModelProperty(value = "Tempo sensor urna")
+  @Schema(description  = "Tempo sensor urna")
   public Integer getUrnSensorTime() {
     return urnSensorTime;
   }

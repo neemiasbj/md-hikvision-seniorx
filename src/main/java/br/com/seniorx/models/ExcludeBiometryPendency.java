@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * ExcludeBiometryPendency
@@ -34,7 +34,7 @@ public class ExcludeBiometryPendency {
    * Identificador da pendência
    * @return pendencyId
   **/
-  @ApiModelProperty(value = "Identificador da pendência")
+  @Schema(description  = "Identificador da pendência")
   public Long getPendencyId() {
     return pendencyId;
   }
@@ -52,7 +52,7 @@ public class ExcludeBiometryPendency {
    * Identificador do dispositivo gerenciador
    * @return managerDeviceId
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+  @Schema(description  = "Identificador do dispositivo gerenciador")
   public Long getManagerDeviceId() {
     return managerDeviceId;
   }
@@ -70,7 +70,7 @@ public class ExcludeBiometryPendency {
    * Identificador da pessoa
    * @return personId
   **/
-  @ApiModelProperty(value = "Identificador da pessoa")
+  @Schema(description  = "Identificador da pessoa")
   public Long getPersonId() {
     return personId;
   }
@@ -96,7 +96,7 @@ public class ExcludeBiometryPendency {
    * Lista de cartões
    * @return cardList
   **/
-  @ApiModelProperty(value = "Lista de cartões")
+  @Schema(description  = "Lista de cartões")
   public List<CardAndTechnology> getCardList() {
     return cardList;
   }

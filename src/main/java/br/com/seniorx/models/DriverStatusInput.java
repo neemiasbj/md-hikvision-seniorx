@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * DriverStatusInput
@@ -33,7 +33,7 @@ public class DriverStatusInput {
    * Get driverIds
    * @return driverIds
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public List<Long> getDriverIds() {
     return driverIds;
   }

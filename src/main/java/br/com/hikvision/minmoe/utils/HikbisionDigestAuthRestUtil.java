@@ -14,21 +14,24 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.thidi.middleware.configurations.RestTemplateConfig;
 import br.com.thidi.middleware.resource.CLogger;
 
-public class DigestAuthRestTemplate {
+public class HikbisionDigestAuthRestUtil {
 
-	private final RestTemplate restTemplate = new RestTemplate();
+	private final RestTemplate restTemplate = RestTemplateConfig.getRestTemplate();
 	ObjectMapper objectMapper = new ObjectMapper();
 	private final String username;
 	private final String password;
 
-	public DigestAuthRestTemplate(String username, String password) {
+	public HikbisionDigestAuthRestUtil(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}
 
-	public <T> ResponseEntity<String> executeWithDigestAuth(String url, HttpMethod method, HttpEntity<T> entity) throws Exception {
+	public <T> ResponseEntity<String> executeWithDigestAuth(String url, HttpMethod method, HttpEntity<T> entity)
+			throws Exception {
+		System.out.println("executeWithDigestAuth Url: " + url);
 		try {
 			ResponseEntity<String> initialResponse = restTemplate.exchange(url, method, entity, String.class);
 			if (initialResponse.getStatusCode().is2xxSuccessful()) {
@@ -48,7 +51,9 @@ public class DigestAuthRestTemplate {
 						if (entity == null) {
 							newHeaders.set("Authorization", digestAuthHeader);
 							HttpEntity<T> updatedEntity = new HttpEntity<>(null, newHeaders);
-							CLogger.logHikivisionDebug("Execute auth request", "\n\nEntity: " + updatedEntity.toString());
+							CLogger.logHikivisionDebug("Execute auth request",
+									"\n\nEntity: " + updatedEntity.toString());
+							System.out.println(("Execute auth request" + "\n\nEntity: " + updatedEntity.toString()));
 							return restTemplate.exchange(url, method, updatedEntity, String.class);
 						} else {
 							HttpHeaders existingHeaders = entity.getHeaders();
@@ -112,12 +117,16 @@ public class DigestAuthRestTemplate {
 		String nc = "00000001";
 		String cnonce = generateCnonce();
 
-		String response = calculateDigest(username, params.realm, password, method, uri, params.nonce, nc, cnonce, params.qop);
+		String response = calculateDigest(username, params.realm, password, method, uri, params.nonce, nc, cnonce,
+				params.qop);
 
-		return String.format("Digest username=\"%s\", realm=\"%s\", nonce=\"%s\", uri=\"%s\", qop=%s, nc=%s, cnonce=\"%s\", response=\"%s\", opaque=\"%s\"", username, params.realm, params.nonce, uri, params.qop, nc, cnonce, response, params.opaque);
+		return String.format(
+				"Digest username=\"%s\", realm=\"%s\", nonce=\"%s\", uri=\"%s\", qop=%s, nc=%s, cnonce=\"%s\", response=\"%s\", opaque=\"%s\"",
+				username, params.realm, params.nonce, uri, params.qop, nc, cnonce, response, params.opaque);
 	}
 
-	private String calculateDigest(String username, String realm, String password, String method, String uri, String nonce, String nc, String cnonce, String qop) {
+	private String calculateDigest(String username, String realm, String password, String method, String uri,
+			String nonce, String nc, String cnonce, String qop) {
 		String A1 = username + ":" + realm + ":" + password;
 		String ha1 = DigestUtils.md5Hex(A1);
 

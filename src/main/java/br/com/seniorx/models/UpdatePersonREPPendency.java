@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * UpdatePersonREPPendency
@@ -257,7 +257,7 @@ public class UpdatePersonREPPendency {
    * Identificador da pendência
    * @return pendencyId
   **/
-  @ApiModelProperty(value = "Identificador da pendência")
+  @Schema(description  = "Identificador da pendência")
   public Long getPendencyId() {
     return pendencyId;
   }
@@ -275,7 +275,7 @@ public class UpdatePersonREPPendency {
    * Identificador do dispositivo gerenciador
    * @return managerDeviceId
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+  @Schema(description  = "Identificador do dispositivo gerenciador")
   public Long getManagerDeviceId() {
     return managerDeviceId;
   }
@@ -293,7 +293,7 @@ public class UpdatePersonREPPendency {
    * Tipo da operação
    * @return operationId
   **/
-  @ApiModelProperty(value = "Tipo da operação")
+  @Schema(description  = "Tipo da operação")
   public OperationIdEnum getOperationId() {
     return operationId;
   }
@@ -311,7 +311,7 @@ public class UpdatePersonREPPendency {
    * Número do cartão
    * @return cardNumber
   **/
-  @ApiModelProperty(value = "Número do cartão")
+  @Schema(description  = "Número do cartão")
   public Long getCardNumber() {
     return cardNumber;
   }
@@ -329,7 +329,7 @@ public class UpdatePersonREPPendency {
    * Get cardTechnology
    * @return cardTechnology
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public CardTechnologyEnum getCardTechnology() {
     return cardTechnology;
   }
@@ -347,7 +347,7 @@ public class UpdatePersonREPPendency {
    * Identificador da pessoa
    * @return personId
   **/
-  @ApiModelProperty(value = "Identificador da pessoa")
+  @Schema(description  = "Identificador da pessoa")
   public Long getPersonId() {
     return personId;
   }
@@ -365,7 +365,7 @@ public class UpdatePersonREPPendency {
    * Nome da pessoa
    * @return personName
   **/
-  @ApiModelProperty(value = "Nome da pessoa")
+  @Schema(description  = "Nome da pessoa")
   public String getPersonName() {
     return personName;
   }
@@ -383,7 +383,7 @@ public class UpdatePersonREPPendency {
    * PIS
    * @return pis
   **/
-  @ApiModelProperty(value = "PIS")
+  @Schema(description  = "PIS")
   public Long getPis() {
     return pis;
   }
@@ -401,7 +401,7 @@ public class UpdatePersonREPPendency {
    * CPF
    * @return cpf
   **/
-  @ApiModelProperty(value = "CPF")
+  @Schema(description  = "CPF")
   public Long getCpf() {
     return cpf;
   }
@@ -419,7 +419,7 @@ public class UpdatePersonREPPendency {
    * Status da biometria
    * @return biometricStatus
   **/
-  @ApiModelProperty(value = "Status da biometria")
+  @Schema(description  = "Status da biometria")
   public BiometricStatusEnum getBiometricStatus() {
     return biometricStatus;
   }
@@ -437,7 +437,7 @@ public class UpdatePersonREPPendency {
    * Validação da biometria
    * @return verifyBiometrics
   **/
-  @ApiModelProperty(value = "Validação da biometria")
+  @Schema(description  = "Validação da biometria")
   public VerifyBiometricsEnum getVerifyBiometrics() {
     return verifyBiometrics;
   }
@@ -463,7 +463,7 @@ public class UpdatePersonREPPendency {
    * Get biometry
    * @return biometry
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public List<Biometry> getBiometry() {
     return biometry;
   }

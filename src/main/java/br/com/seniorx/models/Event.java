@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Event
@@ -162,7 +162,7 @@ public class Event {
    * Identificador do dispositivo
    * @return deviceId
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo")
+  @Schema(description  = "Identificador do dispositivo")
   public Long getDeviceId() {
     return deviceId;
   }
@@ -180,7 +180,7 @@ public class Event {
    * Data da notificação em UTC
    * @return date
   **/
-  @ApiModelProperty(value = "Data da notificação em UTC")
+  @Schema(description  = "Data da notificação em UTC")
   public String getDate() {
     return date;
   }
@@ -198,7 +198,7 @@ public class Event {
    * Offset em minutos
    * @return timezoneOffset
   **/
-  @ApiModelProperty(value = "Offset em minutos")
+  @Schema(description  = "Offset em minutos")
   public Integer getTimezoneOffset() {
     return timezoneOffset;
   }
@@ -216,7 +216,7 @@ public class Event {
    * Get status
    * @return status
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public StatusEnum getStatus() {
     return status;
   }
@@ -234,7 +234,7 @@ public class Event {
    * Get eventType
    * @return eventType
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public EventTypeEnum getEventType() {
     return eventType;
   }

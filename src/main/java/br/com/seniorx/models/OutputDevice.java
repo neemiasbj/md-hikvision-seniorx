@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * OutputDevice
@@ -86,7 +86,7 @@ public class OutputDevice {
    * Identificador do dispositivo
    * @return id
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo")
+  @Schema(description  = "Identificador do dispositivo")
   public Long getId() {
     return id;
   }
@@ -104,7 +104,7 @@ public class OutputDevice {
    * Identificador da área
    * @return areaId
   **/
-  @ApiModelProperty(value = "Identificador da área")
+  @Schema(description  = "Identificador da área")
   public Long getAreaId() {
     return areaId;
   }
@@ -122,7 +122,7 @@ public class OutputDevice {
    * Endereço
    * @return address
   **/
-  @ApiModelProperty(value = "Endereço")
+  @Schema(description  = "Endereço")
   public Integer getAddress() {
     return address;
   }
@@ -140,7 +140,7 @@ public class OutputDevice {
    * Get defaultState
    * @return defaultState
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public DefaultStateEnum getDefaultState() {
     return defaultState;
   }
@@ -158,7 +158,7 @@ public class OutputDevice {
    * Get extensibleConfiguration
    * @return extensibleConfiguration
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public ExtensibleConfiguration getExtensibleConfiguration() {
     return extensibleConfiguration;
   }

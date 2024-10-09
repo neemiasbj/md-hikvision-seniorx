@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * LoadHolidayListPendency
@@ -29,7 +29,7 @@ public class LoadHolidayListPendency {
    * Identificador da pendência
    * @return pendencyId
   **/
-  @ApiModelProperty(value = "Identificador da pendência")
+  @Schema(description  = "Identificador da pendência")
   public Long getPendencyId() {
     return pendencyId;
   }
@@ -47,7 +47,7 @@ public class LoadHolidayListPendency {
    * Identificador do dispositivo gerenciador
    * @return managerDeviceId
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+  @Schema(description  = "Identificador do dispositivo gerenciador")
   public Long getManagerDeviceId() {
     return managerDeviceId;
   }
@@ -65,7 +65,7 @@ public class LoadHolidayListPendency {
    * Identificador da lista de feriados
    * @return holidayListId
   **/
-  @ApiModelProperty(value = "Identificador da lista de feriados")
+  @Schema(description  = "Identificador da lista de feriados")
   public Long getHolidayListId() {
     return holidayListId;
   }

@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * IncludeBiometryPendency
@@ -37,7 +37,7 @@ public class IncludeBiometryPendency {
    * Identificador da pendência
    * @return pendencyId
   **/
-  @ApiModelProperty(value = "Identificador da pendência")
+  @Schema(description  = "Identificador da pendência")
   public Long getPendencyId() {
     return pendencyId;
   }
@@ -55,7 +55,7 @@ public class IncludeBiometryPendency {
    * Identificador do dispositivo gerenciador
    * @return managerDeviceId
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+  @Schema(description  = "Identificador do dispositivo gerenciador")
   public Long getManagerDeviceId() {
     return managerDeviceId;
   }
@@ -73,7 +73,7 @@ public class IncludeBiometryPendency {
    * Identificador da pessoa
    * @return personId
   **/
-  @ApiModelProperty(value = "Identificador da pessoa")
+  @Schema(description  = "Identificador da pessoa")
   public Long getPersonId() {
     return personId;
   }
@@ -99,7 +99,7 @@ public class IncludeBiometryPendency {
    * Lista de credenciais
    * @return cardList
   **/
-  @ApiModelProperty(value = "Lista de credenciais")
+  @Schema(description  = "Lista de credenciais")
   public List<CardAndTechnology> getCardList() {
     return cardList;
   }
@@ -117,7 +117,7 @@ public class IncludeBiometryPendency {
    * Get biometry
    * @return biometry
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Biometry getBiometry() {
     return biometry;
   }

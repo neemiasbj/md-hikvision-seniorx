@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * DeviceInputStatus
@@ -31,7 +31,7 @@ public class DeviceInputStatus {
    * Identificador da pendência
    * @return pendencyId
   **/
-  @ApiModelProperty(value = "Identificador da pendência")
+  @Schema(description  = "Identificador da pendência")
   public Long getPendencyId() {
     return pendencyId;
   }
@@ -49,7 +49,7 @@ public class DeviceInputStatus {
    * Identificador do dispositivo gerenciador
    * @return managerDeviceId
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+  @Schema(description  = "Identificador do dispositivo gerenciador")
   public Long getManagerDeviceId() {
     return managerDeviceId;
   }
@@ -75,7 +75,7 @@ public class DeviceInputStatus {
    * Status da entrada
    * @return status
   **/
-  @ApiModelProperty(value = "Status da entrada")
+  @Schema(description  = "Status da entrada")
   public List<InputStatusField> getStatus() {
     return status;
   }

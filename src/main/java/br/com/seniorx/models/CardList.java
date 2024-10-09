@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * CardList
@@ -138,7 +138,7 @@ public class CardList {
    * Número do cartão
    * @return cardNumber
   **/
-  @ApiModelProperty(value = "Número do cartão")
+  @Schema(description  = "Número do cartão")
   public Long getCardNumber() {
     return cardNumber;
   }
@@ -156,7 +156,7 @@ public class CardList {
    * Get cardTechnology
    * @return cardTechnology
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public CardTechnologyEnum getCardTechnology() {
     return cardTechnology;
   }
@@ -182,7 +182,7 @@ public class CardList {
    * Leitoras que o cartão possui acesso
    * @return reader
   **/
-  @ApiModelProperty(value = "Leitoras que o cartão possui acesso")
+  @Schema(description  = "Leitoras que o cartão possui acesso")
   public List<Integer> getReader() {
     return reader;
   }
@@ -200,7 +200,7 @@ public class CardList {
    * Get ownerType
    * @return ownerType
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public OwnerTypeEnum getOwnerType() {
     return ownerType;
   }
@@ -218,7 +218,7 @@ public class CardList {
    * Identificador do proprietário da credencial (pessoa ou veículo)
    * @return ownerId
   **/
-  @ApiModelProperty(value = "Identificador do proprietário da credencial (pessoa ou veículo)")
+  @Schema(description  = "Identificador do proprietário da credencial (pessoa ou veículo)")
   public Long getOwnerId() {
     return ownerId;
   }

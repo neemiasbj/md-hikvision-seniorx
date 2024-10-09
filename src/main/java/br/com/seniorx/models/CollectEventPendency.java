@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * CollectEventPendency
@@ -39,7 +39,7 @@ public class CollectEventPendency {
    * Identificador da pendência
    * @return pendencyId
   **/
-  @ApiModelProperty(value = "Identificador da pendência")
+  @Schema(description  = "Identificador da pendência")
   public Long getPendencyId() {
     return pendencyId;
   }
@@ -57,7 +57,7 @@ public class CollectEventPendency {
    * Identificador do dispositivo gerenciador
    * @return managerDeviceId
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+  @Schema(description  = "Identificador do dispositivo gerenciador")
   public Long getManagerDeviceId() {
     return managerDeviceId;
   }
@@ -75,7 +75,7 @@ public class CollectEventPendency {
    * Data inicial
    * @return initialDate
   **/
-  @ApiModelProperty(value = "Data inicial")
+  @Schema(description  = "Data inicial")
   public OffsetDateTime getInitialDate() {
     return initialDate;
   }
@@ -93,7 +93,7 @@ public class CollectEventPendency {
    * Data final
    * @return finalDate
   **/
-  @ApiModelProperty(value = "Data final")
+  @Schema(description  = "Data final")
   public OffsetDateTime getFinalDate() {
     return finalDate;
   }
@@ -111,7 +111,7 @@ public class CollectEventPendency {
    * Valor inicial do NSR
    * @return initialNSR
   **/
-  @ApiModelProperty(value = "Valor inicial do NSR")
+  @Schema(description  = "Valor inicial do NSR")
   public Long getInitialNSR() {
     return initialNSR;
   }
@@ -129,7 +129,7 @@ public class CollectEventPendency {
    * Valor final do NSR
    * @return finalNSR
   **/
-  @ApiModelProperty(value = "Valor final do NSR")
+  @Schema(description  = "Valor final do NSR")
   public Long getFinalNSR() {
     return finalNSR;
   }

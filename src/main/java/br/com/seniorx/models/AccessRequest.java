@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class AccessRequest {
 	@SerializedName("readerId")
@@ -18,7 +18,7 @@ public class AccessRequest {
 	private Long personId = null;
 
 	@SerializedName("requestDateTime")
-	private OffsetDateTime requestDateTime = null;
+	private String requestDateTime = null;
 
 	public AccessRequest readerId(Long readerId) {
 		this.readerId = readerId;
@@ -30,7 +30,7 @@ public class AccessRequest {
 	 * 
 	 * @return readerId
 	 **/
-	@ApiModelProperty(value = "Identificador da leitora")
+	@Schema(description = "Identificador da leitora")
 	public Long getReaderId() {
 		return readerId;
 	}
@@ -49,7 +49,7 @@ public class AccessRequest {
 	 * 
 	 * @return cardId
 	 **/
-	@ApiModelProperty(value = "Identificador do cartão")
+	@Schema(description = "Identificador do cartão")
 	public Long getCardId() {
 		return cardId;
 	}
@@ -68,7 +68,7 @@ public class AccessRequest {
 	 * 
 	 * @return personId
 	 **/
-	@ApiModelProperty(value = "Identificador da pessoa")
+	@Schema(description = "Identificador da pessoa")
 	public Long getPersonId() {
 		return personId;
 	}
@@ -77,7 +77,7 @@ public class AccessRequest {
 		this.personId = personId;
 	}
 
-	public AccessRequest requestDateTime(OffsetDateTime requestDateTime) {
+	public AccessRequest requestDateTime(String requestDateTime) {
 		this.requestDateTime = requestDateTime;
 		return this;
 	}
@@ -87,12 +87,12 @@ public class AccessRequest {
 	 * 
 	 * @return requestDateTime
 	 **/
-	@ApiModelProperty(value = "Data e hora da requisição de acesso")
-	public OffsetDateTime getRequestDateTime() {
+	@Schema(description = "Data e hora da requisição de acesso")
+	public String getRequestDateTime() {
 		return requestDateTime;
 	}
 
-	public void setRequestDateTime(OffsetDateTime requestDateTime) {
+	public void setRequestDateTime(String requestDateTime) {
 		this.requestDateTime = requestDateTime;
 	}
 

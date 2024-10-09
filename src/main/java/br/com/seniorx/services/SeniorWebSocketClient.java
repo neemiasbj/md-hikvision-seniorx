@@ -10,7 +10,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.thidi.middleware.resource.CLogger;
-import br.com.thidi.middleware.utils.UtilPropertiesImpl;
+import br.com.thidi.middleware.services.MiddlewareSeniorHandler;
+import br.com.thidi.middleware.utils.MiddlewareUtilPropertiesImpl;
 import jakarta.websocket.ClientEndpoint;
 import jakarta.websocket.CloseReason;
 import jakarta.websocket.ContainerProvider;
@@ -25,7 +26,8 @@ import jakarta.websocket.WebSocketContainer;
 public class SeniorWebSocketClient {
 
 	private Session session;
-	private static final int RECONNECT_INTERVAL = Integer.valueOf(UtilPropertiesImpl.getValor("senior.websocket.reconnect.interval.seconds"));
+	private static final int RECONNECT_INTERVAL = Integer
+			.valueOf(MiddlewareUtilPropertiesImpl.getValor("senior.websocket.reconnect.interval.seconds"));
 
 	private URI endpointURI;
 	private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
@@ -59,7 +61,7 @@ public class SeniorWebSocketClient {
 		JsonNode jsonNode;
 		try {
 			jsonNode = objectMapper.readTree(message);
-			SeniorHandlerService.HandleWebSocketMessage(jsonNode.get("deviceId").asLong());
+			MiddlewareSeniorHandler.HandleWebSocketMessage(jsonNode.get("deviceId").asLong());
 		} catch (Exception e) {
 			CLogger.logSeniorError("ON MESSAGE", e.getMessage());
 		}

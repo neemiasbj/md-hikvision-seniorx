@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * PendencyUpdated
@@ -80,7 +80,7 @@ public class PendencyUpdated {
    * Identificador da pendência
    * @return pendencyId
   **/
-  @ApiModelProperty(value = "Identificador da pendência")
+  @Schema(description  = "Identificador da pendência")
   public Long getPendencyId() {
     return pendencyId;
   }
@@ -98,7 +98,7 @@ public class PendencyUpdated {
    * Código de erro
    * @return errorCode
   **/
-  @ApiModelProperty(value = "Código de erro")
+  @Schema(description  = "Código de erro")
   public Integer getErrorCode() {
     return errorCode;
   }
@@ -116,7 +116,7 @@ public class PendencyUpdated {
    * Get operation
    * @return operation
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public OperationEnum getOperation() {
     return operation;
   }

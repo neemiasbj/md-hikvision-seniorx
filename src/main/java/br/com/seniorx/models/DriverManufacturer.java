@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * DriverManufacturer
@@ -23,7 +23,7 @@ public class DriverManufacturer {
    * Nome do fabricante do driver atualizado
    * @return manufacturerName
   **/
-  @ApiModelProperty(value = "Nome do fabricante do driver atualizado")
+  @Schema(description  = "Nome do fabricante do driver atualizado")
   public String getManufacturerName() {
     return manufacturerName;
   }

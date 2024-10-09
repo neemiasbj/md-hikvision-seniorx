@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * PortConfiguration
@@ -98,7 +98,7 @@ public class PortConfiguration {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Long getId() {
     return id;
   }
@@ -116,7 +116,7 @@ public class PortConfiguration {
    * Número da Porta
    * @return portNumber
   **/
-  @ApiModelProperty(value = "Número da Porta")
+  @Schema(description  = "Número da Porta")
   public Integer getPortNumber() {
     return portNumber;
   }
@@ -134,7 +134,7 @@ public class PortConfiguration {
    * Get communicationMode
    * @return communicationMode
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public CommunicationModeEnum getCommunicationMode() {
     return communicationMode;
   }
@@ -152,7 +152,7 @@ public class PortConfiguration {
    * Delay do driver txd
    * @return txdDriverSettleDelay
   **/
-  @ApiModelProperty(value = "Delay do driver txd")
+  @Schema(description  = "Delay do driver txd")
   public Integer getTxdDriverSettleDelay() {
     return txdDriverSettleDelay;
   }
@@ -170,7 +170,7 @@ public class PortConfiguration {
    * Delay do driver rxd
    * @return receiveDataValidDelay
   **/
-  @ApiModelProperty(value = "Delay do driver rxd")
+  @Schema(description  = "Delay do driver rxd")
   public Integer getReceiveDataValidDelay() {
     return receiveDataValidDelay;
   }
@@ -188,7 +188,7 @@ public class PortConfiguration {
    * Timeout recebimento
    * @return interCharacterTimeout
   **/
-  @ApiModelProperty(value = "Timeout recebimento")
+  @Schema(description  = "Timeout recebimento")
   public Integer getInterCharacterTimeout() {
     return interCharacterTimeout;
   }
@@ -206,7 +206,7 @@ public class PortConfiguration {
    * Timeout reposta
    * @return controllerReplyTimeout
   **/
-  @ApiModelProperty(value = "Timeout reposta")
+  @Schema(description  = "Timeout reposta")
   public Integer getControllerReplyTimeout() {
     return controllerReplyTimeout;
   }
@@ -224,7 +224,7 @@ public class PortConfiguration {
    * Timeout eventos
    * @return pollTime
   **/
-  @ApiModelProperty(value = "Timeout eventos")
+  @Schema(description  = "Timeout eventos")
   public Integer getPollTime() {
     return pollTime;
   }
@@ -242,7 +242,7 @@ public class PortConfiguration {
    * Timeout eventos offline
    * @return offlineDevicePollTime
   **/
-  @ApiModelProperty(value = "Timeout eventos offline")
+  @Schema(description  = "Timeout eventos offline")
   public Integer getOfflineDevicePollTime() {
     return offlineDevicePollTime;
   }

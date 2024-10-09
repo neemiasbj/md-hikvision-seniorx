@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * ExtensibleProperty
@@ -29,7 +29,7 @@ public class ExtensibleProperty {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Long getId() {
     return id;
   }
@@ -47,7 +47,7 @@ public class ExtensibleProperty {
    * Get key
    * @return key
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public String getKey() {
     return key;
   }
@@ -65,7 +65,7 @@ public class ExtensibleProperty {
    * Get value
    * @return value
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public String getValue() {
     return value;
   }

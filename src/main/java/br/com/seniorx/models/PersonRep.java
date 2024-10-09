@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * PersonRep
@@ -43,7 +43,7 @@ public class PersonRep {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Long getId() {
     return id;
   }
@@ -61,7 +61,7 @@ public class PersonRep {
    * Nome da pessoa
    * @return name
   **/
-  @ApiModelProperty(value = "Nome da pessoa")
+  @Schema(description  = "Nome da pessoa")
   public String getName() {
     return name;
   }
@@ -79,7 +79,7 @@ public class PersonRep {
    * Documento
    * @return pis
   **/
-  @ApiModelProperty(value = "Documento")
+  @Schema(description  = "Documento")
   public Long getPis() {
     return pis;
   }
@@ -97,7 +97,7 @@ public class PersonRep {
    * CPF contendo apenas números, incluindo dígito verificador
    * @return cpf
   **/
-  @ApiModelProperty(value = "CPF contendo apenas números, incluindo dígito verificador")
+  @Schema(description  = "CPF contendo apenas números, incluindo dígito verificador")
   public Long getCpf() {
     return cpf;
   }
@@ -115,7 +115,7 @@ public class PersonRep {
    * Tipo da validação para biometria &#x3D; [&#39;NOT_VALID_BIOMETRY&#39;, &#39;VALID_CARD_AND_BIOMETRY&#39;, &#39;ONLY_VALID_BIOMETRY&#39;]
    * @return verifyBiometrics
   **/
-  @ApiModelProperty(value = "Tipo da validação para biometria = ['NOT_VALID_BIOMETRY', 'VALID_CARD_AND_BIOMETRY', 'ONLY_VALID_BIOMETRY']")
+  @Schema(description  = "Tipo da validação para biometria = ['NOT_VALID_BIOMETRY', 'VALID_CARD_AND_BIOMETRY', 'ONLY_VALID_BIOMETRY']")
   public Integer getVerifyBiometrics() {
     return verifyBiometrics;
   }
@@ -141,7 +141,7 @@ public class PersonRep {
    * Lista de cartão
    * @return cards
   **/
-  @ApiModelProperty(value = "Lista de cartão")
+  @Schema(description  = "Lista de cartão")
   public List<CardRep> getCards() {
     return cards;
   }
@@ -167,7 +167,7 @@ public class PersonRep {
    * Lista de biometrias
    * @return biometries
   **/
-  @ApiModelProperty(value = "Lista de biometrias")
+  @Schema(description  = "Lista de biometrias")
   public List<Biometry> getBiometries() {
     return biometries;
   }

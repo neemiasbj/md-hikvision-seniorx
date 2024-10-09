@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * PersonPhotoTemplates
@@ -34,7 +34,7 @@ public class PersonPhotoTemplates {
    * Identificador da pessoa
    * @return personId
   **/
-  @ApiModelProperty(value = "Identificador da pessoa")
+  @Schema(description  = "Identificador da pessoa")
   public Long getPersonId() {
     return personId;
   }
@@ -52,7 +52,7 @@ public class PersonPhotoTemplates {
    * Nome
    * @return name
   **/
-  @ApiModelProperty(value = "Nome")
+  @Schema(description  = "Nome")
   public String getName() {
     return name;
   }
@@ -70,7 +70,7 @@ public class PersonPhotoTemplates {
    * Url da foto
    * @return photoURL
   **/
-  @ApiModelProperty(value = "Url da foto")
+  @Schema(description  = "Url da foto")
   public String getPhotoURL() {
     return photoURL;
   }
@@ -96,7 +96,7 @@ public class PersonPhotoTemplates {
    * Lista de cartões
    * @return cardList
   **/
-  @ApiModelProperty(value = "Lista de cartões")
+  @Schema(description  = "Lista de cartões")
   public List<CardInformation> getCardList() {
     return cardList;
   }

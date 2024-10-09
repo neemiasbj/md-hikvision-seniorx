@@ -1,19 +1,26 @@
 package br.com.hikvision.minmoe.models;
 
-public class AcsConfigRequest {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-	private AcsCfg AcsCfg;
+public class AcsCfgRequest {
+
+	@JsonProperty("AcsCfg")
+	private AcsCfg acsCfg;
 
 	public AcsCfg getAcsCfg() {
-		return AcsCfg;
+		return acsCfg;
 	}
 
 	public void setAcsCfg(AcsCfg acsCfg) {
-		AcsCfg = acsCfg;
+		this.acsCfg = acsCfg;
 	}
 
 	public static class AcsCfg {
+
+		@JsonProperty("remoteCheckDoorEnabled")
 		private boolean remoteCheckDoorEnabled;
+
+		@JsonProperty("checkChannelType")
 		private String checkChannelType;
 
 		public boolean isRemoteCheckDoorEnabled() {

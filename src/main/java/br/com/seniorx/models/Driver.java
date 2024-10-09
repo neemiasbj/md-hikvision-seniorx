@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Driver
@@ -41,7 +41,7 @@ public class Driver {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Long getId() {
     return id;
   }
@@ -59,7 +59,7 @@ public class Driver {
    * Descrição
    * @return name
   **/
-  @ApiModelProperty(value = "Descrição")
+  @Schema(description  = "Descrição")
   public String getName() {
     return name;
   }
@@ -77,7 +77,7 @@ public class Driver {
    * Intervalo de tempo entre consultas (milissegundos)
    * @return requestIntervalTime
   **/
-  @ApiModelProperty(value = "Intervalo de tempo entre consultas (milissegundos)")
+  @Schema(description  = "Intervalo de tempo entre consultas (milissegundos)")
   public Integer getRequestIntervalTime() {
     return requestIntervalTime;
   }
@@ -95,7 +95,7 @@ public class Driver {
    * Intervalo de espera (milissegundos)
    * @return waitInterval
   **/
-  @ApiModelProperty(value = "Intervalo de espera (milissegundos)")
+  @Schema(description  = "Intervalo de espera (milissegundos)")
   public Integer getWaitInterval() {
     return waitInterval;
   }
@@ -113,7 +113,7 @@ public class Driver {
    * Informa se deverá enviar as credenciais para o driver. (Apenas driver Apollo)
    * @return sendCardholders
   **/
-  @ApiModelProperty(value = "Informa se deverá enviar as credenciais para o driver. (Apenas driver Apollo)")
+  @Schema(description  = "Informa se deverá enviar as credenciais para o driver. (Apenas driver Apollo)")
   public Boolean isSendCardholders() {
     return sendCardholders;
   }
@@ -131,7 +131,7 @@ public class Driver {
    * Tamanho do pacote
    * @return packetSize
   **/
-  @ApiModelProperty(value = "Tamanho do pacote")
+  @Schema(description  = "Tamanho do pacote")
   public Integer getPacketSize() {
     return packetSize;
   }
@@ -149,7 +149,7 @@ public class Driver {
    * Get extensibleConfiguration
    * @return extensibleConfiguration
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public ExtensibleConfiguration getExtensibleConfiguration() {
     return extensibleConfiguration;
   }

@@ -4,9 +4,9 @@ import java.util.Properties;
 
 import br.com.thidi.middleware.resource.CLogger;
 
-public class UtilPropertiesImpl {
+public class MiddlewareUtilPropertiesImpl {
 
-	private static UtilProperties loader = new UtilProperties();
+	private static MiddlewareUtilProperties loader = new MiddlewareUtilProperties();
 
 	public static String getValor(String chave) {
 		loader.reloadProperties();

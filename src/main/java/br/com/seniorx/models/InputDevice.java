@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * InputDevice
@@ -97,7 +97,7 @@ public class InputDevice {
    * Identificador do dispositivo
    * @return id
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo")
+  @Schema(description  = "Identificador do dispositivo")
   public Long getId() {
     return id;
   }
@@ -115,7 +115,7 @@ public class InputDevice {
    * Identificador da área
    * @return areaId
   **/
-  @ApiModelProperty(value = "Identificador da área")
+  @Schema(description  = "Identificador da área")
   public Long getAreaId() {
     return areaId;
   }
@@ -133,7 +133,7 @@ public class InputDevice {
    * Endereço
    * @return address
   **/
-  @ApiModelProperty(value = "Endereço")
+  @Schema(description  = "Endereço")
   public Integer getAddress() {
     return address;
   }
@@ -151,7 +151,7 @@ public class InputDevice {
    * Get defaultState
    * @return defaultState
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public DefaultStateEnum getDefaultState() {
     return defaultState;
   }
@@ -169,7 +169,7 @@ public class InputDevice {
    * Atraso de ativação
    * @return activationDelay
   **/
-  @ApiModelProperty(value = "Atraso de ativação")
+  @Schema(description  = "Atraso de ativação")
   public Integer getActivationDelay() {
     return activationDelay;
   }
@@ -195,7 +195,7 @@ public class InputDevice {
    * Máscaras
    * @return masking
   **/
-  @ApiModelProperty(value = "Máscaras")
+  @Schema(description  = "Máscaras")
   public List<Masking> getMasking() {
     return masking;
   }
@@ -221,7 +221,7 @@ public class InputDevice {
    * Entradas ativas
    * @return activations
   **/
-  @ApiModelProperty(value = "Entradas ativas")
+  @Schema(description  = "Entradas ativas")
   public List<InputActivation> getActivations() {
     return activations;
   }
@@ -239,7 +239,7 @@ public class InputDevice {
    * Get extensibleConfiguration
    * @return extensibleConfiguration
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public ExtensibleConfiguration getExtensibleConfiguration() {
     return extensibleConfiguration;
   }

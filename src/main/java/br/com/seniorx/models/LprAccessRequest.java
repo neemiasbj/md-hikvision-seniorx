@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * LprAccessRequest
@@ -29,7 +29,7 @@ public class LprAccessRequest {
    * Identificador da leitora
    * @return readerId
   **/
-  @ApiModelProperty(value = "Identificador da leitora")
+  @Schema(description  = "Identificador da leitora")
   public Long getReaderId() {
     return readerId;
   }
@@ -47,7 +47,7 @@ public class LprAccessRequest {
    * Placa do veículo
    * @return licensePlate
   **/
-  @ApiModelProperty(value = "Placa do veículo")
+  @Schema(description  = "Placa do veículo")
   public String getLicensePlate() {
     return licensePlate;
   }
@@ -65,7 +65,7 @@ public class LprAccessRequest {
    * Gera notificação
    * @return generateNotification
   **/
-  @ApiModelProperty(value = "Gera notificação")
+  @Schema(description  = "Gera notificação")
   public Boolean isGenerateNotification() {
     return generateNotification;
   }

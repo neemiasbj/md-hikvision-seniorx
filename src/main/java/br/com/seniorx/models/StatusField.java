@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * StatusField
@@ -26,7 +26,7 @@ public class StatusField {
    * Get key
    * @return key
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public String getKey() {
     return key;
   }
@@ -44,7 +44,7 @@ public class StatusField {
    * Get value
    * @return value
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public String getValue() {
     return value;
   }

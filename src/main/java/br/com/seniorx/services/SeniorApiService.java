@@ -1,6 +1,5 @@
 package br.com.seniorx.services;
 
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.seniorx.models.Access;
+import br.com.seniorx.models.AccessBiometry;
+import br.com.seniorx.models.AccessRequest;
 import br.com.seniorx.models.AllPendency;
 import br.com.seniorx.models.AreaControlList;
 import br.com.seniorx.models.CardList;
@@ -24,19 +24,22 @@ import br.com.seniorx.models.Event;
 import br.com.seniorx.models.ManagerDevice;
 import br.com.seniorx.models.PendencyExecuted;
 import br.com.seniorx.models.PendencyUpdated;
+import br.com.seniorx.models.PersonInfo;
 import br.com.seniorx.models.PersonPhotoTemplates;
+import br.com.seniorx.models.PersonTemplates;
+import br.com.seniorx.models.PersonValidationResponse;
 import br.com.thidi.middleware.resource.CLogger;
 import br.com.thidi.middleware.resource.Utils;
-import br.com.thidi.middleware.utils.UtilPropertiesImpl;
+import br.com.thidi.middleware.utils.MiddlewareUtilPropertiesImpl;
 
 public class SeniorApiService {
 
 	private ManagerDevice device = null;
-	private Gson gson = new GsonBuilder().registerTypeAdapter(OffsetDateTime.class, (JsonDeserializer<OffsetDateTime>) (json, type, context) -> OffsetDateTime.parse(json.getAsString())).create();;
+	private static ObjectMapper objectMapper = new ObjectMapper();
 
-	private static String seniorPartnerKey = UtilPropertiesImpl.getValor("senior.partner_key");
-	private static String seniorDriverKey = UtilPropertiesImpl.getValor("senior.driver_key");
-	private static String seniorEndpoint = UtilPropertiesImpl.getValor("senior.api.sdk.uri");
+	private static String seniorPartnerKey = MiddlewareUtilPropertiesImpl.getValor("senior.partner_key");
+	private static String seniorDriverKey = MiddlewareUtilPropertiesImpl.getValor("senior.driver_key");
+	private static String seniorEndpoint = MiddlewareUtilPropertiesImpl.getValor("senior.api.sdk.uri");
 
 	private static String uriDevice = String.format("%s/device", seniorEndpoint);
 	private static String uriDevices = String.format("%s/device/", seniorEndpoint);
@@ -47,12 +50,14 @@ public class SeniorApiService {
 	private static String uriPendencySuccess = String.format("%s/pendency/success", seniorEndpoint);
 	private static String uriDeviceAllowedPhotos = String.format("%s/device/access/${id}/photo", seniorEndpoint);
 	private static String uriDeviceAllowedCards = String.format("%s/device/access/${id}/card", seniorEndpoint);
+	private static String uriDeviceAllowedBiometries = String.format("%s/device/access/${id}/biometry", seniorEndpoint);
 	private static String uriDeviceStatus = String.format("%s/device/status", seniorEndpoint);
 	private static String uriAccessRequest = String.format("%s/device/accessrequest", seniorEndpoint);
-	private static String uriClockIn = String.format("%s/notify/person/clockin", seniorEndpoint);
 	private static String uriDriveDateTime = String.format("%s/driver/datetime", seniorEndpoint);
 	private static String uriDeviceBiometry = String.format("%s/device/biometry", seniorEndpoint);
-	private static String uriDatamartPersonInfo = String.format("%s/datamart/person/info", seniorEndpoint);
+	private static String uriDatamartPersonCardAndPhotoInfo = String.format("%s/datamart/person/info", seniorEndpoint);
+	private static String uriDatamartPersonFingerPrintInfo = String
+			.format("%s/datamart/biometry?managerDeviceId=${managerDeviceId}&personId=${personId}", seniorEndpoint);
 	private static String uriDataMartAreaControl = String.format("%s/datamart/areacontrol", seniorEndpoint);
 	private static String uriNotifyPersonAccess = String.format("%s/notify/person/access", seniorEndpoint);
 
@@ -68,7 +73,8 @@ public class SeniorApiService {
 	}
 
 	private static RestTemplate getRestTemplate() {
-		Integer timeWaitingRestTemplate = Integer.valueOf(UtilPropertiesImpl.getValor("senior.api.sdk.timeout"));
+		Integer timeWaitingRestTemplate = Integer
+				.valueOf(MiddlewareUtilPropertiesImpl.getValor("senior.api.sdk.timeout"));
 		HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
 		clientHttpRequestFactory.setConnectTimeout(timeWaitingRestTemplate);
 
@@ -129,8 +135,9 @@ public class SeniorApiService {
 			header.setContentType(MediaType.APPLICATION_JSON);
 
 			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
-			ResponseEntity<List<ManagerDevice>> response = restTemplate.exchange(uriDevices, HttpMethod.GET, entity, new ParameterizedTypeReference<List<ManagerDevice>>() {
-			});
+			ResponseEntity<List<ManagerDevice>> response = restTemplate.exchange(uriDevices, HttpMethod.GET, entity,
+					new ParameterizedTypeReference<List<ManagerDevice>>() {
+					});
 
 			List<ManagerDevice> devices = response.getBody();
 			if (devices == null || devices.isEmpty()) {
@@ -154,8 +161,9 @@ public class SeniorApiService {
 			header.setContentType(MediaType.APPLICATION_JSON);
 
 			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
-			ResponseEntity<ManagerDevice> response = restTemplate.exchange(uriDevice + "/" + deviceId, HttpMethod.GET, entity, new ParameterizedTypeReference<ManagerDevice>() {
-			});
+			ResponseEntity<ManagerDevice> response = restTemplate.exchange(uriDevice + "/" + deviceId, HttpMethod.GET,
+					entity, new ParameterizedTypeReference<ManagerDevice>() {
+					});
 
 			return response.getBody();
 
@@ -171,12 +179,13 @@ public class SeniorApiService {
 
 		try {
 			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
-			ResponseEntity<AllPendency> response = restTemplate.exchange(uriDevicePendencies + "/" + deviceId, HttpMethod.GET, entity, AllPendency.class);
+			ResponseEntity<AllPendency> response = restTemplate.exchange(uriDevicePendencies + "/" + deviceId,
+					HttpMethod.GET, entity, AllPendency.class);
 
 			AllPendency allPendencies = response.getBody();
 			return allPendencies;
 		} catch (Exception e) {
-			CLogger.logSeniorError("SENIOR SERVICE", "getDevice", e);
+			CLogger.logSeniorError("getDevicePendencies", "getDevice", e);
 			return null;
 		}
 	}
@@ -184,8 +193,9 @@ public class SeniorApiService {
 	public AreaControlList getAreaById(Long areaId) {
 		try {
 			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
-			ResponseEntity<List<AreaControlList>> response = restTemplate.exchange(uriAreaControl, HttpMethod.GET, entity, new ParameterizedTypeReference<List<AreaControlList>>() {
-			});
+			ResponseEntity<List<AreaControlList>> response = restTemplate.exchange(uriAreaControl, HttpMethod.GET,
+					entity, new ParameterizedTypeReference<List<AreaControlList>>() {
+					});
 
 			List<AreaControlList> areasControl = response.getBody();
 			if (areasControl == null || areasControl.isEmpty()) {
@@ -198,42 +208,43 @@ public class SeniorApiService {
 					return areaControl;
 			return null;
 		} catch (Exception e) {
-			CLogger.logSeniorError("GET AREA BY ID: " + areaId, "getDevice", e);
+			CLogger.logSeniorError("getAreaById: " + areaId, "ERROR", e);
 			return null;
 		}
 	}
 
 	public void sendEventList(List<Event> events) {
 		try {
-			CLogger.logSeniorDebug("SENDING DEVICE EVENT", Utils.listToJson(events));
+			CLogger.logSeniorDebug("sendEventList", Utils.listToJson(events));
 
 			HttpEntity<List<Event>> entity = new HttpEntity<>(events, httpHeaderSenior);
 			restTemplate.postForObject(uriNotifyDeviceEvent, entity, String.class);
-			CLogger.logSeniorDebug("SENDING DEVICE EVENT", "SUCCESS");
+			CLogger.logSeniorDebug("sendEventList", "SUCCESS");
 
 		} catch (Exception e) {
-			CLogger.logSeniorError("SENDING DEVICE EVENT", "ERROR", e);
+			CLogger.logSeniorError("sendEventList", "ERROR", e);
 		}
 	}
 
 	public void updatePendenciesExecuted(List<PendencyExecuted> pendenciesList) {
 		try {
-			HttpEntity<List<PendencyExecuted>> entity = new HttpEntity<List<PendencyExecuted>>(pendenciesList, httpHeaderSenior);
+			HttpEntity<List<PendencyExecuted>> entity = new HttpEntity<List<PendencyExecuted>>(pendenciesList,
+					httpHeaderSenior);
 			HttpEntity<String> res = restTemplate.exchange(uriPendencySuccess, HttpMethod.POST, entity, String.class);
-			CLogger.logSeniorDebug("UPDATE EXECUTED", "OK: " + res.getBody());
+			CLogger.logSeniorDebug("updatePendenciesExecuted", "OK: " + res.getBody());
 		} catch (Exception e) {
-			CLogger.logSeniorError("UPDATE EXECUTED", "ERROR", e);
+			CLogger.logSeniorError("updatePendenciesExecuted", "ERROR", e);
 		}
 	}
 
 	public void updatePendenciesStatus(List<PendencyUpdated> pendenciesList) {
-
 		try {
-			HttpEntity<List<PendencyUpdated>> entity = new HttpEntity<List<PendencyUpdated>>(pendenciesList, httpHeaderSenior);
+			HttpEntity<List<PendencyUpdated>> entity = new HttpEntity<List<PendencyUpdated>>(pendenciesList,
+					httpHeaderSenior);
 			HttpEntity<String> ls = restTemplate.exchange(uriPendencyUpdate, HttpMethod.POST, entity, String.class);
 			CLogger.logSeniorDebug("UPDATE PENDENCY", "OK: " + ls.getBody());
 		} catch (Exception e) {
-			CLogger.logSeniorError("UPDATE PENDENCY", "ERROR", e);
+			CLogger.logSeniorError("updatePendenciesStatus", "ERROR", e);
 		}
 
 	}
@@ -242,12 +253,12 @@ public class SeniorApiService {
 		try {
 			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
 			String url = uriDeviceAllowedPhotos.replace("${id}", device.getId().toString());
-			ResponseEntity<List<PersonPhotoTemplates>> response = restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<List<PersonPhotoTemplates>>() {
-			});
-			System.out.println(response.getBody());
+			ResponseEntity<List<PersonPhotoTemplates>> response = restTemplate.exchange(url, HttpMethod.GET, entity,
+					new ParameterizedTypeReference<List<PersonPhotoTemplates>>() {
+					});
 			return response.getBody();
 		} catch (Exception e) {
-			CLogger.logSeniorError("getCredentialFacialList", "ERROR", e);
+			CLogger.logSeniorError("getDeviceAllowedFacialList", "ERROR", e);
 			return new ArrayList<PersonPhotoTemplates>();
 		}
 	}
@@ -255,13 +266,87 @@ public class SeniorApiService {
 	public List<CardList> getDeviceAllowedCardList() {
 		try {
 			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
-			ResponseEntity<List<CardList>> response = restTemplate.exchange(uriDeviceAllowedCards.replace("${id}", device.getId().toString()), HttpMethod.GET, entity, new ParameterizedTypeReference<List<CardList>>() {
-			});
-			System.out.println(response.getBody());
+			ResponseEntity<List<CardList>> response = restTemplate.exchange(
+					uriDeviceAllowedCards.replace("${id}", device.getId().toString()), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<List<CardList>>() {
+					});
 			return response.getBody();
 		} catch (Exception e) {
-			CLogger.logSeniorError("getCredentialFacialList", "ERROR", e);
+			CLogger.logSeniorError("getDeviceAllowedCardList", "ERROR", e);
 			return new ArrayList<CardList>();
+		}
+	}
+
+	public List<AccessBiometry> getDeviceAllowedFingerPrint() {
+		try {
+			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
+			ResponseEntity<List<AccessBiometry>> response = restTemplate.exchange(
+					uriDeviceAllowedBiometries.replace("${id}", device.getId().toString()), HttpMethod.GET, entity,
+					new ParameterizedTypeReference<List<AccessBiometry>>() {
+					});
+			return response.getBody();
+		} catch (Exception e) {
+			CLogger.logSeniorError("getDeviceAllowedCardList", "ERROR", e);
+			return new ArrayList<AccessBiometry>();
+		}
+	}
+
+	public static PersonValidationResponse validateOnlineAccess(AccessRequest accessRequest) {
+		try {
+			HttpEntity<String> entity = new HttpEntity<String>(objectMapper.writeValueAsString(accessRequest),
+					httpHeaderSenior);
+			ResponseEntity<PersonValidationResponse> response = restTemplate.exchange(uriAccessRequest, HttpMethod.POST,
+					entity, PersonValidationResponse.class);
+
+			CLogger.logSeniorDebug("validateOnlineAccess", response.getBody().toString());
+			return response.getBody();
+		} catch (Exception e) {
+			CLogger.logSeniorError("validateOnlineAccess", "ERROR", e);
+			return null;
+		}
+	}
+
+	public static void notifyPersonAccess(List<Access> access) {
+		try {
+			CLogger.logSeniorInfo("Sending notifyPersonAccess", access.toString());
+			HttpEntity<String> entity = new HttpEntity<String>(objectMapper.writeValueAsString(access),
+					httpHeaderSenior);
+			restTemplate.exchange(uriNotifyPersonAccess, HttpMethod.POST, entity,
+					new ParameterizedTypeReference<List<Access>>() {
+					});
+			CLogger.logSeniorInfo("Sent notifyPersonAccess", access.toString());
+		} catch (Exception e) {
+			CLogger.logSeniorError("notifyPersonAccess", "ERROR", e);
+		}
+	}
+
+	public static PersonInfo getPersonCardAndPhotoInfo(Long managerDeviceId, Long personId, Long cardNumber) {
+		try {
+			String url = uriDatamartPersonCardAndPhotoInfo + "?managerDeviceId=5"
+					+ String.format(personId != null ? "&personId=%s" : "&cardNumber=%s",
+							personId != null ? personId.toString() : cardNumber.toString());
+			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
+			ResponseEntity<PersonInfo> personInfo = restTemplate.exchange(url, HttpMethod.GET, entity,
+					PersonInfo.class);
+			return personInfo.getBody();
+		} catch (Exception e) {
+			CLogger.logSeniorError("getPersonCardInfo", "ERROR: " + "\n"
+					+ String.format("Manager Device Id: $s , Person Id: %s", managerDeviceId, personId), e);
+			return null;
+		}
+	}
+
+	public static PersonTemplates getPersonBiometries(Long managerDeviceId, Long personId) {
+		try {
+			String url = uriDatamartPersonFingerPrintInfo.replaceFirst("${managerDeviceId}", managerDeviceId.toString())
+					.replace("${personId}", personId.toString());
+			ResponseEntity<PersonTemplates> personInfo = restTemplate.exchange(url, HttpMethod.GET, null,
+					PersonTemplates.class);
+			return personInfo.getBody();
+		} catch (Exception e) {
+			CLogger.logSeniorError("getPersonCardInfo", "ERROR: " + "\n"
+					+ String.format("Manager Device Id: $s , Person Id: %s", managerDeviceId, personId), e);
+			return null;
 		}
 	}
 

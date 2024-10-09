@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * ValidationResponse
@@ -212,7 +212,7 @@ public class ValidationResponse {
    * Get accessType
    * @return accessType
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public AccessTypeEnum getAccessType() {
     return accessType;
   }
@@ -230,7 +230,7 @@ public class ValidationResponse {
    * Informa se verifica biometria
    * @return verifyBiometry
   **/
-  @ApiModelProperty(value = "Informa se verifica biometria")
+  @Schema(description  = "Informa se verifica biometria")
   public Boolean isVerifyBiometry() {
     return verifyBiometry;
   }
@@ -248,7 +248,7 @@ public class ValidationResponse {
    * Identificador da localização atual da pessoa
    * @return currentOwnerLocation
   **/
-  @ApiModelProperty(value = "Identificador da localização atual da pessoa")
+  @Schema(description  = "Identificador da localização atual da pessoa")
   public Long getCurrentOwnerLocation() {
     return currentOwnerLocation;
   }
@@ -266,7 +266,7 @@ public class ValidationResponse {
    * Informa se a pessoa controla nível
    * @return personCheckLevel
   **/
-  @ApiModelProperty(value = "Informa se a pessoa controla nível")
+  @Schema(description  = "Informa se a pessoa controla nível")
   public Boolean isPersonCheckLevel() {
     return personCheckLevel;
   }
@@ -284,7 +284,7 @@ public class ValidationResponse {
    * Tipo da credencial (titular ou provisória)
    * @return credentialType
   **/
-  @ApiModelProperty(value = "Tipo da credencial (titular ou provisória)")
+  @Schema(description  = "Tipo da credencial (titular ou provisória)")
   public CredentialTypeEnum getCredentialType() {
     return credentialType;
   }

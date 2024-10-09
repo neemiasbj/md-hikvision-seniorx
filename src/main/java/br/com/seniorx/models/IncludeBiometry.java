@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * IncludeBiometry
@@ -161,7 +161,7 @@ public class IncludeBiometry {
    * Get origin
    * @return origin
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public OriginEnum getOrigin() {
     return origin;
   }
@@ -179,7 +179,7 @@ public class IncludeBiometry {
    * Identificador da origem do cadastro biométrico
    * @return originId
   **/
-  @ApiModelProperty(value = "Identificador da origem do cadastro biométrico")
+  @Schema(description  = "Identificador da origem do cadastro biométrico")
   public Long getOriginId() {
     return originId;
   }
@@ -197,7 +197,7 @@ public class IncludeBiometry {
    * Get manufacturer
    * @return manufacturer
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public ManufacturerEnum getManufacturer() {
     return manufacturer;
   }
@@ -223,7 +223,7 @@ public class IncludeBiometry {
    * Codificado em base64
    * @return templateList
   **/
-  @ApiModelProperty(value = "Codificado em base64")
+  @Schema(description  = "Codificado em base64")
   public List<String> getTemplateList() {
     return templateList;
   }

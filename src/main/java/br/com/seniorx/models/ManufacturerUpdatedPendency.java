@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * ManufacturerUpdatedPendency
@@ -91,7 +91,7 @@ public class ManufacturerUpdatedPendency {
    * Identificador da pendência
    * @return pendencyId
   **/
-  @ApiModelProperty(value = "Identificador da pendência")
+  @Schema(description  = "Identificador da pendência")
   public Long getPendencyId() {
     return pendencyId;
   }
@@ -109,7 +109,7 @@ public class ManufacturerUpdatedPendency {
    * Identificador do dispositivo gerenciador
    * @return managerDeviceId
   **/
-  @ApiModelProperty(value = "Identificador do dispositivo gerenciador")
+  @Schema(description  = "Identificador do dispositivo gerenciador")
   public Long getManagerDeviceId() {
     return managerDeviceId;
   }
@@ -127,7 +127,7 @@ public class ManufacturerUpdatedPendency {
    * Get documentType
    * @return documentType
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public DocumentTypeEnum getDocumentType() {
     return documentType;
   }
@@ -145,7 +145,7 @@ public class ManufacturerUpdatedPendency {
    * Documento
    * @return document
   **/
-  @ApiModelProperty(value = "Documento")
+  @Schema(description  = "Documento")
   public String getDocument() {
     return document;
   }
@@ -163,7 +163,7 @@ public class ManufacturerUpdatedPendency {
    * Razão social
    * @return companyName
   **/
-  @ApiModelProperty(value = "Razão social")
+  @Schema(description  = "Razão social")
   public String getCompanyName() {
     return companyName;
   }
@@ -181,7 +181,7 @@ public class ManufacturerUpdatedPendency {
    * Endereço
    * @return address
   **/
-  @ApiModelProperty(value = "Endereço")
+  @Schema(description  = "Endereço")
   public String getAddress() {
     return address;
   }

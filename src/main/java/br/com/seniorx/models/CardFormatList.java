@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * CardFormatList
@@ -50,7 +50,7 @@ public class CardFormatList {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(value = "")
+  @Schema(description  = "")
   public Long getId() {
     return id;
   }
@@ -68,7 +68,7 @@ public class CardFormatList {
    * Informa a quantidade de bits do cartão, que pode variar segundo o seu fabricante e modelo
    * @return numOfBitsOnCard
   **/
-  @ApiModelProperty(value = "Informa a quantidade de bits do cartão, que pode variar segundo o seu fabricante e modelo")
+  @Schema(description  = "Informa a quantidade de bits do cartão, que pode variar segundo o seu fabricante e modelo")
   public Integer getNumOfBitsOnCard() {
     return numOfBitsOnCard;
   }
@@ -86,7 +86,7 @@ public class CardFormatList {
    * Informa a quantidade de bits de paridade par que será considerada a partir do início dos bits
    * @return numOfBitsFromStartForEvenParity
   **/
-  @ApiModelProperty(value = "Informa a quantidade de bits de paridade par que será considerada a partir do início dos bits")
+  @Schema(description  = "Informa a quantidade de bits de paridade par que será considerada a partir do início dos bits")
   public Integer getNumOfBitsFromStartForEvenParity() {
     return numOfBitsFromStartForEvenParity;
   }
@@ -104,7 +104,7 @@ public class CardFormatList {
    * Informa a quantidade de bits de paridade ímpar que será considerada a partir do final dos bits
    * @return numOfBitsToEndForOddParity
   **/
-  @ApiModelProperty(value = "Informa a quantidade de bits de paridade ímpar que será considerada a partir do final dos bits")
+  @Schema(description  = "Informa a quantidade de bits de paridade ímpar que será considerada a partir do final dos bits")
   public Integer getNumOfBitsToEndForOddParity() {
     return numOfBitsToEndForOddParity;
   }
@@ -122,7 +122,7 @@ public class CardFormatList {
    * informa a quantidade de bits do código de acesso, que pode variar segundo o fabricante e modelo do cartão
    * @return numOfBitsIFacilityCode
   **/
-  @ApiModelProperty(value = "informa a quantidade de bits do código de acesso, que pode variar segundo o fabricante e modelo do cartão")
+  @Schema(description  = "informa a quantidade de bits do código de acesso, que pode variar segundo o fabricante e modelo do cartão")
   public Integer getNumOfBitsIFacilityCode() {
     return numOfBitsIFacilityCode;
   }
@@ -140,7 +140,7 @@ public class CardFormatList {
    * Informa o bit de início do código de acesso
    * @return indexFromFirstBitToFirstFacilityCodeBit
   **/
-  @ApiModelProperty(value = "Informa o bit de início do código de acesso")
+  @Schema(description  = "Informa o bit de início do código de acesso")
   public Integer getIndexFromFirstBitToFirstFacilityCodeBit() {
     return indexFromFirstBitToFirstFacilityCodeBit;
   }
@@ -158,7 +158,7 @@ public class CardFormatList {
    * Informa a quantidade de bits do número de cartão, lembrando que a contagem inicia a partir do bit de início do número de cartão
    * @return numOfBitsInCardNumber
   **/
-  @ApiModelProperty(value = "Informa a quantidade de bits do número de cartão, lembrando que a contagem inicia a partir do bit de início do número de cartão")
+  @Schema(description  = "Informa a quantidade de bits do número de cartão, lembrando que a contagem inicia a partir do bit de início do número de cartão")
   public Integer getNumOfBitsInCardNumber() {
     return numOfBitsInCardNumber;
   }
@@ -176,7 +176,7 @@ public class CardFormatList {
    * Informa o bit de início do número de cartão que indica a posição de início da leitura do número do cartão
    * @return indexFromFirstBitToFirstCardNumberBit
   **/
-  @ApiModelProperty(value = "Informa o bit de início do número de cartão que indica a posição de início da leitura do número do cartão")
+  @Schema(description  = "Informa o bit de início do número de cartão que indica a posição de início da leitura do número do cartão")
   public Integer getIndexFromFirstBitToFirstCardNumberBit() {
     return indexFromFirstBitToFirstCardNumberBit;
   }
@@ -194,7 +194,7 @@ public class CardFormatList {
    * Informa o código de acesso do formato
    * @return facilityCode
   **/
-  @ApiModelProperty(value = "Informa o código de acesso do formato")
+  @Schema(description  = "Informa o código de acesso do formato")
   public Long getFacilityCode() {
     return facilityCode;
   }
@@ -212,7 +212,7 @@ public class CardFormatList {
    * Informa a quantidade de deslocamento dos bits a serem deslocados no momento da validação de dados
    * @return cardNumberOffset
   **/
-  @ApiModelProperty(value = "Informa a quantidade de deslocamento dos bits a serem deslocados no momento da validação de dados")
+  @Schema(description  = "Informa a quantidade de deslocamento dos bits a serem deslocados no momento da validação de dados")
   public Long getCardNumberOffset() {
     return cardNumberOffset;
   }

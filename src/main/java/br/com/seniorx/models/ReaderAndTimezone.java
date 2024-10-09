@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * ReaderAndTimezone
@@ -26,7 +26,7 @@ public class ReaderAndTimezone {
    * Identificador da leitora
    * @return readerId
   **/
-  @ApiModelProperty(value = "Identificador da leitora")
+  @Schema(description  = "Identificador da leitora")
   public Long getReaderId() {
     return readerId;
   }
@@ -44,7 +44,7 @@ public class ReaderAndTimezone {
    * Identificador do fuso horário
    * @return timezoneId
   **/
-  @ApiModelProperty(value = "Identificador do fuso horário")
+  @Schema(description  = "Identificador do fuso horário")
   public Long getTimezoneId() {
     return timezoneId;
   }
