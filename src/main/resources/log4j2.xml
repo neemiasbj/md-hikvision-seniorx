@@ -2,7 +2,7 @@
 <Configuration>
 
 	<Properties>
-		<Property name="application">conexx.middleware</Property>
+		<Property name="application">MiddlewareHikvisionSeniorX.middleware</Property>
 		<Property name="log-path">log/</Property>
 		<Property name="pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} | %-5p | PID %pid
 			| %t %c{10} | %m%n</Property>

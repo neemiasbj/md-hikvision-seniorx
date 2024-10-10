@@ -3,7 +3,6 @@ package br.com.thidi.middleware.services;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -27,6 +26,7 @@ import br.com.hikvision.minmoe.models.IncludeUserFingerPrint;
 import br.com.hikvision.minmoe.models.SearchPhoto;
 import br.com.hikvision.services.HikvisionMinMoeService;
 import br.com.seniorx.ManagerDeviceList;
+import br.com.seniorx.enums.PendencyUpdateStatus;
 import br.com.seniorx.models.AccessBiometry;
 import br.com.seniorx.models.ActiveDeviceOutputPendency;
 import br.com.seniorx.models.AllPendency;
@@ -210,12 +210,13 @@ public class MiddlewareSeniorHandler {
 		CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " DeviceDateTimePendencies", "OK");
 	}
 
-	private static void updatePendencyStatus(SeniorApiService seniorService, Long pendencyId, OperationEnum status) {
+	private static void updatePendencyStatus(SeniorApiService seniorService, Long pendencyId, OperationEnum status,
+			PendencyUpdateStatus updateStatus) {
 		List<PendencyUpdated> pendenciesUpdate = new ArrayList<PendencyUpdated>();
 		PendencyUpdated pendencyUpdated = new PendencyUpdated();
 		pendencyUpdated.setPendencyId(pendencyId);
 		pendencyUpdated.setOperation(status);
-		pendencyUpdated.setErrorCode(345);
+		pendencyUpdated.setErrorCode(updateStatus.getCode());
 		pendenciesUpdate.add(pendencyUpdated);
 		seniorService.updatePendenciesStatus(pendenciesUpdate);
 	}
@@ -298,13 +299,15 @@ public class MiddlewareSeniorHandler {
 						CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " IncludePhotoPendencies",
 								"OK");
 					} else {
-						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+								PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 						CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " IncludePhotoPendencies",
 								"ERROR");
 
 					}
 				} catch (Exception e) {
-					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+							PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 					CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " IncludePhotoPendencies",
 							e.getMessage());
 				}
@@ -344,13 +347,15 @@ public class MiddlewareSeniorHandler {
 						CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " IncludePhotoPendencies",
 								"OK");
 					} else {
-						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+								PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 						CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " IncludePhotoPendencies",
 								"ERROR");
 
 					}
 				} catch (Exception e) {
-					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+							PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 					CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " BlockDevicePendencies",
 							e.getMessage());
 				}
@@ -374,13 +379,15 @@ public class MiddlewareSeniorHandler {
 						CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " IncludePhotoPendencies",
 								"OK");
 					} else {
-						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+								PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 						CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " IncludePhotoPendencies",
 								"ERROR");
 
 					}
 				} catch (Exception e) {
-					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+							PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 					CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " UnblockDevicePendencies",
 							e.getMessage());
 				}
@@ -405,13 +412,15 @@ public class MiddlewareSeniorHandler {
 					CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " SetDeviceEmergencyPendencies",
 							"OK");
 				} else {
-					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+							PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 					CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " SetDeviceEmergencyPendencies",
 							"ERROR");
 
 				}
 			} catch (Exception e) {
-				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+						PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 				CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " SetDeviceEmergencyPendencies",
 						e.getMessage());
 			}
@@ -430,13 +439,15 @@ public class MiddlewareSeniorHandler {
 					CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " UnsetDeviceEmergencyPendencies",
 							"OK");
 				} else {
-					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+							PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 					CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " UnsetDeviceEmergencyPendencies",
 							"ERROR");
 
 				}
 			} catch (Exception e) {
-				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+						PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 				CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " UnsetDeviceEmergencyPendencies",
 						e.getMessage());
 			}
@@ -448,7 +459,8 @@ public class MiddlewareSeniorHandler {
 			SeniorApiService seniorService) {
 		try {
 			for (ApolloIncludeCardPendency pendency : pendencies) {
-				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.REMOVE_PENDENCY);
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.REMOVE_PENDENCY,
+						PendencyUpdateStatus.PENDING_NOT_IMPLEMENTED);
 				CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " ApolloIncludeCardPendencies", "OK");
 			}
 		} catch (Exception e) {
@@ -461,7 +473,8 @@ public class MiddlewareSeniorHandler {
 			SeniorApiService seniorService) {
 		try {
 			for (ApolloExcludeCardPendency pendency : pendencies) {
-				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.REMOVE_PENDENCY);
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.REMOVE_PENDENCY,
+						PendencyUpdateStatus.PENDING_NOT_IMPLEMENTED);
 				CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " ApolloExcludeCardPendencies", "OK");
 			}
 		} catch (Exception e) {
@@ -534,13 +547,15 @@ public class MiddlewareSeniorHandler {
 						CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " IncludeBiometryPendency",
 								"OK");
 					} else {
-						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+								PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 						CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " IncludeBiometryPendency",
 								"ERROR");
 					}
 
 				} catch (Exception e) {
-					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+							PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 					CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " IncludeBiometryPendency",
 							e.getMessage());
 				}
@@ -574,13 +589,15 @@ public class MiddlewareSeniorHandler {
 						CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " ExcludeBiometryPendency",
 								"OK");
 					} else {
-						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+								PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 						CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " ExcludeBiometryPendency",
 								"ERROR");
 					}
 
 				} catch (Exception e) {
-					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+							PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 					CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " ExcludeBiometryPendency",
 							e.getMessage());
 				}
@@ -595,23 +612,32 @@ public class MiddlewareSeniorHandler {
 			HikvisionMinMoeService minmoeService) {
 		try {
 			for (DeviceUpdatedPendency pendency : pendencies) {
-				if (pendency.getOperation().equals(OperationUpdateDeviceEnum.DEVICE_CONFIG)) {
-					ManagerDevice device = SeniorApiService.getDevice(pendency.getManagerDeviceId());
-					Boolean success = minmoeService.configureDevice(device);
-					if (success) {
+				try {
+
+					if (pendency.getOperation().equals(OperationUpdateDeviceEnum.DEVICE_CONFIG)) {
+						ManagerDevice device = SeniorApiService.getDevice(pendency.getManagerDeviceId());
+						Boolean success = minmoeService.configureDevice(device);
+						if (success) {
+							sendSuccessPendency(seniorService, pendency.getPendencyId());
+							CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " DevicePendencies",
+									"OK");
+						} else
+							updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.REMOVE_PENDENCY,
+									PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
+
+					} else if (pendency.getOperation().equals(OperationUpdateDeviceEnum.DEVICE_CREATED)
+							|| pendency.getOperation().equals(OperationUpdateDeviceEnum.DEVICE_REMOVED)
+							|| pendency.getOperation().equals(OperationUpdateDeviceEnum.DEVICE_UPDATED)) {
+						List<ManagerDevice> devices = SeniorApiService.getDevices();
+						ManagerDeviceList.setManagerDeviceList(devices);
+					} else {
 						sendSuccessPendency(seniorService, pendency.getPendencyId());
 						CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " DevicePendencies", "OK");
-					} else
-						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.REMOVE_PENDENCY);
-
-				} else if (pendency.getOperation().equals(OperationUpdateDeviceEnum.DEVICE_CREATED)
-						|| pendency.getOperation().equals(OperationUpdateDeviceEnum.DEVICE_REMOVED)
-						|| pendency.getOperation().equals(OperationUpdateDeviceEnum.DEVICE_UPDATED)) {
-					List<ManagerDevice> devices = SeniorApiService.getDevices();
-					ManagerDeviceList.setManagerDeviceList(devices);
-				} else {
-					sendSuccessPendency(seniorService, pendency.getPendencyId());
-					CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " DevicePendencies", "OK");
+					}
+				} catch (Exception e) {
+					CLogger.logSeniorDebug("handleDevicePendencies", e.getMessage());
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.REMOVE_PENDENCY,
+							PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 				}
 			}
 		} catch (Exception e) {
@@ -624,7 +650,8 @@ public class MiddlewareSeniorHandler {
 		// TODO
 		try {
 			for (LoadHolidayListPendency pendency : pendencies) {
-				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+						PendencyUpdateStatus.PENDING_NOT_IMPLEMENTED);
 				CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " LoadHolidayListPendencies", "OK");
 			}
 		} catch (Exception e) {
@@ -635,10 +662,10 @@ public class MiddlewareSeniorHandler {
 
 	private static void handleRemoveHolidayListPendencies(List<DevicePendency> pendencies,
 			SeniorApiService seniorService) {
-		// TODO
 		try {
 			for (DevicePendency pendency : pendencies) {
-				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+						PendencyUpdateStatus.PENDING_NOT_IMPLEMENTED);
 				CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " RemoveHolidayListPendencies", "OK");
 			}
 		} catch (Exception e) {
@@ -649,10 +676,10 @@ public class MiddlewareSeniorHandler {
 
 	private static void handleActivateDeviceOutputPendencies(List<ActiveDeviceOutputPendency> pendencies,
 			SeniorApiService seniorService) {
-		// TODO
 		try {
 			for (ActiveDeviceOutputPendency pendency : pendencies) {
-				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+						PendencyUpdateStatus.PENDING_NOT_IMPLEMENTED);
 				CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " ActivateDeviceOutputPendencies",
 						"OK");
 			}
@@ -667,7 +694,8 @@ public class MiddlewareSeniorHandler {
 		// TODO
 		try {
 			for (DeactiveDeviceOutputPendency pendency : pendencies) {
-				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+						PendencyUpdateStatus.PENDING_NOT_IMPLEMENTED);
 				CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " DeactivateDeviceOutputPendencies",
 						"OK");
 			}
@@ -682,7 +710,8 @@ public class MiddlewareSeniorHandler {
 		// TODO
 		try {
 			for (DatamartUpdatedPendency pendency : pendencies) {
-				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+						PendencyUpdateStatus.PENDING_NOT_IMPLEMENTED);
 				CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " DatamartUpdatedPendencies", "OK");
 			}
 		} catch (Exception e) {
@@ -696,7 +725,8 @@ public class MiddlewareSeniorHandler {
 		// TODO
 		try {
 			for (PersonAreaUpdatedPendency pendency : pendencies) {
-				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+						PendencyUpdateStatus.PENDING_NOT_IMPLEMENTED);
 				CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " PersonLocationUpdatedPendencies",
 						"OK");
 			}
@@ -711,7 +741,8 @@ public class MiddlewareSeniorHandler {
 		// TODO
 		try {
 			for (CollectEventPendency pendency : pendencies) {
-				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+						PendencyUpdateStatus.PENDING_NOT_IMPLEMENTED);
 				CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " CollectEventPendencies", "OK");
 			}
 		} catch (Exception e) {
@@ -724,7 +755,8 @@ public class MiddlewareSeniorHandler {
 		// TODO
 		try {
 			for (DevicePendency pendency : pendencies) {
-				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+						PendencyUpdateStatus.PENDING_NOT_IMPLEMENTED);
 				CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " InputStatusPendencies", "OK");
 			}
 		} catch (Exception e) {
@@ -737,7 +769,8 @@ public class MiddlewareSeniorHandler {
 		// TODO
 		try {
 			for (ManufacturerUpdatedPendency pendency : pendencies) {
-				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+						PendencyUpdateStatus.PENDING_NOT_IMPLEMENTED);
 				CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " ManufacturerUpdatedPendencies",
 						"OK");
 			}
@@ -752,7 +785,8 @@ public class MiddlewareSeniorHandler {
 		// TODO
 		try {
 			for (UpdatePersonREPPendency pendency : pendencies) {
-				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+						PendencyUpdateStatus.PENDING_NOT_IMPLEMENTED);
 				CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " UpdatePersonREPPendencies", "OK");
 			}
 		} catch (Exception e) {
@@ -825,18 +859,19 @@ public class MiddlewareSeniorHandler {
 										"OK");
 							} else {
 								updatePendencyStatus(seniorService, pendency.getPendencyId(),
-										OperationEnum.KEEP_PENDENCY);
+										OperationEnum.KEEP_PENDENCY,
+										PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 								CLogger.logSeniorError(
 										getDeviceInfo(seniorService.getDevice()) + " handleIncludeCardPendencies",
 										"ERROR");
 							}
 						} catch (Exception e) {
-							System.out.println("handleLoadAllowCardListPendencies");
-							e.printStackTrace();
+							CLogger.logSeniorError("handleLoadAllowCardListPendencies", e.getMessage());
 						}
 					}
 				} catch (Exception e) {
-					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+							PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 					CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " IncludePhotoPendencies",
 							e.getMessage());
 				}
@@ -888,7 +923,8 @@ public class MiddlewareSeniorHandler {
 										getDeviceInfo(seniorService.getDevice()) + " IncludeBiometryPendency", "OK");
 							} else {
 								updatePendencyStatus(seniorService, pendency.getPendencyId(),
-										OperationEnum.KEEP_PENDENCY);
+										OperationEnum.KEEP_PENDENCY,
+										PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 								CLogger.logSeniorError(
 										getDeviceInfo(seniorService.getDevice()) + " IncludeBiometryPendency", "ERROR");
 							}
@@ -928,7 +964,8 @@ public class MiddlewareSeniorHandler {
 						CLogger.logSeniorDebug(
 								getDeviceInfo(seniorService.getDevice()) + " RemoveBiometryListPendencies", "OK");
 					} else {
-						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+								PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 						CLogger.logSeniorError(
 								getDeviceInfo(seniorService.getDevice()) + " RemoveBiometryListPendencies", "ERROR");
 					}
@@ -966,12 +1003,14 @@ public class MiddlewareSeniorHandler {
 						CLogger.logSeniorDebug(
 								getDeviceInfo(seniorService.getDevice()) + " handleIncludeCardPendencies", "OK");
 					} else {
-						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+								PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 						CLogger.logSeniorError(
 								getDeviceInfo(seniorService.getDevice()) + " handleIncludeCardPendencies", "ERROR");
 					}
 				} catch (Exception e) {
-					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+							PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 					CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " IncludePhotoPendencies",
 							e.getMessage());
 				}
@@ -1014,12 +1053,14 @@ public class MiddlewareSeniorHandler {
 						CLogger.logSeniorDebug(
 								getDeviceInfo(seniorService.getDevice()) + " handleIncludeCardPendencies", "OK");
 					} else {
-						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+								PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 						CLogger.logSeniorError(
 								getDeviceInfo(seniorService.getDevice()) + " handleIncludeCardPendencies", "ERROR");
 					}
 				} catch (Exception e) {
-					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+							PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 					CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " ExcludeCardPendency",
 							e.getMessage());
 				}
@@ -1034,7 +1075,8 @@ public class MiddlewareSeniorHandler {
 		// TODO
 		try {
 			for (DeviceDisplayMessagePendency pendency : pendencies) {
-				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+						PendencyUpdateStatus.PENDING_NOT_IMPLEMENTED);
 				CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " DeviceDisplayMessagePendencies",
 						"OK");
 			}
@@ -1050,7 +1092,8 @@ public class MiddlewareSeniorHandler {
 		try {
 			for (DevicePendency pendency : pendencies) {
 
-				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+				updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+						PendencyUpdateStatus.PENDING_NOT_IMPLEMENTED);
 				CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " UpdateFirmwarePendencies", "OK");
 			}
 		} catch (Exception e) {
@@ -1102,13 +1145,15 @@ public class MiddlewareSeniorHandler {
 						CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " IncludePhotoPendencies",
 								"OK");
 					} else {
-						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+								PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 						CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " IncludePhotoPendencies",
 								"ERROR");
 
 					}
 				} catch (Exception e) {
-					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+							PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 					CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " IncludePhotoPendencies",
 							e.getMessage());
 				}
@@ -1180,12 +1225,14 @@ public class MiddlewareSeniorHandler {
 						CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " ExcludePhotoPendencies",
 								"OK");
 					} else {
-						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.REMOVE_PENDENCY);
+						updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.REMOVE_PENDENCY,
+								PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 						CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " ExcludePhotoPendencies",
 								"ERROR");
 					}
 				} catch (Exception e) {
-					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+							PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 					CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " ExcludePhotoPendencies",
 							e.getMessage());
 				}
@@ -1236,7 +1283,8 @@ public class MiddlewareSeniorHandler {
 
 						Boolean success = includePersonPhoto(user, personInfo.getPhotoURL(), minmoeService);
 						if (!success) {
-							updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+							updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+									PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 							CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " ExcludePhotoPendencies",
 									"ERROR");
 							return;
@@ -1247,7 +1295,8 @@ public class MiddlewareSeniorHandler {
 					CLogger.logSeniorDebug(getDeviceInfo(seniorService.getDevice()) + " ExcludePhotoPendencies", "OK");
 
 				} catch (Exception e) {
-					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY);
+					updatePendencyStatus(seniorService, pendency.getPendencyId(), OperationEnum.KEEP_PENDENCY,
+							PendencyUpdateStatus.PENDING_EXECUTED_WITH_UNKNOWN_ERROR);
 					CLogger.logSeniorError(getDeviceInfo(seniorService.getDevice()) + " ExcludePhotoPendencies",
 							e.getMessage());
 				}

@@ -283,7 +283,7 @@ public class HikvisionMinMoeService {
 		HttpEntity<String> entity = new HttpEntity<String>(objectMapper.writeValueAsString(request));
 		ResponseEntity<String> response = digestAuthRestTemplate
 				.executeWithDigestAuth(deviceUri + SET_REMOTE_CHECK_PATH, HttpMethod.PUT, entity);
-		System.out.println("setRemoteCheck response: " + response.getBody());
+		CLogger.logHikivisionDebug("setRemoteCheck response", response.getBody());
 
 		return true;
 	}

@@ -66,13 +66,14 @@ public class MinMoeController {
 						"MinMoe tipo de registro não tratado para: " + requestBody);
 				return ResponseEntity.ok(null);
 			} else {
-				if (empCard.getCardId() != null
-						&& HikvisionEmployeeCardManager.hasRegisterByCardIdUnderFiveSeconds(empCard)) {
+				if (empCard.getCardId() != null && HikvisionEmployeeCardManager
+						.hasRegisterByCardIdUnderFiveSeconds(req.getIpAddress(), empCard)) {
 					CLogger.logHikivisionInfo("MinMoe Controller",
 							"Registro já encontrado nos últimos 5 segundos para cardNo: " + empCard.toString());
 					return ResponseEntity.ok(null);
 				} else if (empCard.getEmployeeId() != null && empCard.getCardId() == null
-						&& HikvisionEmployeeCardManager.hasRegisterByEmployeeIdUnderFiveSeconds(empCard)) {
+						&& HikvisionEmployeeCardManager.hasRegisterByEmployeeIdUnderFiveSeconds(req.getIpAddress(),
+								empCard)) {
 					CLogger.logHikivisionInfo("MinMoe Controller",
 							"Registro já encontrado nos últimos 5 segundos para employeeNo: " + empCard.toString());
 					return ResponseEntity.ok(null);

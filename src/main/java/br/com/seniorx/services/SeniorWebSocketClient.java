@@ -41,7 +41,7 @@ public class SeniorWebSocketClient {
 		try {
 			WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 			this.session = container.connectToServer(this, endpointURI);
-			System.out.println("Connected to WebSocket server at " + endpointURI);
+			CLogger.logSeniorDebug("Websocket", "Connected to WebSocket server at " + endpointURI);
 		} catch (Exception e) {
 			System.err.println("Failed to connect. Retrying in 5 seconds..." + e.getLocalizedMessage());
 			scheduleReconnect();
@@ -51,12 +51,12 @@ public class SeniorWebSocketClient {
 	@OnOpen
 	public void onOpen(Session session) {
 		this.session = session;
-		System.out.println("WebSocket connection opened.");
+		CLogger.logSeniorDebug("Websocket", "Connection opened.");
 	}
 
 	@OnMessage
 	public void onMessage(String message) {
-		System.out.println(message);
+		CLogger.logSeniorDebug("Websocket", "MESSAGE: " + message);
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode jsonNode;
 		try {
@@ -69,7 +69,7 @@ public class SeniorWebSocketClient {
 
 	@OnClose
 	public void onClose(Session session, CloseReason reason) {
-		System.out.println("WebSocket connection closed: " + reason.getReasonPhrase());
+		CLogger.logSeniorDebug("Websocket", "WebSocket connection closed: " + reason.getReasonPhrase());
 		scheduleReconnect();
 	}
 

@@ -223,7 +223,6 @@ public class Utils {
 
 	public static byte[] convertHexStringToByteArray(String s) {
 		int it = Integer.parseInt(s, 16);
-		System.out.println("Hexadecimal String " + s);
 		BigInteger bigInt = BigInteger.valueOf(it);
 		byte[] byteArray = (bigInt.toByteArray());
 		return byteArray;

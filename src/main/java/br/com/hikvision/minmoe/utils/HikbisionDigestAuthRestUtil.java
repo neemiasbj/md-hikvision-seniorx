@@ -31,7 +31,6 @@ public class HikbisionDigestAuthRestUtil {
 
 	public <T> ResponseEntity<String> executeWithDigestAuth(String url, HttpMethod method, HttpEntity<T> entity)
 			throws Exception {
-		System.out.println("executeWithDigestAuth Url: " + url);
 		try {
 			ResponseEntity<String> initialResponse = restTemplate.exchange(url, method, entity, String.class);
 			if (initialResponse.getStatusCode().is2xxSuccessful()) {
@@ -53,7 +52,7 @@ public class HikbisionDigestAuthRestUtil {
 							HttpEntity<T> updatedEntity = new HttpEntity<>(null, newHeaders);
 							CLogger.logHikivisionDebug("Execute auth request",
 									"\n\nEntity: " + updatedEntity.toString());
-							System.out.println(("Execute auth request" + "\n\nEntity: " + updatedEntity.toString()));
+//							System.out.println(("Execute auth request" + "\n\nEntity: " + updatedEntity.toString()));
 							return restTemplate.exchange(url, method, updatedEntity, String.class);
 						} else {
 							HttpHeaders existingHeaders = entity.getHeaders();
@@ -67,7 +66,7 @@ public class HikbisionDigestAuthRestUtil {
 
 							HttpEntity<T> updatedEntity = new HttpEntity<>(entity.getBody(), newHeaders);
 
-							System.out.println(("Execute auth request" + "\n\nEntity: " + updatedEntity.toString()));
+//							System.out.println(("Execute auth request" + "\n\nEntity: " + updatedEntity.toString()));
 
 							return restTemplate.exchange(url, method, updatedEntity, String.class);
 						}
