@@ -6,6 +6,7 @@
  
  import com.google.gson.annotations.SerializedName;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -107,6 +108,66 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.annotations.SerializedName;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * HolidayList
+ */
+
+public class HolidayList {
+  @SerializedName("id")
+  private Long id = null;
+
+  @SerializedName("holiday")
+  private List<String> holiday = null;
+
+  public HolidayList id(Long id) {
+    this.id = id;
+    return this;
+  }
+
+   /**
+   * Get id
+   * @return id
+  **/
+  @Schema(description  = "")
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public HolidayList holiday(List<String> holiday) {
+    this.holiday = holiday;
+    return this;
+  }
+
+  public HolidayList addHolidayItem(String holidayItem) {
+    if (this.holiday == null) {
+      this.holiday = new ArrayList<String>();
+    }
+    this.holiday.add(holidayItem);
+    return this;
+  }
+
+   /**
+   * Get holiday
+   * @return holiday
+  **/
+  @Schema(description  = "")
+  public List<String> getHoliday() {
+    return holiday;
+  }
+
+  public void setHoliday(List<String> holiday) {
+    this.holiday = holiday;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\HolidayList.class

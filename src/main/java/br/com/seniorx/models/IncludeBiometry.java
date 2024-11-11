@@ -11,6 +11,7 @@
  import com.google.gson.stream.JsonReader;
  import com.google.gson.stream.JsonWriter;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -280,6 +281,234 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * IncludeBiometry
+ */
+
+public class IncludeBiometry {
+  /**
+   * Gets or Sets origin
+   */
+  @JsonAdapter(OriginEnum.Adapter.class)
+  public enum OriginEnum {
+    PERSON("PERSON"),
+    
+    CARD("CARD"),
+    
+    PIS("PIS"),
+    
+    CPF("CPF");
+
+    private String value;
+
+    OriginEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static OriginEnum fromValue(String text) {
+      for (OriginEnum b : OriginEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<OriginEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final OriginEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public OriginEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return OriginEnum.fromValue(String.valueOf(value));
+      }
+    }
+  }
+  @SerializedName("origin")
+  private OriginEnum origin = null;
+
+  @SerializedName("originId")
+  private Long originId = null;
+
+  /**
+   * Gets or Sets manufacturer
+   */
+  @JsonAdapter(ManufacturerEnum.Adapter.class)
+  public enum ManufacturerEnum {
+    NONE("NONE"),
+    
+    FINGERPRINT_SAGEM("FINGERPRINT_SAGEM"),
+    
+    FINGERPRINT_SUPREMA("FINGERPRINT_SUPREMA"),
+    
+    FINGERPRINT_VIRDI("FINGERPRINT_VIRDI"),
+    
+    FINGERPRINT_NITGEN("FINGERPRINT_NITGEN"),
+    
+    FINGERPRINT_CAMA("FINGERPRINT_CAMA"),
+    
+    FINGERPRINT_INNOVATRICS("FINGERPRINT_INNOVATRICS"),
+    
+    HANDKEY_IR("HANDKEY_IR"),
+    
+    FACIAL("FACIAL"),
+    
+    FINGERPRINT_ZKTECO("FINGERPRINT_ZKTECO"),
+    
+    FINGERPRINT_SECUKEY("FINGERPRINT_SECUKEY"),
+    
+    FACIAL_VISICA("FACIAL_VISICA"),
+    
+    FINGERPRINT_DIXI("FINGERPRINT_DIXI"),
+    
+    FACIAL_DIXI("FACIAL_DIXI"),
+    
+    FACIAL_HENRY("FACIAL_HENRY");
+
+    private String value;
+
+    ManufacturerEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static ManufacturerEnum fromValue(String text) {
+      for (ManufacturerEnum b : ManufacturerEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<ManufacturerEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final ManufacturerEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public ManufacturerEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return ManufacturerEnum.fromValue(String.valueOf(value));
+      }
+    }
+  }
+  @SerializedName("manufacturer")
+  private ManufacturerEnum manufacturer = null;
+
+  @SerializedName("templateList")
+  private List<String> templateList = null;
+
+  public IncludeBiometry origin(OriginEnum origin) {
+    this.origin = origin;
+    return this;
+  }
+
+   /**
+   * Get origin
+   * @return origin
+  **/
+  @Schema(description  = "")
+  public OriginEnum getOrigin() {
+    return origin;
+  }
+
+  public void setOrigin(OriginEnum origin) {
+    this.origin = origin;
+  }
+
+  public IncludeBiometry originId(Long originId) {
+    this.originId = originId;
+    return this;
+  }
+
+   /**
+   * Identificador da origem do cadastro biométrico
+   * @return originId
+  **/
+  @Schema(description  = "Identificador da origem do cadastro biométrico")
+  public Long getOriginId() {
+    return originId;
+  }
+
+  public void setOriginId(Long originId) {
+    this.originId = originId;
+  }
+
+  public IncludeBiometry manufacturer(ManufacturerEnum manufacturer) {
+    this.manufacturer = manufacturer;
+    return this;
+  }
+
+   /**
+   * Get manufacturer
+   * @return manufacturer
+  **/
+  @Schema(description  = "")
+  public ManufacturerEnum getManufacturer() {
+    return manufacturer;
+  }
+
+  public void setManufacturer(ManufacturerEnum manufacturer) {
+    this.manufacturer = manufacturer;
+  }
+
+  public IncludeBiometry templateList(List<String> templateList) {
+    this.templateList = templateList;
+    return this;
+  }
+
+  public IncludeBiometry addTemplateListItem(String templateListItem) {
+    if (this.templateList == null) {
+      this.templateList = new ArrayList<String>();
+    }
+    this.templateList.add(templateListItem);
+    return this;
+  }
+
+   /**
+   * Codificado em base64
+   * @return templateList
+  **/
+  @Schema(description  = "Codificado em base64")
+  public List<String> getTemplateList() {
+    return templateList;
+  }
+
+  public void setTemplateList(List<String> templateList) {
+    this.templateList = templateList;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\IncludeBiometry.class

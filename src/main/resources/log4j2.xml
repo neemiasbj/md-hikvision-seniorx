@@ -59,7 +59,11 @@
 		<Logger name="SENIOR_LOGGER" level="error" additivity="false">
 			<AppenderRef ref="LogToConsole" />
 		</Logger>
+<<<<<<< HEAD
 		<Logger name="HIKVISION_LOGGER" level="error"
+=======
+		<Logger name="HIKIVISION_LOGGER" level="error"
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 			additivity="false">
 			<AppenderRef ref="LogToConsole" />
 		</Logger>

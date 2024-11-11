@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*    */ package br.com.seniorx;
 /*    */ 
 /*    */ import br.com.seniorx.models.ManagerDevice;
@@ -57,3 +58,39 @@
  * Java compiler version: 17 (61.0)
  * JD-Core Version:       1.1.3
  */
+=======
+package br.com.seniorx;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.seniorx.models.ManagerDevice;
+
+public class ManagerDeviceList {
+
+	private static List<ManagerDevice> managerDeviceList = new ArrayList<ManagerDevice>();
+
+	public static List<ManagerDevice> getManagerDeviceList() {
+		return managerDeviceList;
+	}
+
+	public static void setManagerDeviceList(List<ManagerDevice> managerDeviceList) {
+		ManagerDeviceList.managerDeviceList = managerDeviceList;
+	}
+
+	public static ManagerDevice getDeviceByNetworkIdentification(String networkIdentification) {
+		for (ManagerDevice device : managerDeviceList)
+			if (device.getNetworkIdentification().equals(networkIdentification))
+				return device;
+		return null;
+	}
+
+	public static ManagerDevice getDeviceByNetworkId(Long deviceId) {
+		for (ManagerDevice device : managerDeviceList)
+			if (device.getId().equals(deviceId))
+				return device;
+		return null;
+	}
+
+}
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c

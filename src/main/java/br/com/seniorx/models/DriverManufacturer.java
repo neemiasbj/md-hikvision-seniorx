@@ -4,6 +4,7 @@
  
  import com.google.gson.annotations.SerializedName;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -74,6 +75,37 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.annotations.SerializedName;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * DriverManufacturer
+ */
+
+public class DriverManufacturer {
+  @SerializedName("manufacturerName")
+  private String manufacturerName = null;
+
+  public DriverManufacturer manufacturerName(String manufacturerName) {
+    this.manufacturerName = manufacturerName;
+    return this;
+  }
+
+   /**
+   * Nome do fabricante do driver atualizado
+   * @return manufacturerName
+  **/
+  @Schema(description  = "Nome do fabricante do driver atualizado")
+  public String getManufacturerName() {
+    return manufacturerName;
+  }
+
+  public void setManufacturerName(String manufacturerName) {
+    this.manufacturerName = manufacturerName;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\DriverManufacturer.class

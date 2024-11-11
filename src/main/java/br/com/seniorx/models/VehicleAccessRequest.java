@@ -10,6 +10,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  public class VehicleAccessRequest {
@@ -247,6 +248,186 @@ import com.google.gson.stream.JsonWriter;
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * VehicleAccessRequest
+ */
+
+public class VehicleAccessRequest {
+  @SerializedName("readerId")
+  private Long readerId = null;
+
+  /**
+   * Formato da credencial do veículo
+   */
+  @JsonAdapter(VehicleCredentialFormatEnum.Adapter.class)
+  public enum VehicleCredentialFormatEnum {
+    LICENSE_PLATE("LICENSE_PLATE"),
+    
+    CARD("CARD");
+
+    private String value;
+
+    VehicleCredentialFormatEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static VehicleCredentialFormatEnum fromValue(String text) {
+      for (VehicleCredentialFormatEnum b : VehicleCredentialFormatEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<VehicleCredentialFormatEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final VehicleCredentialFormatEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public VehicleCredentialFormatEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return VehicleCredentialFormatEnum.fromValue(String.valueOf(value));
+      }
+    }
+  }
+  @SerializedName("vehicleCredentialFormat")
+  private VehicleCredentialFormatEnum vehicleCredentialFormat = null;
+
+  @SerializedName("vehicleCredential")
+  private String vehicleCredential = null;
+
+  @SerializedName("authorizerPersonCardNumber")
+  private Long authorizerPersonCardNumber = null;
+
+  @SerializedName("authorizerPersonId")
+  private Long authorizerPersonId = null;
+
+  @SerializedName("requestDateTime")
+  private OffsetDateTime requestDateTime = null;
+
+  public VehicleAccessRequest readerId(Long readerId) {
+    this.readerId = readerId;
+    return this;
+  }
+
+   /**
+   * Identificador da leitora
+   * @return readerId
+  **/
+  @Schema(description  = "Identificador da leitora")
+  public Long getReaderId() {
+    return readerId;
+  }
+
+  public void setReaderId(Long readerId) {
+    this.readerId = readerId;
+  }
+
+  public VehicleAccessRequest vehicleCredentialFormat(VehicleCredentialFormatEnum vehicleCredentialFormat) {
+    this.vehicleCredentialFormat = vehicleCredentialFormat;
+    return this;
+  }
+
+   /**
+   * Formato da credencial do veículo
+   * @return vehicleCredentialFormat
+  **/
+  @Schema(description  = "Formato da credencial do veículo")
+  public VehicleCredentialFormatEnum getVehicleCredentialFormat() {
+    return vehicleCredentialFormat;
+  }
+
+  public void setVehicleCredentialFormat(VehicleCredentialFormatEnum vehicleCredentialFormat) {
+    this.vehicleCredentialFormat = vehicleCredentialFormat;
+  }
+
+  public VehicleAccessRequest vehicleCredential(String vehicleCredential) {
+    this.vehicleCredential = vehicleCredential;
+    return this;
+  }
+
+   /**
+   * Credencial do veículo
+   * @return vehicleCredential
+  **/
+  @Schema(description  = "Credencial do veículo")
+  public String getVehicleCredential() {
+    return vehicleCredential;
+  }
+
+  public void setVehicleCredential(String vehicleCredential) {
+    this.vehicleCredential = vehicleCredential;
+  }
+
+  public VehicleAccessRequest authorizerPersonCardNumber(Long authorizerPersonCardNumber) {
+    this.authorizerPersonCardNumber = authorizerPersonCardNumber;
+    return this;
+  }
+
+   /**
+   * Número do cartão da pessoa autorizadora
+   * @return authorizerPersonCardNumber
+  **/
+  @Schema(description  = "Número do cartão da pessoa autorizadora")
+  public Long getAuthorizerPersonCardNumber() {
+    return authorizerPersonCardNumber;
+  }
+
+  public void setAuthorizerPersonCardNumber(Long authorizerPersonCardNumber) {
+    this.authorizerPersonCardNumber = authorizerPersonCardNumber;
+  }
+
+  public VehicleAccessRequest authorizerPersonId(Long authorizerPersonId) {
+    this.authorizerPersonId = authorizerPersonId;
+    return this;
+  }
+
+   /**
+   * Identificador da pessoa autorizadora
+   * @return authorizerPersonId
+  **/
+  @Schema(description  = "Identificador da pessoa autorizadora")
+  public Long getAuthorizerPersonId() {
+    return authorizerPersonId;
+  }
+
+  public void setAuthorizerPersonId(Long authorizerPersonId) {
+    this.authorizerPersonId = authorizerPersonId;
+  }
+
+  public VehicleAccessRequest requestDateTime(OffsetDateTime requestDateTime) {
+    this.requestDateTime = requestDateTime;
+    return this;
+  }
+
+   /**
+   * Data e hora da requisição
+   * @return requestDateTime
+  **/
+  @Schema(description  = "Data e hora da requisição")
+  public OffsetDateTime getRequestDateTime() {
+    return requestDateTime;
+  }
+
+  public void setRequestDateTime(OffsetDateTime requestDateTime) {
+    this.requestDateTime = requestDateTime;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\VehicleAccessRequest.class

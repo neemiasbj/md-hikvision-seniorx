@@ -6,6 +6,7 @@
  
  import com.google.gson.annotations.SerializedName;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -84,6 +85,45 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.annotations.SerializedName;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * DriverStatusInput
+ */
+
+public class DriverStatusInput {
+  @SerializedName("driverIds")
+  private List<Long> driverIds = null;
+
+  public DriverStatusInput driverIds(List<Long> driverIds) {
+    this.driverIds = driverIds;
+    return this;
+  }
+
+  public DriverStatusInput addDriverIdsItem(Long driverIdsItem) {
+    if (this.driverIds == null) {
+      this.driverIds = new ArrayList<Long>();
+    }
+    this.driverIds.add(driverIdsItem);
+    return this;
+  }
+
+   /**
+   * Get driverIds
+   * @return driverIds
+  **/
+  @Schema(description  = "")
+  public List<Long> getDriverIds() {
+    return driverIds;
+  }
+
+  public void setDriverIds(List<Long> driverIds) {
+    this.driverIds = driverIds;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\DriverStatusInput.class

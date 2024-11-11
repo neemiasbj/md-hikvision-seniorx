@@ -4,6 +4,7 @@
  
  import com.google.gson.annotations.SerializedName;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -189,6 +190,142 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.annotations.SerializedName;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * Masking
+ */
+
+public class Masking {
+  @SerializedName("startTime")
+  private String startTime = null;
+
+  @SerializedName("finishTime")
+  private String finishTime = null;
+
+  @SerializedName("normalDay")
+  private Boolean normalDay = false;
+
+  @SerializedName("saturday")
+  private Boolean saturday = false;
+
+  @SerializedName("sunday")
+  private Boolean sunday = false;
+
+  @SerializedName("holiday")
+  private Boolean holiday = false;
+
+  public Masking startTime(String startTime) {
+    this.startTime = startTime;
+    return this;
+  }
+
+   /**
+   * Get startTime
+   * @return startTime
+  **/
+  @Schema(description  = "")
+  public String getStartTime() {
+    return startTime;
+  }
+
+  public void setStartTime(String startTime) {
+    this.startTime = startTime;
+  }
+
+  public Masking finishTime(String finishTime) {
+    this.finishTime = finishTime;
+    return this;
+  }
+
+   /**
+   * Get finishTime
+   * @return finishTime
+  **/
+  @Schema(description  = "")
+  public String getFinishTime() {
+    return finishTime;
+  }
+
+  public void setFinishTime(String finishTime) {
+    this.finishTime = finishTime;
+  }
+
+  public Masking normalDay(Boolean normalDay) {
+    this.normalDay = normalDay;
+    return this;
+  }
+
+   /**
+   * Get normalDay
+   * @return normalDay
+  **/
+  @Schema(description  = "")
+  public Boolean isNormalDay() {
+    return normalDay;
+  }
+
+  public void setNormalDay(Boolean normalDay) {
+    this.normalDay = normalDay;
+  }
+
+  public Masking saturday(Boolean saturday) {
+    this.saturday = saturday;
+    return this;
+  }
+
+   /**
+   * Get saturday
+   * @return saturday
+  **/
+  @Schema(description  = "")
+  public Boolean isSaturday() {
+    return saturday;
+  }
+
+  public void setSaturday(Boolean saturday) {
+    this.saturday = saturday;
+  }
+
+  public Masking sunday(Boolean sunday) {
+    this.sunday = sunday;
+    return this;
+  }
+
+   /**
+   * Get sunday
+   * @return sunday
+  **/
+  @Schema(description  = "")
+  public Boolean isSunday() {
+    return sunday;
+  }
+
+  public void setSunday(Boolean sunday) {
+    this.sunday = sunday;
+  }
+
+  public Masking holiday(Boolean holiday) {
+    this.holiday = holiday;
+    return this;
+  }
+
+   /**
+   * Get holiday
+   * @return holiday
+  **/
+  @Schema(description  = "")
+  public Boolean isHoliday() {
+    return holiday;
+  }
+
+  public void setHoliday(Boolean holiday) {
+    this.holiday = holiday;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\Masking.class

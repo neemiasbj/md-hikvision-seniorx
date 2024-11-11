@@ -4,6 +4,7 @@
  
  import com.google.gson.annotations.SerializedName;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -281,6 +282,226 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.annotations.SerializedName;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * Timezone
+ */
+
+public class Timezone {
+  @SerializedName("start")
+  private String start = null;
+
+  @SerializedName("end")
+  private String end = null;
+
+  @SerializedName("monday")
+  private Boolean monday = false;
+
+  @SerializedName("tuesday")
+  private Boolean tuesday = false;
+
+  @SerializedName("wednesday")
+  private Boolean wednesday = false;
+
+  @SerializedName("thursday")
+  private Boolean thursday = false;
+
+  @SerializedName("friday")
+  private Boolean friday = false;
+
+  @SerializedName("saturday")
+  private Boolean saturday = false;
+
+  @SerializedName("sunday")
+  private Boolean sunday = false;
+
+  @SerializedName("holiday")
+  private Boolean holiday = false;
+
+  public Timezone start(String start) {
+    this.start = start;
+    return this;
+  }
+
+   /**
+   * Get start
+   * @return start
+  **/
+  @Schema(description  = "")
+  public String getStart() {
+    return start;
+  }
+
+  public void setStart(String start) {
+    this.start = start;
+  }
+
+  public Timezone end(String end) {
+    this.end = end;
+    return this;
+  }
+
+   /**
+   * Get end
+   * @return end
+  **/
+  @Schema(description  = "")
+  public String getEnd() {
+    return end;
+  }
+
+  public void setEnd(String end) {
+    this.end = end;
+  }
+
+  public Timezone monday(Boolean monday) {
+    this.monday = monday;
+    return this;
+  }
+
+   /**
+   * Get monday
+   * @return monday
+  **/
+  @Schema(description  = "")
+  public Boolean isMonday() {
+    return monday;
+  }
+
+  public void setMonday(Boolean monday) {
+    this.monday = monday;
+  }
+
+  public Timezone tuesday(Boolean tuesday) {
+    this.tuesday = tuesday;
+    return this;
+  }
+
+   /**
+   * Get tuesday
+   * @return tuesday
+  **/
+  @Schema(description  = "")
+  public Boolean isTuesday() {
+    return tuesday;
+  }
+
+  public void setTuesday(Boolean tuesday) {
+    this.tuesday = tuesday;
+  }
+
+  public Timezone wednesday(Boolean wednesday) {
+    this.wednesday = wednesday;
+    return this;
+  }
+
+   /**
+   * Get wednesday
+   * @return wednesday
+  **/
+  @Schema(description  = "")
+  public Boolean isWednesday() {
+    return wednesday;
+  }
+
+  public void setWednesday(Boolean wednesday) {
+    this.wednesday = wednesday;
+  }
+
+  public Timezone thursday(Boolean thursday) {
+    this.thursday = thursday;
+    return this;
+  }
+
+   /**
+   * Get thursday
+   * @return thursday
+  **/
+  @Schema(description  = "")
+  public Boolean isThursday() {
+    return thursday;
+  }
+
+  public void setThursday(Boolean thursday) {
+    this.thursday = thursday;
+  }
+
+  public Timezone friday(Boolean friday) {
+    this.friday = friday;
+    return this;
+  }
+
+   /**
+   * Get friday
+   * @return friday
+  **/
+  @Schema(description  = "")
+  public Boolean isFriday() {
+    return friday;
+  }
+
+  public void setFriday(Boolean friday) {
+    this.friday = friday;
+  }
+
+  public Timezone saturday(Boolean saturday) {
+    this.saturday = saturday;
+    return this;
+  }
+
+   /**
+   * Get saturday
+   * @return saturday
+  **/
+  @Schema(description  = "")
+  public Boolean isSaturday() {
+    return saturday;
+  }
+
+  public void setSaturday(Boolean saturday) {
+    this.saturday = saturday;
+  }
+
+  public Timezone sunday(Boolean sunday) {
+    this.sunday = sunday;
+    return this;
+  }
+
+   /**
+   * Get sunday
+   * @return sunday
+  **/
+  @Schema(description  = "")
+  public Boolean isSunday() {
+    return sunday;
+  }
+
+  public void setSunday(Boolean sunday) {
+    this.sunday = sunday;
+  }
+
+  public Timezone holiday(Boolean holiday) {
+    this.holiday = holiday;
+    return this;
+  }
+
+   /**
+   * Get holiday
+   * @return holiday
+  **/
+  @Schema(description  = "")
+  public Boolean isHoliday() {
+    return holiday;
+  }
+
+  public void setHoliday(Boolean holiday) {
+    this.holiday = holiday;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\Timezone.class

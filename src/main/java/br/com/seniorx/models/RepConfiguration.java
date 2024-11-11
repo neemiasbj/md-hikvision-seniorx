@@ -4,6 +4,7 @@
  
  import com.google.gson.annotations.SerializedName;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -213,6 +214,164 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.annotations.SerializedName;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * Propriedades do REP
+ */
+@Schema(description = "Propriedades do REP")
+
+public class RepConfiguration {
+  @SerializedName("id")
+  private Long id = null;
+
+  @SerializedName("companyName")
+  private String companyName = null;
+
+  @SerializedName("cnpj")
+  private String cnpj = null;
+
+  @SerializedName("cpf")
+  private String cpf = null;
+
+  @SerializedName("cei")
+  private String cei = null;
+
+  @SerializedName("address")
+  private String address = null;
+
+  @SerializedName("taxNumber")
+  private String taxNumber = null;
+
+  public RepConfiguration id(Long id) {
+    this.id = id;
+    return this;
+  }
+
+   /**
+   * Get id
+   * @return id
+  **/
+  @Schema(description  = "")
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public RepConfiguration companyName(String companyName) {
+    this.companyName = companyName;
+    return this;
+  }
+
+   /**
+   * Nome da empresa
+   * @return companyName
+  **/
+  @Schema(description  = "Nome da empresa")
+  public String getCompanyName() {
+    return companyName;
+  }
+
+  public void setCompanyName(String companyName) {
+    this.companyName = companyName;
+  }
+
+  public RepConfiguration cnpj(String cnpj) {
+    this.cnpj = cnpj;
+    return this;
+  }
+
+   /**
+   * Get cnpj
+   * @return cnpj
+  **/
+  @Schema(description  = "")
+  public String getCnpj() {
+    return cnpj;
+  }
+
+  public void setCnpj(String cnpj) {
+    this.cnpj = cnpj;
+  }
+
+  public RepConfiguration cpf(String cpf) {
+    this.cpf = cpf;
+    return this;
+  }
+
+   /**
+   * Get cpf
+   * @return cpf
+  **/
+  @Schema(description  = "")
+  public String getCpf() {
+    return cpf;
+  }
+
+  public void setCpf(String cpf) {
+    this.cpf = cpf;
+  }
+
+  public RepConfiguration cei(String cei) {
+    this.cei = cei;
+    return this;
+  }
+
+   /**
+   * Get cei
+   * @return cei
+  **/
+  @Schema(description  = "")
+  public String getCei() {
+    return cei;
+  }
+
+  public void setCei(String cei) {
+    this.cei = cei;
+  }
+
+  public RepConfiguration address(String address) {
+    this.address = address;
+    return this;
+  }
+
+   /**
+   * Endereço
+   * @return address
+  **/
+  @Schema(description  = "Endereço")
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public RepConfiguration taxNumber(String taxNumber) {
+    this.taxNumber = taxNumber;
+    return this;
+  }
+
+   /**
+   * Get taxNumber
+   * @return taxNumber
+  **/
+  @Schema(description  = "")
+  public String getTaxNumber() {
+    return taxNumber;
+  }
+
+  public void setTaxNumber(String taxNumber) {
+    this.taxNumber = taxNumber;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\RepConfiguration.class

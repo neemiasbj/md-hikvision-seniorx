@@ -9,6 +9,7 @@ import com.google.gson.annotations.JsonAdapter;
  import com.google.gson.stream.JsonReader;
  import com.google.gson.stream.JsonWriter;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  public class Resource { @SerializedName("deviceId") private Long deviceId; @SerializedName("date") private OffsetDateTime date; @SerializedName("timezoneOffset") private Integer timezoneOffset; @SerializedName("status") private StatusEnum status; @SerializedName("resourceType") private ResourceTypeEnum resourceType; @SerializedName("resourcePercent") private Integer resourcePercent; @JsonAdapter(StatusEnum.Adapter.class)
    public enum StatusEnum { ONLINE("ONLINE"),
@@ -290,6 +291,234 @@ import com.google.gson.annotations.JsonAdapter;
      }
      return o.toString().replace("\n", "\n    ");
    } }
+=======
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * Resource
+ */
+
+public class Resource {
+  @SerializedName("deviceId")
+  private Long deviceId = null;
+
+  @SerializedName("date")
+  private OffsetDateTime date = null;
+
+  @SerializedName("timezoneOffset")
+  private Integer timezoneOffset = null;
+
+  /**
+   * Gets or Sets status
+   */
+  @JsonAdapter(StatusEnum.Adapter.class)
+  public enum StatusEnum {
+    ONLINE("ONLINE"),
+    
+    OFFLINE("OFFLINE");
+
+    private String value;
+
+    StatusEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static StatusEnum fromValue(String text) {
+      for (StatusEnum b : StatusEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<StatusEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final StatusEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public StatusEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return StatusEnum.fromValue(String.valueOf(value));
+      }
+    }
+  }
+  @SerializedName("status")
+  private StatusEnum status = null;
+
+  /**
+   * Tipo de recurso
+   */
+  @JsonAdapter(ResourceTypeEnum.Adapter.class)
+  public enum ResourceTypeEnum {
+    MEMORY("MEMORY"),
+    
+    BATTERY("BATTERY"),
+    
+    PAPER("PAPER");
+
+    private String value;
+
+    ResourceTypeEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static ResourceTypeEnum fromValue(String text) {
+      for (ResourceTypeEnum b : ResourceTypeEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<ResourceTypeEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final ResourceTypeEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public ResourceTypeEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return ResourceTypeEnum.fromValue(String.valueOf(value));
+      }
+    }
+  }
+  @SerializedName("resourceType")
+  private ResourceTypeEnum resourceType = null;
+
+  @SerializedName("resourcePercent")
+  private Integer resourcePercent = null;
+
+  public Resource deviceId(Long deviceId) {
+    this.deviceId = deviceId;
+    return this;
+  }
+
+   /**
+   * Identificador do dispositivo
+   * @return deviceId
+  **/
+  @Schema(description  = "Identificador do dispositivo")
+  public Long getDeviceId() {
+    return deviceId;
+  }
+
+  public void setDeviceId(Long deviceId) {
+    this.deviceId = deviceId;
+  }
+
+  public Resource date(OffsetDateTime date) {
+    this.date = date;
+    return this;
+  }
+
+   /**
+   * Data da notificação em UTC
+   * @return date
+  **/
+  @Schema(description  = "Data da notificação em UTC")
+  public OffsetDateTime getDate() {
+    return date;
+  }
+
+  public void setDate(OffsetDateTime date) {
+    this.date = date;
+  }
+
+  public Resource timezoneOffset(Integer timezoneOffset) {
+    this.timezoneOffset = timezoneOffset;
+    return this;
+  }
+
+   /**
+   * Offset em minutos
+   * @return timezoneOffset
+  **/
+  @Schema(description  = "Offset em minutos")
+  public Integer getTimezoneOffset() {
+    return timezoneOffset;
+  }
+
+  public void setTimezoneOffset(Integer timezoneOffset) {
+    this.timezoneOffset = timezoneOffset;
+  }
+
+  public Resource status(StatusEnum status) {
+    this.status = status;
+    return this;
+  }
+
+   /**
+   * Get status
+   * @return status
+  **/
+  @Schema(description  = "")
+  public StatusEnum getStatus() {
+    return status;
+  }
+
+  public void setStatus(StatusEnum status) {
+    this.status = status;
+  }
+
+  public Resource resourceType(ResourceTypeEnum resourceType) {
+    this.resourceType = resourceType;
+    return this;
+  }
+
+   /**
+   * Tipo de recurso
+   * @return resourceType
+  **/
+  @Schema(description  = "Tipo de recurso")
+  public ResourceTypeEnum getResourceType() {
+    return resourceType;
+  }
+
+  public void setResourceType(ResourceTypeEnum resourceType) {
+    this.resourceType = resourceType;
+  }
+
+  public Resource resourcePercent(Integer resourcePercent) {
+    this.resourcePercent = resourcePercent;
+    return this;
+  }
+
+   /**
+   * Percentual de uso do recurso
+   * @return resourcePercent
+  **/
+  @Schema(description  = "Percentual de uso do recurso")
+  public Integer getResourcePercent() {
+    return resourcePercent;
+  }
+
+  public void setResourcePercent(Integer resourcePercent) {
+    this.resourcePercent = resourcePercent;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\Resource.class

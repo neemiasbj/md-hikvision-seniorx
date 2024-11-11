@@ -1,8 +1,135 @@
 
 package br.com.seniorx.models;
 
+<<<<<<< HEAD
  import java.io.IOException;
  import java.util.Objects;
+=======
+import java.io.IOException;
+import java.util.Objects;
+
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * PendencyUpdated
+ */
+
+public class PendencyUpdated {
+  @SerializedName("pendencyId")
+  private Long pendencyId = null;
+
+  @SerializedName("errorCode")
+  private Integer errorCode = null;
+
+  /**
+   * Gets or Sets operation
+   */
+  @JsonAdapter(OperationEnum.Adapter.class)
+  public enum OperationEnum {
+    REMOVE_PENDENCY("REMOVE_PENDENCY"),
+    
+    KEEP_PENDENCY("KEEP_PENDENCY");
+
+    private String value;
+
+    OperationEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static OperationEnum fromValue(String text) {
+      for (OperationEnum b : OperationEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<OperationEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final OperationEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public OperationEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return OperationEnum.fromValue(String.valueOf(value));
+      }
+    }
+  }
+  @SerializedName("operation")
+  private OperationEnum operation = null;
+
+  public PendencyUpdated pendencyId(Long pendencyId) {
+    this.pendencyId = pendencyId;
+    return this;
+  }
+
+   /**
+   * Identificador da pendência
+   * @return pendencyId
+  **/
+  @Schema(description  = "Identificador da pendência")
+  public Long getPendencyId() {
+    return pendencyId;
+  }
+
+  public void setPendencyId(Long pendencyId) {
+    this.pendencyId = pendencyId;
+  }
+
+  public PendencyUpdated errorCode(Integer errorCode) {
+    this.errorCode = errorCode;
+    return this;
+  }
+
+   /**
+   * Código de erro
+   * @return errorCode
+  **/
+  @Schema(description  = "Código de erro")
+  public Integer getErrorCode() {
+    return errorCode;
+  }
+
+  public void setErrorCode(Integer errorCode) {
+    this.errorCode = errorCode;
+  }
+
+  public PendencyUpdated operation(OperationEnum operation) {
+    this.operation = operation;
+    return this;
+  }
+
+   /**
+   * Get operation
+   * @return operation
+  **/
+  @Schema(description  = "")
+  public OperationEnum getOperation() {
+    return operation;
+  }
+
+  public void setOperation(OperationEnum operation) {
+    this.operation = operation;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
  import com.google.gson.TypeAdapter;

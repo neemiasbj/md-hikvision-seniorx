@@ -5,6 +5,7 @@
  
  import com.google.gson.annotations.SerializedName;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -236,6 +237,184 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.annotations.SerializedName;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * PersonEvent
+ */
+
+public class PersonEvent {
+  @SerializedName("personId")
+  private Long personId = null;
+
+  @SerializedName("deviceId")
+  private Long deviceId = null;
+
+  @SerializedName("date")
+  private OffsetDateTime date = null;
+
+  @SerializedName("timezoneOffset")
+  private Integer timezoneOffset = null;
+
+  @SerializedName("normalTemperature")
+  private Boolean normalTemperature = false;
+
+  @SerializedName("temperature")
+  private Float temperature = null;
+
+  @SerializedName("withMask")
+  private Boolean withMask = false;
+
+  @SerializedName("accessAllowed")
+  private Boolean accessAllowed = false;
+
+  public PersonEvent personId(Long personId) {
+    this.personId = personId;
+    return this;
+  }
+
+   /**
+   * Identificador de pessoa
+   * @return personId
+  **/
+  @Schema(description  = "Identificador de pessoa")
+  public Long getPersonId() {
+    return personId;
+  }
+
+  public void setPersonId(Long personId) {
+    this.personId = personId;
+  }
+
+  public PersonEvent deviceId(Long deviceId) {
+    this.deviceId = deviceId;
+    return this;
+  }
+
+   /**
+   * Identificador de dispositivos
+   * @return deviceId
+  **/
+  @Schema(description  = "Identificador de dispositivos")
+  public Long getDeviceId() {
+    return deviceId;
+  }
+
+  public void setDeviceId(Long deviceId) {
+    this.deviceId = deviceId;
+  }
+
+  public PersonEvent date(OffsetDateTime date) {
+    this.date = date;
+    return this;
+  }
+
+   /**
+   * Data da notificação em UTC
+   * @return date
+  **/
+  @Schema(description  = "Data da notificação em UTC")
+  public OffsetDateTime getDate() {
+    return date;
+  }
+
+  public void setDate(OffsetDateTime date) {
+    this.date = date;
+  }
+
+  public PersonEvent timezoneOffset(Integer timezoneOffset) {
+    this.timezoneOffset = timezoneOffset;
+    return this;
+  }
+
+   /**
+   * Offset em minutos
+   * @return timezoneOffset
+  **/
+  @Schema(description  = "Offset em minutos")
+  public Integer getTimezoneOffset() {
+    return timezoneOffset;
+  }
+
+  public void setTimezoneOffset(Integer timezoneOffset) {
+    this.timezoneOffset = timezoneOffset;
+  }
+
+  public PersonEvent normalTemperature(Boolean normalTemperature) {
+    this.normalTemperature = normalTemperature;
+    return this;
+  }
+
+   /**
+   * Informa se a temperatura da pessoa está normal
+   * @return normalTemperature
+  **/
+  @Schema(description  = "Informa se a temperatura da pessoa está normal")
+  public Boolean isNormalTemperature() {
+    return normalTemperature;
+  }
+
+  public void setNormalTemperature(Boolean normalTemperature) {
+    this.normalTemperature = normalTemperature;
+  }
+
+  public PersonEvent temperature(Float temperature) {
+    this.temperature = temperature;
+    return this;
+  }
+
+   /**
+   * Informa o valor da temperatura
+   * @return temperature
+  **/
+  @Schema(description  = "Informa o valor da temperatura")
+  public Float getTemperature() {
+    return temperature;
+  }
+
+  public void setTemperature(Float temperature) {
+    this.temperature = temperature;
+  }
+
+  public PersonEvent withMask(Boolean withMask) {
+    this.withMask = withMask;
+    return this;
+  }
+
+   /**
+   * Informa se a pessoa está com máscara
+   * @return withMask
+  **/
+  @Schema(description  = "Informa se a pessoa está com máscara")
+  public Boolean isWithMask() {
+    return withMask;
+  }
+
+  public void setWithMask(Boolean withMask) {
+    this.withMask = withMask;
+  }
+
+  public PersonEvent accessAllowed(Boolean accessAllowed) {
+    this.accessAllowed = accessAllowed;
+    return this;
+  }
+
+   /**
+   * Informa se o acesso foi permitido
+   * @return accessAllowed
+  **/
+  @Schema(description  = "Informa se o acesso foi permitido")
+  public Boolean isAccessAllowed() {
+    return accessAllowed;
+  }
+
+  public void setAccessAllowed(Boolean accessAllowed) {
+    this.accessAllowed = accessAllowed;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\PersonEvent.class

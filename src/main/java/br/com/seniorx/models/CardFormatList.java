@@ -4,6 +4,7 @@
  
  import com.google.gson.annotations.SerializedName;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -281,6 +282,226 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.annotations.SerializedName;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * CardFormatList
+ */
+
+public class CardFormatList {
+  @SerializedName("id")
+  private Long id = null;
+
+  @SerializedName("numOfBitsOnCard")
+  private Integer numOfBitsOnCard = null;
+
+  @SerializedName("numOfBitsFromStartForEvenParity")
+  private Integer numOfBitsFromStartForEvenParity = null;
+
+  @SerializedName("numOfBitsToEndForOddParity")
+  private Integer numOfBitsToEndForOddParity = null;
+
+  @SerializedName("numOfBitsIFacilityCode")
+  private Integer numOfBitsIFacilityCode = null;
+
+  @SerializedName("indexFromFirstBitToFirstFacilityCodeBit")
+  private Integer indexFromFirstBitToFirstFacilityCodeBit = null;
+
+  @SerializedName("numOfBitsInCardNumber")
+  private Integer numOfBitsInCardNumber = null;
+
+  @SerializedName("indexFromFirstBitToFirstCardNumberBit")
+  private Integer indexFromFirstBitToFirstCardNumberBit = null;
+
+  @SerializedName("facilityCode")
+  private Long facilityCode = null;
+
+  @SerializedName("cardNumberOffset")
+  private Long cardNumberOffset = null;
+
+  public CardFormatList id(Long id) {
+    this.id = id;
+    return this;
+  }
+
+   /**
+   * Get id
+   * @return id
+  **/
+  @Schema(description  = "")
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public CardFormatList numOfBitsOnCard(Integer numOfBitsOnCard) {
+    this.numOfBitsOnCard = numOfBitsOnCard;
+    return this;
+  }
+
+   /**
+   * Informa a quantidade de bits do cartão, que pode variar segundo o seu fabricante e modelo
+   * @return numOfBitsOnCard
+  **/
+  @Schema(description  = "Informa a quantidade de bits do cartão, que pode variar segundo o seu fabricante e modelo")
+  public Integer getNumOfBitsOnCard() {
+    return numOfBitsOnCard;
+  }
+
+  public void setNumOfBitsOnCard(Integer numOfBitsOnCard) {
+    this.numOfBitsOnCard = numOfBitsOnCard;
+  }
+
+  public CardFormatList numOfBitsFromStartForEvenParity(Integer numOfBitsFromStartForEvenParity) {
+    this.numOfBitsFromStartForEvenParity = numOfBitsFromStartForEvenParity;
+    return this;
+  }
+
+   /**
+   * Informa a quantidade de bits de paridade par que será considerada a partir do início dos bits
+   * @return numOfBitsFromStartForEvenParity
+  **/
+  @Schema(description  = "Informa a quantidade de bits de paridade par que será considerada a partir do início dos bits")
+  public Integer getNumOfBitsFromStartForEvenParity() {
+    return numOfBitsFromStartForEvenParity;
+  }
+
+  public void setNumOfBitsFromStartForEvenParity(Integer numOfBitsFromStartForEvenParity) {
+    this.numOfBitsFromStartForEvenParity = numOfBitsFromStartForEvenParity;
+  }
+
+  public CardFormatList numOfBitsToEndForOddParity(Integer numOfBitsToEndForOddParity) {
+    this.numOfBitsToEndForOddParity = numOfBitsToEndForOddParity;
+    return this;
+  }
+
+   /**
+   * Informa a quantidade de bits de paridade ímpar que será considerada a partir do final dos bits
+   * @return numOfBitsToEndForOddParity
+  **/
+  @Schema(description  = "Informa a quantidade de bits de paridade ímpar que será considerada a partir do final dos bits")
+  public Integer getNumOfBitsToEndForOddParity() {
+    return numOfBitsToEndForOddParity;
+  }
+
+  public void setNumOfBitsToEndForOddParity(Integer numOfBitsToEndForOddParity) {
+    this.numOfBitsToEndForOddParity = numOfBitsToEndForOddParity;
+  }
+
+  public CardFormatList numOfBitsIFacilityCode(Integer numOfBitsIFacilityCode) {
+    this.numOfBitsIFacilityCode = numOfBitsIFacilityCode;
+    return this;
+  }
+
+   /**
+   * informa a quantidade de bits do código de acesso, que pode variar segundo o fabricante e modelo do cartão
+   * @return numOfBitsIFacilityCode
+  **/
+  @Schema(description  = "informa a quantidade de bits do código de acesso, que pode variar segundo o fabricante e modelo do cartão")
+  public Integer getNumOfBitsIFacilityCode() {
+    return numOfBitsIFacilityCode;
+  }
+
+  public void setNumOfBitsIFacilityCode(Integer numOfBitsIFacilityCode) {
+    this.numOfBitsIFacilityCode = numOfBitsIFacilityCode;
+  }
+
+  public CardFormatList indexFromFirstBitToFirstFacilityCodeBit(Integer indexFromFirstBitToFirstFacilityCodeBit) {
+    this.indexFromFirstBitToFirstFacilityCodeBit = indexFromFirstBitToFirstFacilityCodeBit;
+    return this;
+  }
+
+   /**
+   * Informa o bit de início do código de acesso
+   * @return indexFromFirstBitToFirstFacilityCodeBit
+  **/
+  @Schema(description  = "Informa o bit de início do código de acesso")
+  public Integer getIndexFromFirstBitToFirstFacilityCodeBit() {
+    return indexFromFirstBitToFirstFacilityCodeBit;
+  }
+
+  public void setIndexFromFirstBitToFirstFacilityCodeBit(Integer indexFromFirstBitToFirstFacilityCodeBit) {
+    this.indexFromFirstBitToFirstFacilityCodeBit = indexFromFirstBitToFirstFacilityCodeBit;
+  }
+
+  public CardFormatList numOfBitsInCardNumber(Integer numOfBitsInCardNumber) {
+    this.numOfBitsInCardNumber = numOfBitsInCardNumber;
+    return this;
+  }
+
+   /**
+   * Informa a quantidade de bits do número de cartão, lembrando que a contagem inicia a partir do bit de início do número de cartão
+   * @return numOfBitsInCardNumber
+  **/
+  @Schema(description  = "Informa a quantidade de bits do número de cartão, lembrando que a contagem inicia a partir do bit de início do número de cartão")
+  public Integer getNumOfBitsInCardNumber() {
+    return numOfBitsInCardNumber;
+  }
+
+  public void setNumOfBitsInCardNumber(Integer numOfBitsInCardNumber) {
+    this.numOfBitsInCardNumber = numOfBitsInCardNumber;
+  }
+
+  public CardFormatList indexFromFirstBitToFirstCardNumberBit(Integer indexFromFirstBitToFirstCardNumberBit) {
+    this.indexFromFirstBitToFirstCardNumberBit = indexFromFirstBitToFirstCardNumberBit;
+    return this;
+  }
+
+   /**
+   * Informa o bit de início do número de cartão que indica a posição de início da leitura do número do cartão
+   * @return indexFromFirstBitToFirstCardNumberBit
+  **/
+  @Schema(description  = "Informa o bit de início do número de cartão que indica a posição de início da leitura do número do cartão")
+  public Integer getIndexFromFirstBitToFirstCardNumberBit() {
+    return indexFromFirstBitToFirstCardNumberBit;
+  }
+
+  public void setIndexFromFirstBitToFirstCardNumberBit(Integer indexFromFirstBitToFirstCardNumberBit) {
+    this.indexFromFirstBitToFirstCardNumberBit = indexFromFirstBitToFirstCardNumberBit;
+  }
+
+  public CardFormatList facilityCode(Long facilityCode) {
+    this.facilityCode = facilityCode;
+    return this;
+  }
+
+   /**
+   * Informa o código de acesso do formato
+   * @return facilityCode
+  **/
+  @Schema(description  = "Informa o código de acesso do formato")
+  public Long getFacilityCode() {
+    return facilityCode;
+  }
+
+  public void setFacilityCode(Long facilityCode) {
+    this.facilityCode = facilityCode;
+  }
+
+  public CardFormatList cardNumberOffset(Long cardNumberOffset) {
+    this.cardNumberOffset = cardNumberOffset;
+    return this;
+  }
+
+   /**
+   * Informa a quantidade de deslocamento dos bits a serem deslocados no momento da validação de dados
+   * @return cardNumberOffset
+  **/
+  @Schema(description  = "Informa a quantidade de deslocamento dos bits a serem deslocados no momento da validação de dados")
+  public Long getCardNumberOffset() {
+    return cardNumberOffset;
+  }
+
+  public void setCardNumberOffset(Long cardNumberOffset) {
+    this.cardNumberOffset = cardNumberOffset;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\CardFormatList.class

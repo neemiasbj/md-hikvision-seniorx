@@ -1,5 +1,6 @@
 package br.com.seniorx.utils;
 
+<<<<<<< HEAD
 public class SeniorUtils {}
 
 
@@ -7,3 +8,8 @@ public class SeniorUtils {}
  * Java compiler version: 17 (61.0)
  * JD-Core Version:       1.1.3
  */
+=======
+public class SeniorUtils {
+
+}
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c

@@ -5,6 +5,13 @@ import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+<<<<<<< HEAD
+=======
+
+/**
+ * ReaderAndTimezone
+ */
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 public class ReaderAndTimezone {
 	@SerializedName("readerId")
@@ -18,10 +25,21 @@ public class ReaderAndTimezone {
 		return this;
 	}
 
+<<<<<<< HEAD
 	@Schema(description = "Identificador da leitora")
 	public Long getReaderId() {
 		return this.readerId;
 	}
+=======
+   /**
+   * Identificador da leitora
+   * @return readerId
+  **/
+  @Schema(description  = "Identificador da leitora")
+  public Long getReaderId() {
+    return readerId;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	public void setReaderId(Long readerId) {
 		this.readerId = readerId;
@@ -32,10 +50,21 @@ public class ReaderAndTimezone {
 		return this;
 	}
 
+<<<<<<< HEAD
 	@Schema(description = "Identificador do fuso horário")
 	public Long getTimezoneId() {
 		return this.timezoneId;
 	}
+=======
+   /**
+   * Identificador do fuso horário
+   * @return timezoneId
+  **/
+  @Schema(description  = "Identificador do fuso horário")
+  public Long getTimezoneId() {
+    return timezoneId;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	public void setTimezoneId(Long timezoneId) {
 		this.timezoneId = timezoneId;

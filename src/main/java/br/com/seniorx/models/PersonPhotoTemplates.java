@@ -6,6 +6,7 @@
  
  import com.google.gson.annotations.SerializedName;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -153,6 +154,108 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.annotations.SerializedName;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * PersonPhotoTemplates
+ */
+
+public class PersonPhotoTemplates {
+  @SerializedName("personId")
+  private Long personId = null;
+
+  @SerializedName("name")
+  private String name = null;
+
+  @SerializedName("photoURL")
+  private String photoURL = null;
+
+  @SerializedName("cardList")
+  private List<CardInformation> cardList = null;
+
+  public PersonPhotoTemplates personId(Long personId) {
+    this.personId = personId;
+    return this;
+  }
+
+   /**
+   * Identificador da pessoa
+   * @return personId
+  **/
+  @Schema(description  = "Identificador da pessoa")
+  public Long getPersonId() {
+    return personId;
+  }
+
+  public void setPersonId(Long personId) {
+    this.personId = personId;
+  }
+
+  public PersonPhotoTemplates name(String name) {
+    this.name = name;
+    return this;
+  }
+
+   /**
+   * Nome
+   * @return name
+  **/
+  @Schema(description  = "Nome")
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public PersonPhotoTemplates photoURL(String photoURL) {
+    this.photoURL = photoURL;
+    return this;
+  }
+
+   /**
+   * Url da foto
+   * @return photoURL
+  **/
+  @Schema(description  = "Url da foto")
+  public String getPhotoURL() {
+    return photoURL;
+  }
+
+  public void setPhotoURL(String photoURL) {
+    this.photoURL = photoURL;
+  }
+
+  public PersonPhotoTemplates cardList(List<CardInformation> cardList) {
+    this.cardList = cardList;
+    return this;
+  }
+
+  public PersonPhotoTemplates addCardListItem(CardInformation cardListItem) {
+    if (this.cardList == null) {
+      this.cardList = new ArrayList<CardInformation>();
+    }
+    this.cardList.add(cardListItem);
+    return this;
+  }
+
+   /**
+   * Lista de cartões
+   * @return cardList
+  **/
+  @Schema(description  = "Lista de cartões")
+  public List<CardInformation> getCardList() {
+    return cardList;
+  }
+
+  public void setCardList(List<CardInformation> cardList) {
+    this.cardList = cardList;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\PersonPhotoTemplates.class

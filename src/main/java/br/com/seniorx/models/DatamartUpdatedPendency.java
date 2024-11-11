@@ -9,6 +9,7 @@
  import com.google.gson.stream.JsonReader;
  import com.google.gson.stream.JsonWriter;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  public class DatamartUpdatedPendency {
@@ -177,6 +178,135 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * DatamartUpdatedPendency
+ */
+
+public class DatamartUpdatedPendency {
+  @SerializedName("pendencyId")
+  private Long pendencyId = null;
+
+  @SerializedName("driverId")
+  private Long driverId = null;
+
+  /**
+   * Gets or Sets datamartObjectType
+   */
+  @JsonAdapter(DatamartObjectTypeEnum.Adapter.class)
+  public enum DatamartObjectTypeEnum {
+    HOLIDAY("HOLIDAY"),
+    
+    TIMEZONE("TIMEZONE"),
+    
+    ACCESS_LEVEL("ACCESS_LEVEL"),
+    
+    AREA_CONTROLLED("AREA_CONTROLLED"),
+    
+    CARD_FORMAT("CARD_FORMAT");
+
+    private String value;
+
+    DatamartObjectTypeEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static DatamartObjectTypeEnum fromValue(String text) {
+      for (DatamartObjectTypeEnum b : DatamartObjectTypeEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<DatamartObjectTypeEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final DatamartObjectTypeEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public DatamartObjectTypeEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return DatamartObjectTypeEnum.fromValue(String.valueOf(value));
+      }
+    }
+  }
+  @SerializedName("datamartObjectType")
+  private DatamartObjectTypeEnum datamartObjectType = null;
+
+  public DatamartUpdatedPendency pendencyId(Long pendencyId) {
+    this.pendencyId = pendencyId;
+    return this;
+  }
+
+   /**
+   * Identificador da pendência
+   * @return pendencyId
+  **/
+  @Schema(description  = "Identificador da pendência")
+  public Long getPendencyId() {
+    return pendencyId;
+  }
+
+  public void setPendencyId(Long pendencyId) {
+    this.pendencyId = pendencyId;
+  }
+
+  public DatamartUpdatedPendency driverId(Long driverId) {
+    this.driverId = driverId;
+    return this;
+  }
+
+   /**
+   * Identificador do driver
+   * @return driverId
+  **/
+  @Schema(description  = "Identificador do driver")
+  public Long getDriverId() {
+    return driverId;
+  }
+
+  public void setDriverId(Long driverId) {
+    this.driverId = driverId;
+  }
+
+  public DatamartUpdatedPendency datamartObjectType(DatamartObjectTypeEnum datamartObjectType) {
+    this.datamartObjectType = datamartObjectType;
+    return this;
+  }
+
+   /**
+   * Get datamartObjectType
+   * @return datamartObjectType
+  **/
+  @Schema(description  = "")
+  public DatamartObjectTypeEnum getDatamartObjectType() {
+    return datamartObjectType;
+  }
+
+  public void setDatamartObjectType(DatamartObjectTypeEnum datamartObjectType) {
+    this.datamartObjectType = datamartObjectType;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\DatamartUpdatedPendency.class

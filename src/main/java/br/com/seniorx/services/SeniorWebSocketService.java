@@ -8,11 +8,22 @@ import java.net.URISyntaxException;
 import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 @Service
 @ClientEndpoint
 public class SeniorWebSocketService extends Thread {
 	private static String SENIOR_WEBSOCKET_URI = MiddlewareUtilPropertiesImpl.getValor("senior.websocket.uri");
 	private static String SENIOR_DRIVER_KEY = MiddlewareUtilPropertiesImpl.getValor("senior.driver_key");
+=======
+import br.com.thidi.middleware.utils.MiddlewareUtilPropertiesImpl;
+import jakarta.websocket.ClientEndpoint;
+
+@Service
+@ClientEndpoint
+public class SeniorWebSocketService extends Thread {
+
+	private static String websocketUri = MiddlewareUtilPropertiesImpl.getValor("senior.websocket.uri");
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	private SeniorWebSocketClient webSocketClient;
 

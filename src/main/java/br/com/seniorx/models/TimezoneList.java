@@ -6,6 +6,7 @@
  
  import com.google.gson.annotations.SerializedName;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -107,6 +108,66 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.annotations.SerializedName;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * TimezoneList
+ */
+
+public class TimezoneList {
+  @SerializedName("id")
+  private Long id = null;
+
+  @SerializedName("timezone")
+  private List<Timezone> timezone = null;
+
+  public TimezoneList id(Long id) {
+    this.id = id;
+    return this;
+  }
+
+   /**
+   * Get id
+   * @return id
+  **/
+  @Schema(description  = "")
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public TimezoneList timezone(List<Timezone> timezone) {
+    this.timezone = timezone;
+    return this;
+  }
+
+  public TimezoneList addTimezoneItem(Timezone timezoneItem) {
+    if (this.timezone == null) {
+      this.timezone = new ArrayList<Timezone>();
+    }
+    this.timezone.add(timezoneItem);
+    return this;
+  }
+
+   /**
+   * Get timezone
+   * @return timezone
+  **/
+  @Schema(description  = "")
+  public List<Timezone> getTimezone() {
+    return timezone;
+  }
+
+  public void setTimezone(List<Timezone> timezone) {
+    this.timezone = timezone;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\TimezoneList.class

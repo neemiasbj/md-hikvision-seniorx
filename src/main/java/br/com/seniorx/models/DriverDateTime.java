@@ -4,6 +4,7 @@
  
  import com.google.gson.annotations.SerializedName;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -74,6 +75,37 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.annotations.SerializedName;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * DriverDateTime
+ */
+
+public class DriverDateTime {
+  @SerializedName("dateTime")
+  private String dateTime = null;
+
+  public DriverDateTime dateTime(String dateTime) {
+    this.dateTime = dateTime;
+    return this;
+  }
+
+   /**
+   * Get dateTime
+   * @return dateTime
+  **/
+  @Schema(description  = "")
+  public String getDateTime() {
+    return dateTime;
+  }
+
+  public void setDateTime(String dateTime) {
+    this.dateTime = dateTime;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\DriverDateTime.class

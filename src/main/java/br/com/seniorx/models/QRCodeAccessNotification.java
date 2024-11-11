@@ -12,6 +12,13 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+<<<<<<< HEAD
+=======
+
+/**
+ * QRCodeAccessNotification
+ */
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 public class QRCodeAccessNotification {
 	@SerializedName("deviceId")
@@ -180,9 +187,20 @@ public class QRCodeAccessNotification {
 			this.value = value;
 		}
 
+<<<<<<< HEAD
 		public String getValue() {
 			return this.value;
 		}
+=======
+   /**
+   * Identificador do dispositivo
+   * @return deviceId
+  **/
+  @Schema(description  = "Identificador do dispositivo")
+  public Long getDeviceId() {
+    return deviceId;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 		public String toString() {
 			return String.valueOf(this.value);
@@ -201,11 +219,22 @@ public class QRCodeAccessNotification {
 			return null;
 		}
 
+<<<<<<< HEAD
 		public static class Adapter extends TypeAdapter<AccessDirectionEnum> {
 			public void write(JsonWriter jsonWriter, QRCodeAccessNotification.AccessDirectionEnum enumeration)
 					throws IOException {
 				jsonWriter.value(enumeration.getValue());
 			}
+=======
+   /**
+   * Data da notificação em UTC
+   * @return date
+  **/
+  @Schema(description  = "Data da notificação em UTC")
+  public OffsetDateTime getDate() {
+    return date;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 			public QRCodeAccessNotification.AccessDirectionEnum read(JsonReader jsonReader) throws IOException {
 				String value = jsonReader.nextString();
@@ -218,10 +247,21 @@ public class QRCodeAccessNotification {
 		this.deviceId = deviceId;
 	}
 
+<<<<<<< HEAD
 	public QRCodeAccessNotification date(OffsetDateTime date) {
 		this.date = date;
 		return this;
 	}
+=======
+   /**
+   * Offset em minutos
+   * @return timezoneOffset
+  **/
+  @Schema(description  = "Offset em minutos")
+  public Integer getTimezoneOffset() {
+    return timezoneOffset;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	@Schema(description = "Data da notificação em UTC")
 	public OffsetDateTime getDate() {
@@ -232,10 +272,21 @@ public class QRCodeAccessNotification {
 		this.date = date;
 	}
 
+<<<<<<< HEAD
 	public QRCodeAccessNotification timezoneOffset(Integer timezoneOffset) {
 		this.timezoneOffset = timezoneOffset;
 		return this;
 	}
+=======
+   /**
+   * Get status
+   * @return status
+  **/
+  @Schema(description  = "")
+  public StatusEnum getStatus() {
+    return status;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	@Schema(description = "Offset em minutos")
 	public Integer getTimezoneOffset() {
@@ -246,10 +297,21 @@ public class QRCodeAccessNotification {
 		this.timezoneOffset = timezoneOffset;
 	}
 
+<<<<<<< HEAD
 	public QRCodeAccessNotification status(StatusEnum status) {
 		this.status = status;
 		return this;
 	}
+=======
+   /**
+   * Get accessType
+   * @return accessType
+  **/
+  @Schema(description  = "")
+  public AccessTypeEnum getAccessType() {
+    return accessType;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	@Schema(description = "")
 	public StatusEnum getStatus() {
@@ -260,10 +322,21 @@ public class QRCodeAccessNotification {
 		this.status = status;
 	}
 
+<<<<<<< HEAD
 	public QRCodeAccessNotification accessType(AccessTypeEnum accessType) {
 		this.accessType = accessType;
 		return this;
 	}
+=======
+   /**
+   * Get accessDirection
+   * @return accessDirection
+  **/
+  @Schema(description  = "")
+  public AccessDirectionEnum getAccessDirection() {
+    return accessDirection;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	@Schema(description = "")
 	public AccessTypeEnum getAccessType() {
@@ -274,10 +347,21 @@ public class QRCodeAccessNotification {
 		this.accessType = accessType;
 	}
 
+<<<<<<< HEAD
 	public QRCodeAccessNotification accessDirection(AccessDirectionEnum accessDirection) {
 		this.accessDirection = accessDirection;
 		return this;
 	}
+=======
+   /**
+   * Get qrcode
+   * @return qrcode
+  **/
+  @Schema(description  = "")
+  public String getQrcode() {
+    return qrcode;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	@Schema(description = "")
 	public AccessDirectionEnum getAccessDirection() {

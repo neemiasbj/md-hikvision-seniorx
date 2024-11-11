@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*    */ package br.com.hikvision.minmoe.models;
 /*    */ 
 /*    */ import jakarta.xml.bind.annotation.XmlElement;
@@ -53,3 +54,54 @@
  * Java compiler version: 17 (61.0)
  * JD-Core Version:       1.1.3
  */
+=======
+package br.com.hikvision.minmoe.models;
+
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "ResponseStatus")
+public class RequestExecutionResponseXml {
+
+	private String requestURL;
+	private int statusCode;
+	private String statusString;
+	private String subStatusCode;
+
+	@XmlElement(name = "requestURL")
+	public String getRequestURL() {
+		return requestURL;
+	}
+
+	public void setRequestURL(String requestURL) {
+		this.requestURL = requestURL;
+	}
+
+	@XmlElement(name = "statusCode")
+	public int getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(int statusCode) {
+		this.statusCode = statusCode;
+	}
+
+	@XmlElement(name = "statusString")
+	public String getStatusString() {
+		return statusString;
+	}
+
+	public void setStatusString(String statusString) {
+		this.statusString = statusString;
+	}
+
+	@XmlElement(name = "subStatusCode")
+	public String getSubStatusCode() {
+		return subStatusCode;
+	}
+
+	public void setSubStatusCode(String subStatusCode) {
+		this.subStatusCode = subStatusCode;
+	}
+}
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c

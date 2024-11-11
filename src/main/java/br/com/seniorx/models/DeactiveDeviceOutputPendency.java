@@ -4,6 +4,7 @@
  
  import com.google.gson.annotations.SerializedName;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -120,6 +121,79 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.annotations.SerializedName;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * DeactiveDeviceOutputPendency
+ */
+
+public class DeactiveDeviceOutputPendency {
+  @SerializedName("pendencyId")
+  private Long pendencyId = null;
+
+  @SerializedName("managerDeviceId")
+  private Long managerDeviceId = null;
+
+  @SerializedName("deviceId")
+  private Long deviceId = null;
+
+  public DeactiveDeviceOutputPendency pendencyId(Long pendencyId) {
+    this.pendencyId = pendencyId;
+    return this;
+  }
+
+   /**
+   * Identificador da pendência
+   * @return pendencyId
+  **/
+  @Schema(description  = "Identificador da pendência")
+  public Long getPendencyId() {
+    return pendencyId;
+  }
+
+  public void setPendencyId(Long pendencyId) {
+    this.pendencyId = pendencyId;
+  }
+
+  public DeactiveDeviceOutputPendency managerDeviceId(Long managerDeviceId) {
+    this.managerDeviceId = managerDeviceId;
+    return this;
+  }
+
+   /**
+   * Identificador do dispositivo gerenciador
+   * @return managerDeviceId
+  **/
+  @Schema(description  = "Identificador do dispositivo gerenciador")
+  public Long getManagerDeviceId() {
+    return managerDeviceId;
+  }
+
+  public void setManagerDeviceId(Long managerDeviceId) {
+    this.managerDeviceId = managerDeviceId;
+  }
+
+  public DeactiveDeviceOutputPendency deviceId(Long deviceId) {
+    this.deviceId = deviceId;
+    return this;
+  }
+
+   /**
+   * Identificador do dispositivo
+   * @return deviceId
+  **/
+  @Schema(description  = "Identificador do dispositivo")
+  public Long getDeviceId() {
+    return deviceId;
+  }
+
+  public void setDeviceId(Long deviceId) {
+    this.deviceId = deviceId;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\DeactiveDeviceOutputPendency.class

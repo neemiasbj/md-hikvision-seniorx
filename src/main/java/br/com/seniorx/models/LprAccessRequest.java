@@ -4,6 +4,7 @@
  
  import com.google.gson.annotations.SerializedName;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -120,6 +121,79 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.annotations.SerializedName;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * LprAccessRequest
+ */
+
+public class LprAccessRequest {
+  @SerializedName("readerId")
+  private Long readerId = null;
+
+  @SerializedName("licensePlate")
+  private String licensePlate = null;
+
+  @SerializedName("generateNotification")
+  private Boolean generateNotification = false;
+
+  public LprAccessRequest readerId(Long readerId) {
+    this.readerId = readerId;
+    return this;
+  }
+
+   /**
+   * Identificador da leitora
+   * @return readerId
+  **/
+  @Schema(description  = "Identificador da leitora")
+  public Long getReaderId() {
+    return readerId;
+  }
+
+  public void setReaderId(Long readerId) {
+    this.readerId = readerId;
+  }
+
+  public LprAccessRequest licensePlate(String licensePlate) {
+    this.licensePlate = licensePlate;
+    return this;
+  }
+
+   /**
+   * Placa do veículo
+   * @return licensePlate
+  **/
+  @Schema(description  = "Placa do veículo")
+  public String getLicensePlate() {
+    return licensePlate;
+  }
+
+  public void setLicensePlate(String licensePlate) {
+    this.licensePlate = licensePlate;
+  }
+
+  public LprAccessRequest generateNotification(Boolean generateNotification) {
+    this.generateNotification = generateNotification;
+    return this;
+  }
+
+   /**
+   * Gera notificação
+   * @return generateNotification
+  **/
+  @Schema(description  = "Gera notificação")
+  public Boolean isGenerateNotification() {
+    return generateNotification;
+  }
+
+  public void setGenerateNotification(Boolean generateNotification) {
+    this.generateNotification = generateNotification;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\LprAccessRequest.class

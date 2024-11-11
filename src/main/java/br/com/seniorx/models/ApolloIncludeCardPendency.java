@@ -13,7 +13,11 @@ import com.google.gson.annotations.JsonAdapter;
  import com.google.gson.stream.JsonReader;
  import com.google.gson.stream.JsonWriter;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
+=======
+import io.swagger.v3.oas.annotations.media.Schema;
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
  public class ApolloIncludeCardPendency {
 	@SerializedName("pendencyId")
@@ -275,7 +279,39 @@ import com.google.gson.annotations.JsonAdapter;
 		}
 	}
 
+<<<<<<< HEAD
 	 @Schema(description = "Identificador da pendência")
+=======
+	@SerializedName("ownerType")
+	private OwnerTypeEnum ownerType = null;
+
+	@SerializedName("ownerId")
+	private Long ownerId = null;
+
+	@SerializedName("areaId")
+	private Long areaId = null;
+
+	@SerializedName("isVisitor")
+	private Boolean isVisitor = false;
+
+	@SerializedName("isEscort")
+	private Boolean isEscort = false;
+
+	@SerializedName("accessLevel")
+	private List<Long> accessLevel = null;
+
+	public ApolloIncludeCardPendency pendencyId(Long pendencyId) {
+		this.pendencyId = pendencyId;
+		return this;
+	}
+
+	/**
+	 * Identificador da pendência
+	 * 
+	 * @return pendencyId
+	 **/
+	@Schema(description  = "Identificador da pendência")
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 	public Long getPendencyId() {
 		return this.pendencyId;
 	}
@@ -292,6 +328,7 @@ import com.google.gson.annotations.JsonAdapter;
 		 return this;
 		 }
 
+<<<<<<< HEAD
 	
 	
 	
@@ -302,6 +339,17 @@ import com.google.gson.annotations.JsonAdapter;
 	 public Long getManagerDeviceId() {
 		 return this.managerDeviceId;
 		 }
+=======
+	/**
+	 * Identificador do dispositivo gerenciador
+	 * 
+	 * @return managerDeviceId
+	 **/
+	@Schema(description  = "Identificador do dispositivo gerenciador")
+	public Long getManagerDeviceId() {
+		return managerDeviceId;
+	}
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	
 	 public void setManagerDeviceId(Long managerDeviceId) {
@@ -314,6 +362,7 @@ import com.google.gson.annotations.JsonAdapter;
 		 return this;
 		 }
 
+<<<<<<< HEAD
 	
 	
 	
@@ -324,6 +373,17 @@ import com.google.gson.annotations.JsonAdapter;
 	 public Long getCardNumber() {
 		 return this.cardNumber;
 		 }
+=======
+	/**
+	 * Número físico do cartão
+	 * 
+	 * @return cardNumber
+	 **/
+	@Schema(description  = "Número físico do cartão")
+	public Long getCardNumber() {
+		return cardNumber;
+	}
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	
 	 public void setCardNumber(Long cardNumber) {
@@ -336,6 +396,7 @@ import com.google.gson.annotations.JsonAdapter;
 		 return this;
 		 }
 
+<<<<<<< HEAD
 	
 	
 	
@@ -346,6 +407,17 @@ import com.google.gson.annotations.JsonAdapter;
 	 public CardTechnologyEnum getCardTechnology() {
 		 return this.cardTechnology;
 		 }
+=======
+	/**
+	 * Get cardTechnology
+	 * 
+	 * @return cardTechnology
+	 **/
+	@Schema(description  = "")
+	public CardTechnologyEnum getCardTechnology() {
+		return cardTechnology;
+	}
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	
 	 public void setCardTechnology(CardTechnologyEnum cardTechnology) {
@@ -358,6 +430,7 @@ import com.google.gson.annotations.JsonAdapter;
 		 return this;
 		 }
 
+<<<<<<< HEAD
 	
 	
 	
@@ -368,6 +441,17 @@ import com.google.gson.annotations.JsonAdapter;
 	 public OffsetDateTime getStartValidity() {
 		 return this.startValidity;
 		 }
+=======
+	/**
+	 * Data de início da validade
+	 * 
+	 * @return startValidity
+	 **/
+	@Schema(description  = "Data de início da validade")
+	public OffsetDateTime getStartValidity() {
+		return startValidity;
+	}
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	
 	 public void setStartValidity(OffsetDateTime startValidity) {
@@ -380,6 +464,7 @@ import com.google.gson.annotations.JsonAdapter;
 		 return this;
 		 }
 
+<<<<<<< HEAD
 	
 	
 	
@@ -390,6 +475,17 @@ import com.google.gson.annotations.JsonAdapter;
 	 public OffsetDateTime getFinishValidity() {
 		 return this.finishValidity;
 		 }
+=======
+	/**
+	 * Data final da validade
+	 * 
+	 * @return finishValidity
+	 **/
+	@Schema(description  = "Data final da validade")
+	public OffsetDateTime getFinishValidity() {
+		return finishValidity;
+	}
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	
 	 public void setFinishValidity(OffsetDateTime finishValidity) {
@@ -402,6 +498,7 @@ import com.google.gson.annotations.JsonAdapter;
 		 return this;
 		 }
 
+<<<<<<< HEAD
 	
 	
 	
@@ -412,6 +509,17 @@ import com.google.gson.annotations.JsonAdapter;
 	 public Boolean isCheckAntiPassback() {
 		 return this.checkAntiPassback;
 		 }
+=======
+	/**
+	 * Valida anti-dupla
+	 * 
+	 * @return checkAntiPassback
+	 **/
+	@Schema(description  = "Valida anti-dupla")
+	public Boolean isCheckAntiPassback() {
+		return checkAntiPassback;
+	}
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	
 	 public void setCheckAntiPassback(Boolean checkAntiPassback) {
@@ -424,6 +532,7 @@ import com.google.gson.annotations.JsonAdapter;
 		 return this;
 		 }
 
+<<<<<<< HEAD
 	
 	
 	
@@ -434,6 +543,17 @@ import com.google.gson.annotations.JsonAdapter;
 	 public OwnerTypeEnum getOwnerType() {
 		 return this.ownerType;
 		 }
+=======
+	/**
+	 * Get ownerType
+	 * 
+	 * @return ownerType
+	 **/
+	@Schema(description  = "")
+	public OwnerTypeEnum getOwnerType() {
+		return ownerType;
+	}
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	
 	 public void setOwnerType(OwnerTypeEnum ownerType) {
@@ -446,6 +566,7 @@ import com.google.gson.annotations.JsonAdapter;
 		 return this;
 		 }
 
+<<<<<<< HEAD
 	
 	
 	
@@ -456,6 +577,17 @@ import com.google.gson.annotations.JsonAdapter;
 	 public Long getOwnerId() {
 		 return this.ownerId;
 		 }
+=======
+	/**
+	 * Identificador do proprietário da credencial (pessoa ou veículo)
+	 * 
+	 * @return ownerId
+	 **/
+	@Schema(description  = "Identificador do proprietário da credencial (pessoa ou veículo)")
+	public Long getOwnerId() {
+		return ownerId;
+	}
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	
 	 public void setOwnerId(Long ownerId) {
@@ -468,6 +600,7 @@ import com.google.gson.annotations.JsonAdapter;
 		/* 328 */ return this;
 		/*     */ }
 
+<<<<<<< HEAD
 	/*     */
 	/*     */
 	/*     */
@@ -478,6 +611,17 @@ import com.google.gson.annotations.JsonAdapter;
 	/*     */ public Long getAreaId() {
 		/* 338 */ return this.areaId;
 		/*     */ }
+=======
+	/**
+	 * Identificador da área
+	 * 
+	 * @return areaId
+	 **/
+	@Schema(description  = "Identificador da área")
+	public Long getAreaId() {
+		return areaId;
+	}
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	/*     */
 	/*     */ public void setAreaId(Long areaId) {
@@ -490,6 +634,7 @@ import com.google.gson.annotations.JsonAdapter;
 		/* 347 */ return this;
 		/*     */ }
 
+<<<<<<< HEAD
 	/*     */
 	/*     */
 	/*     */
@@ -500,6 +645,17 @@ import com.google.gson.annotations.JsonAdapter;
 	/*     */ public Boolean isIsVisitor() {
 		/* 357 */ return this.isVisitor;
 		/*     */ }
+=======
+	/**
+	 * Informa se é um visitante
+	 * 
+	 * @return isVisitor
+	 **/
+	@Schema(description  = "Informa se é um visitante")
+	public Boolean isIsVisitor() {
+		return isVisitor;
+	}
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	/*     */
 	/*     */ public void setIsVisitor(Boolean isVisitor) {
@@ -512,6 +668,7 @@ import com.google.gson.annotations.JsonAdapter;
 		/* 366 */ return this;
 		/*     */ }
 
+<<<<<<< HEAD
 	/*     */
 	/*     */
 	/*     */
@@ -522,6 +679,17 @@ import com.google.gson.annotations.JsonAdapter;
 	/*     */ public Boolean isIsEscort() {
 		/* 376 */ return this.isEscort;
 		/*     */ }
+=======
+	/**
+	 * Informa se é um autorizador
+	 * 
+	 * @return isEscort
+	 **/
+	@Schema(description  = "Informa se é um autorizador")
+	public Boolean isIsEscort() {
+		return isEscort;
+	}
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	/*     */
 	/*     */ public void setIsEscort(Boolean isEscort) {
@@ -543,6 +711,7 @@ import com.google.gson.annotations.JsonAdapter;
 		/* 393 */ return this;
 		/*     */ }
 
+<<<<<<< HEAD
 	/*     */
 	/*     */
 	/*     */
@@ -553,6 +722,17 @@ import com.google.gson.annotations.JsonAdapter;
 	/*     */ public List<Long> getAccessLevel() {
 		/* 403 */ return this.accessLevel;
 		/*     */ }
+=======
+	/**
+	 * Níveis de acesso
+	 * 
+	 * @return accessLevel
+	 **/
+	@Schema(description  = "Níveis de acesso")
+	public List<Long> getAccessLevel() {
+		return accessLevel;
+	}
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 	/*     */
 	/*     */ public void setAccessLevel(List<Long> accessLevel) {

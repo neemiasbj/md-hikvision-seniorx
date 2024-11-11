@@ -9,6 +9,7 @@
  import com.google.gson.stream.JsonReader;
  import com.google.gson.stream.JsonWriter;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  public class CardRep
@@ -152,6 +153,112 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * CardRep
+ */
+
+public class CardRep {
+  @SerializedName("cardNumber")
+  private Long cardNumber = null;
+
+  /**
+   * Gets or Sets cardTechnology
+   */
+  @JsonAdapter(CardTechnologyEnum.Adapter.class)
+  public enum CardTechnologyEnum {
+    BARCODE_CARD("BARCODE_CARD"),
+    
+    RFID_CARD("RFID_CARD"),
+    
+    SMART_CARD("SMART_CARD"),
+    
+    QRCODE("QRCODE");
+
+    private String value;
+
+    CardTechnologyEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static CardTechnologyEnum fromValue(String text) {
+      for (CardTechnologyEnum b : CardTechnologyEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<CardTechnologyEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final CardTechnologyEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public CardTechnologyEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return CardTechnologyEnum.fromValue(String.valueOf(value));
+      }
+    }
+  }
+  @SerializedName("cardTechnology")
+  private CardTechnologyEnum cardTechnology = null;
+
+  public CardRep cardNumber(Long cardNumber) {
+    this.cardNumber = cardNumber;
+    return this;
+  }
+
+   /**
+   * Número físico do cartão
+   * @return cardNumber
+  **/
+  @Schema(description  = "Número físico do cartão")
+  public Long getCardNumber() {
+    return cardNumber;
+  }
+
+  public void setCardNumber(Long cardNumber) {
+    this.cardNumber = cardNumber;
+  }
+
+  public CardRep cardTechnology(CardTechnologyEnum cardTechnology) {
+    this.cardTechnology = cardTechnology;
+    return this;
+  }
+
+   /**
+   * Get cardTechnology
+   * @return cardTechnology
+  **/
+  @Schema(description  = "")
+  public CardTechnologyEnum getCardTechnology() {
+    return cardTechnology;
+  }
+
+  public void setCardTechnology(CardTechnologyEnum cardTechnology) {
+    this.cardTechnology = cardTechnology;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\CardRep.class

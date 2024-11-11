@@ -5,6 +5,7 @@
  
  import com.google.gson.annotations.SerializedName;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -121,6 +122,79 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.annotations.SerializedName;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * QRCodeAccessRequest
+ */
+
+public class QRCodeAccessRequest {
+  @SerializedName("readerId")
+  private Long readerId = null;
+
+  @SerializedName("qrcode")
+  private String qrcode = null;
+
+  @SerializedName("requestDateTime")
+  private OffsetDateTime requestDateTime = null;
+
+  public QRCodeAccessRequest readerId(Long readerId) {
+    this.readerId = readerId;
+    return this;
+  }
+
+   /**
+   * Get readerId
+   * @return readerId
+  **/
+  @Schema(description  = "")
+  public Long getReaderId() {
+    return readerId;
+  }
+
+  public void setReaderId(Long readerId) {
+    this.readerId = readerId;
+  }
+
+  public QRCodeAccessRequest qrcode(String qrcode) {
+    this.qrcode = qrcode;
+    return this;
+  }
+
+   /**
+   * Get qrcode
+   * @return qrcode
+  **/
+  @Schema(description  = "")
+  public String getQrcode() {
+    return qrcode;
+  }
+
+  public void setQrcode(String qrcode) {
+    this.qrcode = qrcode;
+  }
+
+  public QRCodeAccessRequest requestDateTime(OffsetDateTime requestDateTime) {
+    this.requestDateTime = requestDateTime;
+    return this;
+  }
+
+   /**
+   * Get requestDateTime
+   * @return requestDateTime
+  **/
+  @Schema(description  = "")
+  public OffsetDateTime getRequestDateTime() {
+    return requestDateTime;
+  }
+
+  public void setRequestDateTime(OffsetDateTime requestDateTime) {
+    this.requestDateTime = requestDateTime;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\QRCodeAccessRequest.class

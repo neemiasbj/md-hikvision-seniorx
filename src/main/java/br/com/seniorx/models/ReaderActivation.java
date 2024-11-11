@@ -4,6 +4,7 @@
  
  import com.google.gson.annotations.SerializedName;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -120,6 +121,79 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.annotations.SerializedName;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * ReaderActivation
+ */
+
+public class ReaderActivation {
+  @SerializedName("actionEventType")
+  private Integer actionEventType = null;
+
+  @SerializedName("outputId")
+  private Long outputId = null;
+
+  @SerializedName("activationTime")
+  private Integer activationTime = null;
+
+  public ReaderActivation actionEventType(Integer actionEventType) {
+    this.actionEventType = actionEventType;
+    return this;
+  }
+
+   /**
+   * 0&#x3D;Acesso Permitido, 1&#x3D;Acesso Negado
+   * @return actionEventType
+  **/
+  @Schema(description  = "0=Acesso Permitido, 1=Acesso Negado")
+  public Integer getActionEventType() {
+    return actionEventType;
+  }
+
+  public void setActionEventType(Integer actionEventType) {
+    this.actionEventType = actionEventType;
+  }
+
+  public ReaderActivation outputId(Long outputId) {
+    this.outputId = outputId;
+    return this;
+  }
+
+   /**
+   * Get outputId
+   * @return outputId
+  **/
+  @Schema(description  = "")
+  public Long getOutputId() {
+    return outputId;
+  }
+
+  public void setOutputId(Long outputId) {
+    this.outputId = outputId;
+  }
+
+  public ReaderActivation activationTime(Integer activationTime) {
+    this.activationTime = activationTime;
+    return this;
+  }
+
+   /**
+   * Quantidade em milissegundos de tempo em que a ativação será executada (zero é para sempre)
+   * @return activationTime
+  **/
+  @Schema(description  = "Quantidade em milissegundos de tempo em que a ativação será executada (zero é para sempre)")
+  public Integer getActivationTime() {
+    return activationTime;
+  }
+
+  public void setActivationTime(Integer activationTime) {
+    this.activationTime = activationTime;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\ReaderActivation.class

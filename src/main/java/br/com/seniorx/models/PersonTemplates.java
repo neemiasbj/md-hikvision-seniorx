@@ -6,6 +6,7 @@
  
  import com.google.gson.annotations.SerializedName;
 
+<<<<<<< HEAD
  import io.swagger.v3.oas.annotations.media.Schema;
  
  
@@ -138,6 +139,95 @@
      return o.toString().replace("\n", "\n    ");
    }
  }
+=======
+import com.google.gson.annotations.SerializedName;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * PersonTemplates
+ */
+
+public class PersonTemplates {
+  @SerializedName("personId")
+  private Long personId = null;
+
+  @SerializedName("cardList")
+  private List<CardAndTechnology> cardList = null;
+
+  @SerializedName("technologies")
+  private List<BiometricTechnologyTemplatesList> technologies = null;
+
+  public PersonTemplates personId(Long personId) {
+    this.personId = personId;
+    return this;
+  }
+
+   /**
+   * Identificador da pessoa
+   * @return personId
+  **/
+  @Schema(description  = "Identificador da pessoa")
+  public Long getPersonId() {
+    return personId;
+  }
+
+  public void setPersonId(Long personId) {
+    this.personId = personId;
+  }
+
+  public PersonTemplates cardList(List<CardAndTechnology> cardList) {
+    this.cardList = cardList;
+    return this;
+  }
+
+  public PersonTemplates addCardListItem(CardAndTechnology cardListItem) {
+    if (this.cardList == null) {
+      this.cardList = new ArrayList<CardAndTechnology>();
+    }
+    this.cardList.add(cardListItem);
+    return this;
+  }
+
+   /**
+   * Lista de cartões
+   * @return cardList
+  **/
+  @Schema(description  = "Lista de cartões")
+  public List<CardAndTechnology> getCardList() {
+    return cardList;
+  }
+
+  public void setCardList(List<CardAndTechnology> cardList) {
+    this.cardList = cardList;
+  }
+
+  public PersonTemplates technologies(List<BiometricTechnologyTemplatesList> technologies) {
+    this.technologies = technologies;
+    return this;
+  }
+
+  public PersonTemplates addTechnologiesItem(BiometricTechnologyTemplatesList technologiesItem) {
+    if (this.technologies == null) {
+      this.technologies = new ArrayList<BiometricTechnologyTemplatesList>();
+    }
+    this.technologies.add(technologiesItem);
+    return this;
+  }
+
+   /**
+   * Get technologies
+   * @return technologies
+  **/
+  @Schema(description  = "")
+  public List<BiometricTechnologyTemplatesList> getTechnologies() {
+    return technologies;
+  }
+
+  public void setTechnologies(List<BiometricTechnologyTemplatesList> technologies) {
+    this.technologies = technologies;
+  }
+>>>>>>> ccbe5f431a38f01813c625c116d14dff72c2494c
 
 
 /* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\PersonTemplates.class
