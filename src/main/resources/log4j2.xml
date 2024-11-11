@@ -2,7 +2,7 @@
 <Configuration>
 
 	<Properties>
-		<Property name="application">conexx.middleware</Property>
+		<Property name="application">MiddlewareHikvisionSeniorX.middleware</Property>
 		<Property name="log-path">log/</Property>
 		<Property name="pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} | %-5p | PID %pid
 			| %t %c{10} | %m%n</Property>
@@ -29,6 +29,23 @@
 	</Appenders>
 
 	<Loggers>
+
+		<Logger name="br.com.thidi" level="error" additivity="false">
+			<AppenderRef ref="LogToConsole" />
+			<AppenderRef ref="LogToFile" />
+		</Logger>
+
+		<Logger name="br.com.hikvision" level="error"
+			additivity="false">
+			<AppenderRef ref="LogToConsole" />
+			<AppenderRef ref="LogToFile" />
+		</Logger>
+
+		<Logger name="br.com.seniorx" level="error" additivity="false">
+			<AppenderRef ref="LogToConsole" />
+			<AppenderRef ref="LogToFile" />
+		</Logger>
+
 		<Logger name="org.springframework.boot" level="info"
 			additivity="false">
 			<AppenderRef ref="LogToConsole" />
@@ -36,6 +53,33 @@
 
 		<Logger name="org.springframework" level="info"
 			additivity="false">
+			<AppenderRef ref="LogToConsole" />
+		</Logger>
+
+		<Logger name="SENIOR_LOGGER" level="error" additivity="false">
+			<AppenderRef ref="LogToConsole" />
+		</Logger>
+		<Logger name="HIKVISION_LOGGER" level="error"
+			additivity="false">
+			<AppenderRef ref="LogToConsole" />
+		</Logger>
+		<Logger name="WEBSOCKET_LOGGER" level="error"
+			additivity="false">
+			<AppenderRef ref="LogToConsole" />
+		</Logger>
+		<Logger name="SPRING_LOGGER" level="error" additivity="false">
+			<AppenderRef ref="LogToConsole" />
+		</Logger>
+		<Logger name="LOGGER" level="error" additivity="false">
+			<AppenderRef ref="LogToConsole" />
+		</Logger>
+		<Logger name="PROPERTIES" level="error" additivity="false">
+			<AppenderRef ref="LogToConsole" />
+		</Logger>
+		<Logger name="FILE" level="error" additivity="false">
+			<AppenderRef ref="LogToConsole" />
+		</Logger>
+		<Logger name="GENERAL" level="error" additivity="false">
 			<AppenderRef ref="LogToConsole" />
 		</Logger>
 

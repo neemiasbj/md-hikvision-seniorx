@@ -10,6 +10,6 @@ import io.swagger.v3.oas.models.info.Info;
 public class SwaggerConfig {
 //	@Bean
 //	public OpenAPI customOpenAPI() {
-//		return new OpenAPI().info(new Info().title("Hikivision Device API").version("1.0").description("API documentation using OpenAPI 3 and Springdoc"));
+//		return new OpenAPI().info(new Info().title("Hikvision Device API").version("1.0").description("API documentation using OpenAPI 3 and Springdoc"));
 //	}
 }

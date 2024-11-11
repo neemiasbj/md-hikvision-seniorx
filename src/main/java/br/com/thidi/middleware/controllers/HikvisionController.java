@@ -21,7 +21,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping(value = "/api/hikvision")
 @Tag(name = "Hikvision - MinMoe")
-public class HikivisionController {
+public class HikvisionController {
 
 	@Operation(summary = "Create a new entity with multiple request body examples", description = "This endpoint receives one of the following examples in the request body.", responses = {
 			@ApiResponse(responseCode = "200", description = "Event successfully handled"),

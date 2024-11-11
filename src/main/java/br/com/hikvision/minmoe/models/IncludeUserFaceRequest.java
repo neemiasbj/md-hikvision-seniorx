@@ -2,7 +2,7 @@ package br.com.hikvision.minmoe.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class IncludeFaceRequest {
+public class IncludeUserFaceRequest {
 
 	@JsonProperty("faceLibType")
 	private String faceLibType = "blackFD";
@@ -13,10 +13,10 @@ public class IncludeFaceRequest {
 	@JsonProperty("FPID")
 	private String FPID;
 
-	public IncludeFaceRequest() {
+	public IncludeUserFaceRequest() {
 	}
 
-	public IncludeFaceRequest( String fpid) {
+	public IncludeUserFaceRequest( String fpid) {
 		this.FPID = fpid;
 	}
 

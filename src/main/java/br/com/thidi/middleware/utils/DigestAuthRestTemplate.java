@@ -17,7 +17,7 @@ import br.com.thidi.middleware.resource.CLogger;
 
 public class DigestAuthRestTemplate {
 
-	private final RestTemplate restTemplate = RestTemplateConfig.restTemplate();
+	private final RestTemplate restTemplate = RestTemplateConfig.getRestTemplate();
 	private final String username;
 	private final String password;
 
@@ -28,7 +28,8 @@ public class DigestAuthRestTemplate {
 
 	public <T> ResponseEntity<String> executeWithDigestAuth(String url, HttpMethod method, HttpEntity<T> entity) {
 		try {
-			CLogger.logHikivisionDebug("Execute initial request", "Entity: " + (entity == null ? "null" : entity.toString()));
+			CLogger.logHikvisionDebug("Execute initial request",
+					"Entity: " + (entity == null ? "null" : entity.toString()));
 			ResponseEntity<String> initialResponse = restTemplate.exchange(url, method, entity, String.class);
 			if (initialResponse.getStatusCode().is2xxSuccessful()) {
 				return initialResponse;
@@ -46,7 +47,8 @@ public class DigestAuthRestTemplate {
 					if (entity == null) {
 						newHeaders.set("Authorization", digestAuthHeader);
 						HttpEntity<T> updatedEntity = new HttpEntity<>(null, newHeaders);
-						CLogger.logHikivisionDebug("Execute auth request", "Entity: " + (updatedEntity == null ? "null" : updatedEntity.toString()));
+						CLogger.logHikvisionDebug("Execute auth request",
+								"Entity: " + (updatedEntity == null ? "null" : updatedEntity.toString()));
 						return restTemplate.exchange(url, method, updatedEntity, String.class);
 					} else {
 						HttpHeaders existingHeaders = entity.getHeaders();
@@ -60,17 +62,18 @@ public class DigestAuthRestTemplate {
 
 						HttpEntity<T> updatedEntity = new HttpEntity<>(entity.getBody(), newHeaders);
 
-						CLogger.logHikivisionDebug("Execute auth request", "Entity: " + (updatedEntity == null ? "null" : updatedEntity.toString()));
+						CLogger.logHikvisionDebug("Execute auth request",
+								"Entity: " + (updatedEntity == null ? "null" : updatedEntity.toString()));
 
 						return restTemplate.exchange(url, method, updatedEntity, String.class);
 					}
 				}
 			} else {
-				CLogger.logHikivisionError("Execute initial request", ("Error during request: " + e.getMessage()));
+				CLogger.logHikvisionError("Execute initial request", ("Error during request: " + e.getMessage()));
 				e.printStackTrace();
 			}
 		} catch (Exception ex) {
-			CLogger.logHikivisionError("Execute initial request", ex.getMessage());
+			CLogger.logHikvisionError("Execute initial request", ex.getMessage());
 			ex.printStackTrace();
 		}
 
@@ -109,9 +112,12 @@ public class DigestAuthRestTemplate {
 		String nc = "00000001";
 		String cnonce = generateCnonce();
 
-		String response = calculateDigest(username, params.realm, password, method, uri, params.nonce, nc, cnonce, params.qop);
+		String response = calculateDigest(username, params.realm, password, method, uri, params.nonce, nc, cnonce,
+				params.qop);
 
-		return String.format("Digest username=\"%s\", realm=\"%s\", nonce=\"%s\", uri=\"%s\", qop=%s, nc=%s, cnonce=\"%s\", response=\"%s\", opaque=\"%s\"", username, params.realm, params.nonce, uri, params.qop, nc, cnonce, response, params.opaque);
+		return String.format(
+				"Digest username=\"%s\", realm=\"%s\", nonce=\"%s\", uri=\"%s\", qop=%s, nc=%s, cnonce=\"%s\", response=\"%s\", opaque=\"%s\"",
+				username, params.realm, params.nonce, uri, params.qop, nc, cnonce, response, params.opaque);
 	}
 
 	private static class DigestParams {
@@ -121,7 +127,8 @@ public class DigestAuthRestTemplate {
 		String opaque;
 	}
 
-	public static String calculateDigest(String username, String realm, String password, String method, String uri, String nonce, String nc, String cnonce, String qop) {
+	public static String calculateDigest(String username, String realm, String password, String method, String uri,
+			String nonce, String nc, String cnonce, String qop) {
 		String A1 = username + ":" + realm + ":" + password;
 		String ha1 = DigestUtils.md5Hex(A1);
 

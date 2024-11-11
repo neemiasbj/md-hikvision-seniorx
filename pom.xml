@@ -4,14 +4,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.hikvision</groupId>
 	<artifactId>hikvisionSeniorX</artifactId>
-	<version>1.0.0</version>
-	<name>Hikivision - Senior X</name>
+	<version>1.1.4</version>
+	<name>Hikvision - Senior X</name>
 	<packaging>jar</packaging>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.3</version>
+		<version>3.1.1</version>
 		<relativePath />
 	</parent>
 
@@ -29,10 +29,17 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<!-- Dependência para Springdoc OpenAPI 3 com Swagger UI -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.5.0</version>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.7.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+			<version>3.0.0</version>
 		</dependency>
 
 		<dependency>
@@ -102,10 +109,11 @@
 			<version>2.13.3</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 
+
 	</dependencies>
 	<build>
 
-		<finalName>HikivisioSeniorX/hikivision</finalName>
+		<finalName>HikvisionSeniorX/hikvision</finalName>
 
 		<plugins>
 
@@ -130,7 +138,7 @@
 						</goals>
 						<configuration>
 							<outputDirectory>
-								${project.build.directory}/HikivisioSeniorX/lib</outputDirectory>
+								${project.build.directory}/HikvisionSeniorX/lib</outputDirectory>
 							<overWriteReleases>false</overWriteReleases>
 							<overWriteSnapshots>false</overWriteSnapshots>
 							<overWriteIfNewer>true</overWriteIfNewer>
@@ -147,7 +155,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>br.com.thidi.hikivision.conex.Hikivision</mainClass>
+							<mainClass>br.com.thidi.middleware.Middleware</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -163,7 +171,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${basedir}/target/HikivisioSeniorX</outputDirectory>
+							<outputDirectory>${basedir}/target/HikvisionSeniorX</outputDirectory>
 							<resources>
 								<resource>
 									<directory>src/main/files</directory>

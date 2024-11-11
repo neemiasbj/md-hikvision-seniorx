@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 
 import br.com.hikvision.minmoe.models.DeleteUsers;
-import br.com.hikvision.minmoe.models.IncludeFaceRequest;
+import br.com.hikvision.minmoe.models.IncludeUserFaceRequest;
 import br.com.thidi.middleware.utils.DigestAuthRestTemplate;
 
 public class RequestTest {
@@ -41,7 +41,7 @@ public class RequestTest {
 		byte[] imageBytes = IOUtils.toByteArray(imageInputStream);
 
 		MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-		IncludeFaceRequest faceDataRequest = new IncludeFaceRequest("5");
+		IncludeUserFaceRequest faceDataRequest = new IncludeUserFaceRequest("5");
 		body.add("FaceDataRecord", faceDataRequest);
 
 		Resource imageResource = new ByteArrayResource(imageBytes) {

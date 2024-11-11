@@ -1,24 +1,33 @@
+
 package br.com.thidi.middleware.services;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Arrays;
 
-import br.com.thidi.middleware.resource.CLogger;
+ import br.com.thidi.middleware.resource.CLogger;
+ import java.io.IOException;
+ import java.nio.file.Files;
+ import java.nio.file.Path;
+ import java.nio.file.attribute.FileAttribute;
+ import java.util.Arrays;
 
-public class FileService {
 
-	public static void checkOrCreateFile(Path filePath, String fileContent) {
-		if (!Files.exists(filePath)) {
-			try {
-				Files.createFile(filePath);
-				Files.write(filePath, Arrays.asList(fileContent));
-				CLogger.logFileInfo("File Service", fileContent);
-			} catch (IOException e) {
-				CLogger.logFileInfo("File Service", "Error creating file created at: " + filePath);
-			}
-		}
-	}
+ public class FileService
+ {
+	 public static void checkOrCreateFile(Path filePath, String fileContent) {
+		 if (!Files.exists(filePath, new java.nio.file.LinkOption[0]))
+			 try {
+				 Files.createFile(filePath, (FileAttribute<?>[]) new FileAttribute[0]);
+				 Files.write(filePath, Arrays.asList((CharSequence[]) new String[] { fileContent }),
+						new java.nio.file.OpenOption[0]);
+				 CLogger.logFileInfo("File Service", fileContent);
+				 } catch (IOException e) {
+				 CLogger.logFileInfo("File Service", "Error creating file created at: " + filePath);
+				 }
+		 }
+	 }
 
-}
+/*
+ * Location:
+ * C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\thidi\
+ * middleware\services\FileService.class Java compiler version: 17 (61.0)
+ * JD-Core Version: 1.1.3
+ */
