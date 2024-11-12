@@ -232,12 +232,6 @@ public class SeniorHandlerService {
 
 	private static void sendDeviceStatus(DevicePendency pendency, SeniorApiService seniorService, Long deviceId,
 			Boolean status) {
-		AreaControlList areaControl = seniorService.getAreaById(seniorService.getDevice().getAreaId());
-		if (areaControl == null) {
-			CLogger.logSeniorError("getDeviceInfo",
-					String.format("AreaControl não encontrada pra o deviceId %d", deviceId));
-			return;
-		}
 
 		if (pendency != null) {
 			if (status) {
@@ -256,6 +250,13 @@ public class SeniorHandlerService {
 				CLogger.logSeniorDebug("DEVICE STATUS PENDENCY", "OFFLINE");
 			}
 		} else {
+			AreaControlList areaControl = seniorService.getAreaById(seniorService.getDevice().getAreaId());
+			if (areaControl == null) {
+				CLogger.logSeniorError("getDeviceInfo",
+						String.format("AreaControl não encontrada pra o deviceId %d", deviceId));
+				return;
+			}
+
 			List<Event> events = new ArrayList<Event>();
 			Event event = new Event();
 			event.setDate(seniorDateTime.format(new Date()));
