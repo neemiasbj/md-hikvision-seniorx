@@ -7,7 +7,9 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -30,6 +32,7 @@ import com.google.gson.Gson;
 import br.com.hikvision.minmoe.enums.MinMoeCheckChannelType;
 import br.com.hikvision.minmoe.enums.RemoteCheckCfgPassmode;
 import br.com.hikvision.minmoe.enums.RemoteCheckCfgUserType;
+import br.com.hikvision.minmoe.models.AccessCustomPrompts;
 import br.com.hikvision.minmoe.models.AcsCfgRequest;
 import br.com.hikvision.minmoe.models.DateTime;
 import br.com.hikvision.minmoe.models.DeleteUsers;
@@ -49,6 +52,13 @@ import br.com.hikvision.minmoe.models.RemoteCheckEventResponse;
 import br.com.hikvision.minmoe.models.RemoteControlDoor;
 import br.com.hikvision.minmoe.models.RequestExecutionResponseJson;
 import br.com.hikvision.minmoe.models.RequestExecutionResponseXml;
+import br.com.hikvision.minmoe.models.SearchCardsByCardsRequest;
+import br.com.hikvision.minmoe.models.SearchCardsByEmployeeRequest;
+import br.com.hikvision.minmoe.models.SearchCardsResponse;
+import br.com.hikvision.minmoe.models.SearchCardsResponse.CardInfo;
+import br.com.hikvision.minmoe.models.SearchFingerPrintRequest;
+import br.com.hikvision.minmoe.models.SearchFingerPrintResponse;
+import br.com.hikvision.minmoe.models.SearchFingerPrintResponse.FingerPrint;
 import br.com.hikvision.minmoe.models.SearchPhotoRequest;
 import br.com.hikvision.minmoe.models.SearchPhotoResponse;
 import br.com.hikvision.minmoe.utils.HikbisionDigestAuthRestUtil;
@@ -75,6 +85,9 @@ public class HikvisionMinMoeService {
 	private static final String SET_REMOTE_CHECK_CFG_PATH = "/ISAPI/AccessControl/remoteCheckCfg?format=json";
 	private static final String SET_DATE_TIME_PATH = "/ISAPI/System/time";
 	private static final String ACCESS_CONTROL_PATH = "/ISAPI/AccessControl/remoteCheck?format=json";
+	private static final String ACCESS_CUSTOM_PROMPT = "/ISAPI/AccessControl/customPrompt?format=json";
+	private static final String SEARCH_FINGER_PRINT = "/ISAPI/AccessControl/FingerPrintUpload?format=json";
+	private static final String SEARCH_CARDS = "/ISAPI/AccessControl/CardInfo/Search?format=json";
 	private static final String INCLUDE_USER_PATH = "/ISAPI/AccessControl/UserInfo/SetUp?format=json";
 	private static final String INCLUDE_FACE_PATH = "/ISAPI/Intelligent/FDLib/FaceDataRecord?format=json";
 	private static final String INCLUDE_CARD_PATH = "/ISAPI/AccessControl/CardInfo/SetUp?format=json";
@@ -144,9 +157,9 @@ public class HikvisionMinMoeService {
 
 		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(
 				String.valueOf(this.deviceUri) + "/ISAPI/System/deviceInfo", HttpMethod.GET, null);
-		if (response == null) {
+		if (response == null)
 			return null;
-		}
+
 		DeviceInfo deviceInfo = deserializeXmlResponse((String) response.getBody(), DeviceInfo.class);
 		return deviceInfo;
 	}
@@ -178,6 +191,9 @@ public class HikvisionMinMoeService {
 		if (remoteCheckVersion.equals("2") && !setRemoteCheckConfig(rmChkCnf, remoteCheckVersion)) {
 			return false;
 		}
+
+		setCustomAccessPrompts();
+
 		return true;
 	}
 
@@ -229,8 +245,8 @@ public class HikvisionMinMoeService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.TEXT_XML);
 
-		HttpEntity<String> entity = new HttpEntity(toXml(notificationList, HttpHostNotificationList.class),
-				(MultiValueMap) headers);
+		HttpEntity<String> entity = new HttpEntity<String>(toXml(notificationList, HttpHostNotificationList.class),
+				headers);
 
 		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(
 				String.valueOf(this.deviceUri) + "/ISAPI/Event/notification/httpHosts", HttpMethod.PUT, entity);
@@ -262,7 +278,7 @@ public class HikvisionMinMoeService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		HttpEntity<AcsCfgRequest> entity = new HttpEntity(request, (MultiValueMap) headers);
+		HttpEntity<AcsCfgRequest> entity = new HttpEntity<AcsCfgRequest>(request, headers);
 		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(
 				String.valueOf(this.deviceUri) + "/ISAPI/AccessControl/AcsCfg?format=json", HttpMethod.PUT, entity);
 
@@ -281,7 +297,7 @@ public class HikvisionMinMoeService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		HttpEntity<String> entity = new HttpEntity(this.objectMapper.writeValueAsString(cfg), (MultiValueMap) headers);
+		HttpEntity<String> entity = new HttpEntity<String>(this.objectMapper.writeValueAsString(cfg), headers);
 		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(
 				String.valueOf(this.deviceUri) + "/ISAPI/AccessControl/remoteCheckCfg?format=json", HttpMethod.PUT,
 				entity);
@@ -298,7 +314,7 @@ public class HikvisionMinMoeService {
 	}
 
 	public boolean setRemoteCheck(AcsCfgRequest request) throws Exception {
-		HttpEntity<String> entity = new HttpEntity(this.objectMapper.writeValueAsString(request));
+		HttpEntity<String> entity = new HttpEntity<String>(this.objectMapper.writeValueAsString(request));
 		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(
 				String.valueOf(this.deviceUri) + "/ISAPI/AccessControl/AcsCfg?format=json", HttpMethod.PUT, entity);
 		CLogger.logHikvisionDebug("setRemoteCheck response", (String) response.getBody());
@@ -310,7 +326,7 @@ public class HikvisionMinMoeService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		HttpEntity<String> entity = new HttpEntity(this.objectMapper.writeValueAsString(user), (MultiValueMap) headers);
+		HttpEntity<String> entity = new HttpEntity<String>(this.objectMapper.writeValueAsString(user), headers);
 		this.digestAuthRestTemplate.executeWithDigestAuth(
 				String.valueOf(this.deviceUri) + "/ISAPI/AccessControl/UserInfo/SetUp?format=json", HttpMethod.PUT,
 				entity);
@@ -323,7 +339,7 @@ public class HikvisionMinMoeService {
 
 		byte[] imageBytes = IOUtils.toByteArray(imageInputStream);
 
-		LinkedMultiValueMap linkedMultiValueMap = new LinkedMultiValueMap();
+		LinkedMultiValueMap<String, Object> linkedMultiValueMap = new LinkedMultiValueMap<String, Object>();
 
 		ByteArrayResource byteArrayResource = new ByteArrayResource(imageBytes) {
 			public String getFilename() {
@@ -337,8 +353,7 @@ public class HikvisionMinMoeService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-		HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity(linkedMultiValueMap,
-				(MultiValueMap) headers);
+		HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity(linkedMultiValueMap, headers);
 		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(
 				String.valueOf(this.deviceUri) + "/ISAPI/Intelligent/FDLib/FaceDataRecord?format=json", HttpMethod.POST,
 				requestEntity);
@@ -358,8 +373,7 @@ public class HikvisionMinMoeService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		HttpEntity<String> entity = new HttpEntity(this.objectMapper.writeValueAsString(request),
-				(MultiValueMap) headers);
+		HttpEntity<String> entity = new HttpEntity<String>(this.objectMapper.writeValueAsString(request), headers);
 		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(
 				String.valueOf(this.deviceUri) + "/ISAPI/AccessControl/CardInfo/SetUp?format=json", HttpMethod.PUT,
 				entity);
@@ -380,8 +394,7 @@ public class HikvisionMinMoeService {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		for (IncludeUserFingerPrint fp : fpList) {
-			HttpEntity<String> entity = new HttpEntity(this.objectMapper.writeValueAsString(fp),
-					(MultiValueMap) headers);
+			HttpEntity<String> entity = new HttpEntity<String>(this.objectMapper.writeValueAsString(fp), headers);
 			this.digestAuthRestTemplate.executeWithDigestAuth(
 					String.valueOf(this.deviceUri) + "/ISAPI/AccessControl/FingerPrint/SetUp?format=json",
 					HttpMethod.POST, entity);
@@ -395,8 +408,7 @@ public class HikvisionMinMoeService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		HttpEntity<String> entity = new HttpEntity(this.objectMapper.writeValueAsString(request),
-				(MultiValueMap) headers);
+		HttpEntity<String> entity = new HttpEntity<String>(this.objectMapper.writeValueAsString(request), headers);
 		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(
 				String.valueOf(this.deviceUri) + "/ISAPI/AccessControl/FingerPrint/Delete?format=json", HttpMethod.PUT,
 				entity);
@@ -412,12 +424,16 @@ public class HikvisionMinMoeService {
 		return false;
 	}
 
-	public boolean searchUserPhoto(SearchPhotoRequest searchPhoto) throws Exception {
+	public boolean getUserPhoto(String employeeId) throws Exception {
+		SearchPhotoRequest searchPhoto = new SearchPhotoRequest();
+		searchPhoto.setFPID(employeeId);
+		searchPhoto.setMaxResults(5);
+		searchPhoto.setSearchResultPosition(0);
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		HttpEntity<String> entity = new HttpEntity(this.objectMapper.writeValueAsString(searchPhoto),
-				(MultiValueMap) headers);
+		HttpEntity<String> entity = new HttpEntity<String>(this.objectMapper.writeValueAsString(searchPhoto), headers);
 
 		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(
 				String.valueOf(this.deviceUri) + "/ISAPI/Intelligent/FDLib/FDSearch?format=json", HttpMethod.POST,
@@ -436,12 +452,167 @@ public class HikvisionMinMoeService {
 		return false;
 	}
 
+	private List<String> getUserFingerPrints(String employeeId) throws Exception {
+		List<String> fps = new ArrayList<String>();
+		String uid = UUID.randomUUID().toString();
+
+		while (true) {
+
+			SearchFingerPrintRequest requestData = new SearchFingerPrintRequest();
+			SearchFingerPrintRequest.FingerPrintCond fingerPrintCond = new SearchFingerPrintRequest.FingerPrintCond();
+			fingerPrintCond.setSearchID(uid);
+			fingerPrintCond.setEmployeeNo(employeeId);
+			requestData.setFingerPrintCond(fingerPrintCond);
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+
+			HttpEntity<String> entity = new HttpEntity<String>(this.objectMapper.writeValueAsString(requestData),
+					headers);
+
+			ResponseEntity<String> response = this.digestAuthRestTemplate
+					.executeWithDigestAuth(deviceUri + SEARCH_FINGER_PRINT, HttpMethod.POST, entity);
+
+			String jsonResponse = (String) response.getBody();
+			SearchFingerPrintResponse searchFingerPrintResponse = (SearchFingerPrintResponse) this.objectMapper
+					.readValue(jsonResponse, SearchFingerPrintResponse.class);
+
+			if (searchFingerPrintResponse.getFingerPrintInfo().getStatus().equals("NoFP"))
+				break;
+
+			if (searchFingerPrintResponse.getFingerPrintInfo().getFingerPrintList() != null
+					&& searchFingerPrintResponse.getFingerPrintInfo().getFingerPrintList().size() > 0) {
+				for (FingerPrint fp : searchFingerPrintResponse.getFingerPrintInfo().getFingerPrintList())
+					fps.add(fp.getFingerData());
+			}
+		}
+
+		return fps;
+	}
+
+	public CardInfo getCard(String card) throws Exception {
+
+		SearchCardsByCardsRequest requestData = new SearchCardsByCardsRequest();
+		SearchCardsByCardsRequest.CardInfoSearchCond searchRequest = new SearchCardsByCardsRequest.CardInfoSearchCond();
+		searchRequest.setSearchResultPosition(0);
+		searchRequest.setMaxResults(5);
+		searchRequest.getCardNoList().add(new SearchCardsByCardsRequest.CardNo(card));
+		requestData.setData(searchRequest);
+
+		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(requestData);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		HttpEntity<String> entity = new HttpEntity<String>(this.objectMapper.writeValueAsString(json), headers);
+
+		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(deviceUri + SEARCH_CARDS,
+				HttpMethod.POST, entity);
+
+		String jsonResponse = (String) response.getBody();
+		SearchCardsResponse searchCardResponse = (SearchCardsResponse) this.objectMapper.readValue(jsonResponse,
+				SearchCardsResponse.class);
+
+		if (searchCardResponse.getCardInfoSearch().getCardInfo() == null)
+			return null;
+
+		if (searchCardResponse.getCardInfoSearch().getCardInfo().size() > 0)
+			return searchCardResponse.getCardInfoSearch().getCardInfo().get(0);
+		else
+			return null;
+
+	}
+
+	public String getEmployeeByCard(String card) throws Exception {
+
+		SearchCardsByCardsRequest requestData = new SearchCardsByCardsRequest();
+		SearchCardsByCardsRequest.CardInfoSearchCond searchCardRequest = new SearchCardsByCardsRequest.CardInfoSearchCond();
+		searchCardRequest.setSearchID("0");
+		searchCardRequest.setSearchResultPosition(0);
+		searchCardRequest.setMaxResults(30);
+
+		SearchCardsByCardsRequest.CardNo cardNo = new SearchCardsByCardsRequest.CardNo();
+		cardNo.setCardNo(card);
+
+		searchCardRequest.setCardNoList(Arrays.asList(cardNo));
+		requestData.setData(searchCardRequest);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		HttpEntity<String> entity = new HttpEntity<String>(this.objectMapper.writeValueAsString(requestData), headers);
+
+		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(deviceUri + SEARCH_CARDS,
+				HttpMethod.POST, entity);
+
+		String jsonResponse = (String) response.getBody();
+		SearchCardsResponse searchCardResponse = (SearchCardsResponse) this.objectMapper.readValue(jsonResponse,
+				SearchCardsResponse.class);
+
+		if (searchCardResponse.getCardInfoSearch().getCardInfo() != null
+				&& searchCardResponse.getCardInfoSearch().getCardInfo().size() > 0)
+			return searchCardResponse.getCardInfoSearch().getCardInfo().get(0).getEmployeeNo();
+
+		return null;
+	}
+
+	public boolean getCardsByEmployeeId(String employeeId) throws Exception {
+
+		SearchCardsByEmployeeRequest requestData = new SearchCardsByEmployeeRequest();
+		SearchCardsByEmployeeRequest.CardInfoSearchCond searchCardRequest = new SearchCardsByEmployeeRequest.CardInfoSearchCond();
+		searchCardRequest.setSearchID(UUID.randomUUID().toString());
+		searchCardRequest.setSearchResultPosition(0);
+		searchCardRequest.setMaxResults(30);
+
+		SearchCardsByEmployeeRequest.EmployeeNo employeeNo = new SearchCardsByEmployeeRequest.EmployeeNo();
+		employeeNo.setEmployeeNo(employeeId);
+
+		searchCardRequest.setEmployeeNoList(Arrays.asList(employeeNo));
+		requestData.setCardInfoSearchCond(searchCardRequest);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		HttpEntity<String> entity = new HttpEntity<String>(this.objectMapper.writeValueAsString(requestData), headers);
+
+		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(deviceUri + SEARCH_CARDS,
+				HttpMethod.POST, entity);
+
+		String jsonResponse = (String) response.getBody();
+		SearchCardsResponse searchCardResponse = (SearchCardsResponse) this.objectMapper.readValue(jsonResponse,
+				SearchCardsResponse.class);
+
+		return searchCardResponse.getCardInfoSearch().getTotalMatches() > 0 ? true : false;
+	}
+
+	public boolean excludeCard(ExcludeUserCard request) throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		HttpEntity<String> entity = new HttpEntity<String>(this.objectMapper.writeValueAsString(request), headers);
+
+		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(
+				String.valueOf(this.deviceUri) + "/ISAPI/AccessControl/CardInfo/Delete?format=json", HttpMethod.PUT,
+				entity);
+
+		String jsonResponse = (String) response.getBody();
+		RequestExecutionResponseJson includeResponse = (RequestExecutionResponseJson) this.objectMapper
+				.readValue(jsonResponse, RequestExecutionResponseJson.class);
+
+		if (includeResponse.getStatusCode() == 1) {
+			return true;
+		}
+		CLogger.logHikvisionInfo("excludePhoto", this.objectMapper.writeValueAsString(includeResponse));
+		return false;
+	}
+
 	public boolean excludeUserPhoto(ExcludePhotoRequest faceDataRequest) throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		HttpEntity<String> entity = new HttpEntity(this.objectMapper.writeValueAsString(faceDataRequest),
-				(MultiValueMap) headers);
+		HttpEntity<String> entity = new HttpEntity<String>(this.objectMapper.writeValueAsString(faceDataRequest),
+				headers);
 
 		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(
 				String.valueOf(this.deviceUri)
@@ -459,25 +630,18 @@ public class HikvisionMinMoeService {
 		return false;
 	}
 
-	public boolean excludeCard(ExcludeUserCard request) throws Exception {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
+	public boolean userHasCredentials(String employeeId) throws Exception {
 
-		HttpEntity<String> entity = new HttpEntity(this.objectMapper.writeValueAsString(request),
-				(MultiValueMap) headers);
-
-		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(
-				String.valueOf(this.deviceUri) + "/ISAPI/AccessControl/CardInfo/Delete?format=json", HttpMethod.PUT,
-				entity);
-
-		String jsonResponse = (String) response.getBody();
-		RequestExecutionResponseJson includeResponse = (RequestExecutionResponseJson) this.objectMapper
-				.readValue(jsonResponse, RequestExecutionResponseJson.class);
-
-		if (includeResponse.getStatusCode() == 1) {
+		if (getUserPhoto(employeeId))
 			return true;
-		}
-		CLogger.logHikvisionInfo("excludePhoto", this.objectMapper.writeValueAsString(includeResponse));
+
+		List<String> fps = getUserFingerPrints(employeeId);
+		if (fps.size() > 0)
+			return true;
+
+		if (getCardsByEmployeeId(employeeId))
+			return true;
+
 		return false;
 	}
 
@@ -487,8 +651,8 @@ public class HikvisionMinMoeService {
 		DeleteUsers.UserInfoDelCondDetails userInfoDelCondDetails = new DeleteUsers.UserInfoDelCondDetails();
 		DeleteUsers userInfoDelCond = new DeleteUsers(userInfoDelCondDetails);
 
-		HttpEntity<String> entity = new HttpEntity(this.objectMapper.writeValueAsString(userInfoDelCond),
-				(MultiValueMap) headers);
+		HttpEntity<String> entity = new HttpEntity<String>(this.objectMapper.writeValueAsString(userInfoDelCond),
+				headers);
 
 		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(
 				String.valueOf(this.deviceUri) + "/ISAPI/AccessControl/UserInfo/Delete?format=json", HttpMethod.PUT,
@@ -504,11 +668,36 @@ public class HikvisionMinMoeService {
 		return false;
 	}
 
+	public boolean excludeUser(String employeeId) throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		DeleteUsers.EmployeeNo empId = new DeleteUsers.EmployeeNo(employeeId);
+		DeleteUsers.UserInfoDelCondDetails userInfoDelCondDetails = new DeleteUsers.UserInfoDelCondDetails();
+		userInfoDelCondDetails.getEmployeeNoList().add(empId);
+		DeleteUsers userInfoDelCond = new DeleteUsers(userInfoDelCondDetails);
+
+		HttpEntity<String> entity = new HttpEntity<String>(this.objectMapper.writeValueAsString(userInfoDelCond),
+				headers);
+
+		ResponseEntity<String> response = this.digestAuthRestTemplate.executeWithDigestAuth(
+				String.valueOf(this.deviceUri) + "/ISAPI/AccessControl/UserInfo/Delete?format=json", HttpMethod.PUT,
+				entity);
+		String jsonResponse = (String) response.getBody();
+		RequestExecutionResponseJson includeResponse = (RequestExecutionResponseJson) this.objectMapper
+				.readValue(jsonResponse, RequestExecutionResponseJson.class);
+
+		if (includeResponse.getStatusCode() == 1)
+			return true;
+
+		CLogger.logHikvisionInfo("excluddUser", this.objectMapper.writeValueAsString(includeResponse));
+		return false;
+	}
+
 	public boolean setDateTime(DateTime datetime) throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_XML);
 
-		HttpEntity<String> entity = new HttpEntity(convertObjectToXml(datetime), (MultiValueMap) headers);
+		HttpEntity<String> entity = new HttpEntity<String>(convertObjectToXml(datetime), headers);
 
 		this.digestAuthRestTemplate.executeWithDigestAuth(String.valueOf(this.deviceUri) + "/ISAPI/System/time",
 				HttpMethod.PUT, entity);
@@ -523,7 +712,7 @@ public class HikvisionMinMoeService {
 
 		RemoteControlDoor remoteDoorControl = new RemoteControlDoor("2.0", "alwaysOpen");
 
-		HttpEntity<String> entity = new HttpEntity(convertObjectToXml(remoteDoorControl), (MultiValueMap) headers);
+		HttpEntity<String> entity = new HttpEntity<String>(convertObjectToXml(remoteDoorControl));
 
 		this.digestAuthRestTemplate.executeWithDigestAuth(REMOTE_CONTROL_DOOR_PATH, HttpMethod.PUT, entity);
 
@@ -537,7 +726,7 @@ public class HikvisionMinMoeService {
 
 		RemoteControlDoor remoteDoorControl = new RemoteControlDoor("2.0", "alwaysClose");
 
-		HttpEntity<String> entity = new HttpEntity(convertObjectToXml(remoteDoorControl), (MultiValueMap) headers);
+		HttpEntity<String> entity = new HttpEntity<String>(convertObjectToXml(remoteDoorControl));
 
 		this.digestAuthRestTemplate.executeWithDigestAuth(REMOTE_CONTROL_DOOR_PATH, HttpMethod.PUT, entity);
 
@@ -551,7 +740,7 @@ public class HikvisionMinMoeService {
 
 		RemoteControlDoor remoteDoorControl = new RemoteControlDoor("2.0", "close");
 
-		HttpEntity<String> entity = new HttpEntity(convertObjectToXml(remoteDoorControl), (MultiValueMap) headers);
+		HttpEntity<String> entity = new HttpEntity<String>(convertObjectToXml(remoteDoorControl), headers);
 
 		this.digestAuthRestTemplate.executeWithDigestAuth(REMOTE_CONTROL_DOOR_PATH, HttpMethod.PUT, entity);
 
@@ -565,7 +754,7 @@ public class HikvisionMinMoeService {
 
 		RemoteControlDoor remoteDoorControl = new RemoteControlDoor("2.0", "open");
 
-		HttpEntity<String> entity = new HttpEntity(convertObjectToXml(remoteDoorControl), (MultiValueMap) headers);
+		HttpEntity<String> entity = new HttpEntity<String>(convertObjectToXml(remoteDoorControl), headers);
 
 		this.digestAuthRestTemplate.executeWithDigestAuth(
 				String.valueOf(this.deviceUri) + "/ISAPI/AccessControl/RemoteControl/door/65535", HttpMethod.PUT,
@@ -620,8 +809,7 @@ public class HikvisionMinMoeService {
 	public boolean sendAccessResponse(RemoteCheckEventResponse response) throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		HttpEntity<String> entity = new HttpEntity(this.objectMapper.writeValueAsString(response),
-				(MultiValueMap) headers);
+		HttpEntity<String> entity = new HttpEntity<String>(this.objectMapper.writeValueAsString(response), headers);
 
 		this.digestAuthRestTemplate.executeWithDigestAuth(
 				String.valueOf(this.deviceUri) + "/ISAPI/AccessControl/remoteCheck?format=json", HttpMethod.PUT,
@@ -630,4 +818,31 @@ public class HikvisionMinMoeService {
 		CLogger.logHikvisionDebug("sendAccessResponse", "OK");
 		return true;
 	}
+
+	public void setCustomAccessPrompts() throws Exception {
+		AccessCustomPrompts config = new AccessCustomPrompts();
+		config.setEnabled(true);
+
+		AccessCustomPrompts.Prompt prompt1 = new AccessCustomPrompts.Prompt();
+		prompt1.setPromptType("stranger");
+		prompt1.setPromptContent("Acesso Negado");
+
+		AccessCustomPrompts.Prompt prompt2 = new AccessCustomPrompts.Prompt();
+		prompt2.setPromptType("authenticationSuccess");
+		prompt2.setPromptContent("Acesso Permitido");
+
+		AccessCustomPrompts.Prompt prompt3 = new AccessCustomPrompts.Prompt();
+		prompt3.setPromptType("authenticationFailed");
+		prompt3.setPromptContent("Acesso Falhou");
+
+		config.setPromptList(Arrays.asList(prompt1, prompt2, prompt3));
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		HttpEntity<String> requestEntity = new HttpEntity<String>(gson.toJson(config), headers);
+		this.digestAuthRestTemplate.executeWithDigestAuth(String.valueOf(this.deviceUri) + ACCESS_CUSTOM_PROMPT,
+				HttpMethod.PUT, requestEntity);
+	}
+
 }

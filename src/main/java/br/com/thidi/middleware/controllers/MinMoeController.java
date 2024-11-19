@@ -3,9 +3,9 @@ package br.com.thidi.middleware.controllers;
 
 import br.com.hikvision.minmoe.models.EventRequest;
 import br.com.hikvision.minmoe.models.RemoteCheckEventResponse;
-import br.com.hikvision.services.HikvisionEmployeeCardManager;
+import br.com.hikvision.services.HikvisionAccessManagerService;
 import br.com.hikvision.services.HikvisionMinMoeService;
-import br.com.seniorx.ManagerDeviceList;
+import br.com.seniorx.SeniorStaticData;
 import br.com.seniorx.models.Access;
 import br.com.seniorx.models.AccessMessage;
 import br.com.seniorx.models.AccessRequest;
@@ -46,13 +46,13 @@ public class MinMoeController {
 	@PostMapping(consumes = { "multipart/form-data" })
 	public ResponseEntity<String> receiveAndValidateJson(@RequestParam("event_log") String requestBody) {
 		try {
+			EventRequest req = (EventRequest) this.objectMapper.readValue(requestBody, EventRequest.class);
 			Thread sendResponse = new Thread(() -> {
 				try {
-					EventRequest req = (EventRequest) this.objectMapper.readValue(requestBody, EventRequest.class);
 
 					CLogger.logHikvisionDebug("MINMOE CONTROLLER: REQUEST::: ", requestBody);
 
-					ManagerDevice device = ManagerDeviceList.getDeviceByNetworkIdentification(req.getIpAddress());
+					ManagerDevice device = SeniorStaticData.getDeviceByNetworkIdentification(req.getIpAddress());
 
 					if (device == null) {
 						CLogger.logHikvisionDebug("MINMOE CONTROLLER",
@@ -77,9 +77,10 @@ public class MinMoeController {
 						return;
 					}
 
-					AreaControlList area = seniorService.getAreaById(device.getAreaId());
+					AreaControlList areaControl = SeniorStaticData
+							.getAreaControlId(seniorService.getDevice().getAreaId());
 
-					if (area == null) {
+					if (areaControl == null) {
 						CLogger.logHikvisionDebug("MINMOE CONTROLLER",
 								"Área não encontada para o id: " + device.getAreaId());
 
@@ -95,9 +96,9 @@ public class MinMoeController {
 					}
 
 					if (req.getAccessControllerEvent().isRemoteCheck()) {
-						HikvisionEmployeeCardManager.updateDeviceLastOnlineAccess(req.getIpAddress(),
+						HikvisionAccessManagerService.updateDeviceLastOnlineAccess(req.getIpAddress(),
 								req.getDateTime().substring(0, 19));
-					} else if (!HikvisionEmployeeCardManager.isNewerOfflineAccess(req.getIpAddress(),
+					} else if (!HikvisionAccessManagerService.isNewerOfflineAccess(req.getIpAddress(),
 							req.getDateTime().substring(0, 19))) {
 						return;
 					}
@@ -218,12 +219,13 @@ public class MinMoeController {
 
 						calendar.setTime(accessDate);
 
-						calendar.add(12, -area.getGmt().intValue());
+						calendar.add(12, -areaControl.getGmt().intValue());
 
 						Access seniorAccess = new Access();
 
-						seniorAccess.setAccessDirection(
-								Access.AccessDirectionEnum.valueOf(reqReader.getReaderDirection().getValue()));
+						seniorAccess.setAccessDirection(reqReader.getReaderDirection().getValue().equals("BOTH")
+								? Access.AccessDirectionEnum.UNKNOWN
+								: Access.AccessDirectionEnum.valueOf(reqReader.getReaderDirection().getValue()));
 
 						seniorAccess.setAccessType(
 								Access.AccessTypeEnum.valueOf(seniorResponse.getAccessType().getValue()));
@@ -232,7 +234,7 @@ public class MinMoeController {
 						seniorAccess.setDeviceId(reqReader.getId());
 						seniorAccess.setStatus(req.getAccessControllerEvent().isRemoteCheck() ? Access.StatusEnum.ONLINE
 								: Access.StatusEnum.OFFLINE);
-						seniorAccess.setTimezoneOffset(area.getGmt());
+						seniorAccess.setTimezoneOffset(areaControl.getGmt());
 						seniorAccess.setCreditRange(Integer.valueOf(0));
 						if (cardId.longValue() != 0L) {
 							seniorAccess.setCardId(cardId);
@@ -248,6 +250,7 @@ public class MinMoeController {
 					CLogger.logHikvisionError("MINMOE CONTROLLER", "ERROR", e);
 				}
 			});
+			sendResponse.setName("THIDI EVENT REQUEST HANDLER: " + req.getIpAddress());
 			sendResponse.start();
 
 			HttpHeaders headers = new HttpHeaders();
@@ -260,10 +263,3 @@ public class MinMoeController {
 		}
 	}
 }
-
-/*
- * Location:
- * C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\thidi\
- * middleware\controllers\MinMoeController.class Java compiler version: 17
- * (61.0) JD-Core Version: 1.1.3
- */

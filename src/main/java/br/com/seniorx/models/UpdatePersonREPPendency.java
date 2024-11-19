@@ -540,7 +540,3 @@ import com.google.gson.annotations.JsonAdapter;
    } }
 
 
-/* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\UpdatePersonREPPendency.class
- * Java compiler version: 17 (61.0)
- * JD-Core Version:       1.1.3
- */

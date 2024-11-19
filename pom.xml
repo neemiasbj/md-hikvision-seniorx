@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.hikvision</groupId>
 	<artifactId>hikvisionSeniorX</artifactId>
-	<version>1.1.5.1</version>
+	<version>1.1.5.8</version>
 	<name>Hikvision - Senior X</name>
 	<packaging>jar</packaging>
 

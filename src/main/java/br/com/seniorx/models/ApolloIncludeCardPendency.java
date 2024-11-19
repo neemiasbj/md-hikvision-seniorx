@@ -459,178 +459,172 @@ import com.google.gson.annotations.JsonAdapter;
 
 	
 	 public void setOwnerId(Long ownerId) {
-		/* 323 */ this.ownerId = ownerId;
-		/*     */ }
+		 this.ownerId = ownerId;
+		 }
 
-	/*     */
-	/*     */ public ApolloIncludeCardPendency areaId(Long areaId) {
-		/* 327 */ this.areaId = areaId;
-		/* 328 */ return this;
-		/*     */ }
+	
+	 public ApolloIncludeCardPendency areaId(Long areaId) {
+		 this.areaId = areaId;
+		 return this;
+		 }
 
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */ @Schema(description = "Identificador da área")
-	/*     */ public Long getAreaId() {
-		/* 338 */ return this.areaId;
-		/*     */ }
+	
+	
+	
+	
+	
+	
+	 @Schema(description = "Identificador da área")
+	 public Long getAreaId() {
+		 return this.areaId;
+		 }
 
-	/*     */
-	/*     */ public void setAreaId(Long areaId) {
-		/* 342 */ this.areaId = areaId;
-		/*     */ }
+	
+	 public void setAreaId(Long areaId) {
+		 this.areaId = areaId;
+		 }
 
-	/*     */
-	/*     */ public ApolloIncludeCardPendency isVisitor(Boolean isVisitor) {
-		/* 346 */ this.isVisitor = isVisitor;
-		/* 347 */ return this;
-		/*     */ }
+	
+	 public ApolloIncludeCardPendency isVisitor(Boolean isVisitor) {
+		 this.isVisitor = isVisitor;
+		 return this;
+		 }
 
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */ @Schema(description = "Informa se é um visitante")
-	/*     */ public Boolean isIsVisitor() {
-		/* 357 */ return this.isVisitor;
-		/*     */ }
+	
+	
+	
+	
+	
+	
+	 @Schema(description = "Informa se é um visitante")
+	 public Boolean isIsVisitor() {
+		 return this.isVisitor;
+		 }
 
-	/*     */
-	/*     */ public void setIsVisitor(Boolean isVisitor) {
-		/* 361 */ this.isVisitor = isVisitor;
-		/*     */ }
+	
+	 public void setIsVisitor(Boolean isVisitor) {
+		 this.isVisitor = isVisitor;
+		 }
 
-	/*     */
-	/*     */ public ApolloIncludeCardPendency isEscort(Boolean isEscort) {
-		/* 365 */ this.isEscort = isEscort;
-		/* 366 */ return this;
-		/*     */ }
+	
+	 public ApolloIncludeCardPendency isEscort(Boolean isEscort) {
+		 this.isEscort = isEscort;
+		 return this;
+		 }
 
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */ @Schema(description = "Informa se é um autorizador")
-	/*     */ public Boolean isIsEscort() {
-		/* 376 */ return this.isEscort;
-		/*     */ }
+	
+	
+	
+	
+	
+	
+	 @Schema(description = "Informa se é um autorizador")
+	 public Boolean isIsEscort() {
+		 return this.isEscort;
+		 }
 
-	/*     */
-	/*     */ public void setIsEscort(Boolean isEscort) {
-		/* 380 */ this.isEscort = isEscort;
-		/*     */ }
+	
+	 public void setIsEscort(Boolean isEscort) {
+		 this.isEscort = isEscort;
+		 }
 
-	/*     */
-	/*     */ public ApolloIncludeCardPendency accessLevel(List<Long> accessLevel) {
-		/* 384 */ this.accessLevel = accessLevel;
-		/* 385 */ return this;
-		/*     */ }
+	
+	 public ApolloIncludeCardPendency accessLevel(List<Long> accessLevel) {
+		 this.accessLevel = accessLevel;
+		 return this;
+		 }
 
-	/*     */
-	/*     */ public ApolloIncludeCardPendency addAccessLevelItem(Long accessLevelItem) {
-		/* 389 */ if (this.accessLevel == null) {
-			/* 390 */ this.accessLevel = new ArrayList<>();
-			/*     */ }
-		/* 392 */ this.accessLevel.add(accessLevelItem);
-		/* 393 */ return this;
-		/*     */ }
+	
+	 public ApolloIncludeCardPendency addAccessLevelItem(Long accessLevelItem) {
+		 if (this.accessLevel == null) {
+			 this.accessLevel = new ArrayList<>();
+			 }
+		 this.accessLevel.add(accessLevelItem);
+		 return this;
+		 }
 
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */ @Schema(description = "Níveis de acesso")
-	/*     */ public List<Long> getAccessLevel() {
-		/* 403 */ return this.accessLevel;
-		/*     */ }
+	
+	
+	
+	
+	
+	
+	 @Schema(description = "Níveis de acesso")
+	 public List<Long> getAccessLevel() {
+		 return this.accessLevel;
+		 }
 
-	/*     */
-	/*     */ public void setAccessLevel(List<Long> accessLevel) {
-		/* 407 */ this.accessLevel = accessLevel;
-		/*     */ }
+	
+	 public void setAccessLevel(List<Long> accessLevel) {
+		 this.accessLevel = accessLevel;
+		 }
 
-	/*     */
-	/*     */
-	/*     */ public boolean equals(Object o) {
-		/* 412 */ if (this == o) {
-			/* 413 */ return true;
-			/*     */ }
-		/* 415 */ if (o == null || getClass() != o.getClass()) {
-			/* 416 */ return false;
-			/*     */ }
-		/* 418 */ ApolloIncludeCardPendency apolloIncludeCardPendency = (ApolloIncludeCardPendency) o;
-		/* 419 */ return (Objects.equals(this.pendencyId, apolloIncludeCardPendency.pendencyId) &&
-		/* 420 */ Objects.equals(this.managerDeviceId, apolloIncludeCardPendency.managerDeviceId) &&
-		/* 421 */ Objects.equals(this.cardNumber, apolloIncludeCardPendency.cardNumber) &&
-		/* 422 */ Objects.equals(this.cardTechnology, apolloIncludeCardPendency.cardTechnology) &&
-		/* 423 */ Objects.equals(this.startValidity, apolloIncludeCardPendency.startValidity) &&
-		/* 424 */ Objects.equals(this.finishValidity, apolloIncludeCardPendency.finishValidity) &&
-		/* 425 */ Objects.equals(this.checkAntiPassback, apolloIncludeCardPendency.checkAntiPassback) &&
-		/* 426 */ Objects.equals(this.ownerType, apolloIncludeCardPendency.ownerType) &&
-		/* 427 */ Objects.equals(this.ownerId, apolloIncludeCardPendency.ownerId) &&
-		/* 428 */ Objects.equals(this.areaId, apolloIncludeCardPendency.areaId) &&
-		/* 429 */ Objects.equals(this.isVisitor, apolloIncludeCardPendency.isVisitor) &&
-		/* 430 */ Objects.equals(this.isEscort, apolloIncludeCardPendency.isEscort) &&
-		/* 431 */ Objects.equals(this.accessLevel, apolloIncludeCardPendency.accessLevel));
-		/*     */ }
+	
+	
+	 public boolean equals(Object o) {
+		 if (this == o) {
+			 return true;
+			 }
+		 if (o == null || getClass() != o.getClass()) {
+			 return false;
+			 }
+		 ApolloIncludeCardPendency apolloIncludeCardPendency = (ApolloIncludeCardPendency) o;
+		 return (Objects.equals(this.pendencyId, apolloIncludeCardPendency.pendencyId) &&
+		 Objects.equals(this.managerDeviceId, apolloIncludeCardPendency.managerDeviceId) &&
+		 Objects.equals(this.cardNumber, apolloIncludeCardPendency.cardNumber) &&
+		 Objects.equals(this.cardTechnology, apolloIncludeCardPendency.cardTechnology) &&
+		 Objects.equals(this.startValidity, apolloIncludeCardPendency.startValidity) &&
+		 Objects.equals(this.finishValidity, apolloIncludeCardPendency.finishValidity) &&
+		 Objects.equals(this.checkAntiPassback, apolloIncludeCardPendency.checkAntiPassback) &&
+		 Objects.equals(this.ownerType, apolloIncludeCardPendency.ownerType) &&
+		 Objects.equals(this.ownerId, apolloIncludeCardPendency.ownerId) &&
+		 Objects.equals(this.areaId, apolloIncludeCardPendency.areaId) &&
+		 Objects.equals(this.isVisitor, apolloIncludeCardPendency.isVisitor) &&
+		 Objects.equals(this.isEscort, apolloIncludeCardPendency.isEscort) &&
+		 Objects.equals(this.accessLevel, apolloIncludeCardPendency.accessLevel));
+		 }
 
-	/*     */
-	/*     */
-	/*     */ public int hashCode() {
-		/* 436 */ return Objects.hash(new Object[] { this.pendencyId, this.managerDeviceId, this.cardNumber,
-				this.cardTechnology, this.startValidity, this.finishValidity, /* 437 */ this.checkAntiPassback,
+	
+	
+	 public int hashCode() {
+		 return Objects.hash(new Object[] { this.pendencyId, this.managerDeviceId, this.cardNumber,
+				this.cardTechnology, this.startValidity, this.finishValidity,  this.checkAntiPassback,
 				this.ownerType, this.ownerId, this.areaId, this.isVisitor, this.isEscort, this.accessLevel });
-		/*     */ }
+		 }
 
-	/*     */
-	/*     */
-	/*     */ public String toString() {
-		/* 442 */ StringBuilder sb = new StringBuilder();
-		/* 443 */ sb.append("class ApolloIncludeCardPendency {\n");
-		/*     */
-		/* 445 */ sb.append("    pendencyId: ").append(toIndentedString(this.pendencyId)).append("\n");
-		/* 446 */ sb.append("    managerDeviceId: ").append(toIndentedString(this.managerDeviceId)).append("\n");
-		/* 447 */ sb.append("    cardNumber: ").append(toIndentedString(this.cardNumber)).append("\n");
-		/* 448 */ sb.append("    cardTechnology: ").append(toIndentedString(this.cardTechnology)).append("\n");
-		/* 449 */ sb.append("    startValidity: ").append(toIndentedString(this.startValidity)).append("\n");
-		/* 450 */ sb.append("    finishValidity: ").append(toIndentedString(this.finishValidity)).append("\n");
-		/* 451 */ sb.append("    checkAntiPassback: ").append(toIndentedString(this.checkAntiPassback)).append("\n");
-		/* 452 */ sb.append("    ownerType: ").append(toIndentedString(this.ownerType)).append("\n");
-		/* 453 */ sb.append("    ownerId: ").append(toIndentedString(this.ownerId)).append("\n");
-		/* 454 */ sb.append("    areaId: ").append(toIndentedString(this.areaId)).append("\n");
-		/* 455 */ sb.append("    isVisitor: ").append(toIndentedString(this.isVisitor)).append("\n");
-		/* 456 */ sb.append("    isEscort: ").append(toIndentedString(this.isEscort)).append("\n");
-		/* 457 */ sb.append("    accessLevel: ").append(toIndentedString(this.accessLevel)).append("\n");
-		/* 458 */ sb.append("}");
-		/* 459 */ return sb.toString();
-		/*     */ }
+	
+	
+	 public String toString() {
+		 StringBuilder sb = new StringBuilder();
+		 sb.append("class ApolloIncludeCardPendency {\n");
+		
+		 sb.append("    pendencyId: ").append(toIndentedString(this.pendencyId)).append("\n");
+		 sb.append("    managerDeviceId: ").append(toIndentedString(this.managerDeviceId)).append("\n");
+		 sb.append("    cardNumber: ").append(toIndentedString(this.cardNumber)).append("\n");
+		 sb.append("    cardTechnology: ").append(toIndentedString(this.cardTechnology)).append("\n");
+		 sb.append("    startValidity: ").append(toIndentedString(this.startValidity)).append("\n");
+		 sb.append("    finishValidity: ").append(toIndentedString(this.finishValidity)).append("\n");
+		 sb.append("    checkAntiPassback: ").append(toIndentedString(this.checkAntiPassback)).append("\n");
+		 sb.append("    ownerType: ").append(toIndentedString(this.ownerType)).append("\n");
+		 sb.append("    ownerId: ").append(toIndentedString(this.ownerId)).append("\n");
+		 sb.append("    areaId: ").append(toIndentedString(this.areaId)).append("\n");
+		 sb.append("    isVisitor: ").append(toIndentedString(this.isVisitor)).append("\n");
+		 sb.append("    isEscort: ").append(toIndentedString(this.isEscort)).append("\n");
+		 sb.append("    accessLevel: ").append(toIndentedString(this.accessLevel)).append("\n");
+		 sb.append("}");
+		 return sb.toString();
+		 }
 
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */ private String toIndentedString(Object o) {
-		/* 467 */ if (o == null) {
-			/* 468 */ return "null";
-			/*     */ }
-		/* 470 */ return o.toString().replace("\n", "\n    ");
-		/*     */ }
+	
+	
+	
+	
+	
+	 private String toIndentedString(Object o) {
+		 if (o == null) {
+			 return "null";
+			 }
+		 return o.toString().replace("\n", "\n    ");
+		 }
 }
 
-/*
- * Location:
- * C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\
- * models\ApolloIncludeCardPendency.class Java compiler version: 17 (61.0)
- * JD-Core Version: 1.1.3
- */

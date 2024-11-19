@@ -18,6 +18,7 @@ public class SeniorWebSocketService extends Thread {
 
 	@PostConstruct
 	public void run() {
+		this.setName("SENIOR WEBSOCKET SERVICE");
 		try {
 			URI uri = new URI(String.format("%s?driver_key=%s", SENIOR_WEBSOCKET_URI, SENIOR_DRIVER_KEY));
 			CLogger.logSeniorInfo("SOCKET", "Socket URL: " + uri.toString());
@@ -27,10 +28,3 @@ public class SeniorWebSocketService extends Thread {
 		}
 	}
 }
-
-/*
- * Location:
- * C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\
- * services\SeniorWebSocketService.class Java compiler version: 17 (61.0)
- * JD-Core Version: 1.1.3
- */

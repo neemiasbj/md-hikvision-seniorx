@@ -11,7 +11,8 @@ import com.google.gson.annotations.JsonAdapter;
  import com.google.gson.stream.JsonWriter;
 
  import io.swagger.v3.oas.annotations.media.Schema;
- public class CardList { @SerializedName("cardNumber") private Long cardNumber; @SerializedName("cardTechnology") private CardTechnologyEnum cardTechnology; @SerializedName("reader") private List<Integer> reader; @SerializedName("ownerType") private OwnerTypeEnum ownerType; @SerializedName("ownerId") private Long ownerId; @JsonAdapter(CardTechnologyEnum.Adapter.class) public enum CardTechnologyEnum { BARCODE_CARD("BARCODE_CARD"),
+
+	public class CardList { @SerializedName("cardNumber") private Long cardNumber; @SerializedName("cardTechnology") private CardTechnologyEnum cardTechnology; @SerializedName("reader") private List<Integer> reader; @SerializedName("ownerType") private OwnerTypeEnum ownerType; @SerializedName("ownerId") private Long ownerId; @JsonAdapter(CardTechnologyEnum.Adapter.class) public enum CardTechnologyEnum { BARCODE_CARD("BARCODE_CARD"),
      RFID_CARD("RFID_CARD"),
      SMART_CARD("SMART_CARD"),
      QRCODE("QRCODE"); private String value; CardTechnologyEnum(String value) { this.value = value; } public String getValue() { return this.value; } public String toString() { return String.valueOf(this.value); } public static CardTechnologyEnum fromValue(String text) { byte b;
@@ -281,7 +282,3 @@ import com.google.gson.annotations.JsonAdapter;
    } }
 
 
-/* Location:              C:\DevWorkspace\Thidi\conex-hikvision\hikvision_1.1.2.jar!\br\com\seniorx\models\CardList.class
- * Java compiler version: 17 (61.0)
- * JD-Core Version:       1.1.3
- */
