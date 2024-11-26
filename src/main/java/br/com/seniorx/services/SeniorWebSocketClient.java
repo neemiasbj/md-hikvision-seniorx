@@ -61,14 +61,9 @@ public class SeniorWebSocketClient {
 
 		try {
 			JsonNode jsonNode = objectMapper.readTree(message);
-			Long deviceId = Long.valueOf(jsonNode.get("deviceId").asLong()),
-					driverId = Long.valueOf(jsonNode.get("driverId").asLong());
-			if (deviceId != null && deviceId != 0)
-				SeniorMiddlewareHandlerService
-						.HandleWebSocketDeviceMessage(Long.valueOf(jsonNode.get("deviceId").asLong()));
-			else if (driverId != null && driverId != 0)
-				SeniorMiddlewareHandlerService
-						.HandleWebSocketDeviceMessage(Long.valueOf(jsonNode.get("driverId").asLong()));
+			Long deviceId = Long.valueOf(jsonNode.get("deviceId").asLong());
+
+			SeniorMiddlewareHandlerService.HandleWebSocketMessage(deviceId);
 		} catch (Exception e) {
 			CLogger.logSeniorError("ON MESSAGE", e.getMessage());
 			e.printStackTrace();

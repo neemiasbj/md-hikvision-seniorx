@@ -271,7 +271,7 @@
        this.serialNo = serialNo;
      }
      
-     public boolean isRemoteCheck() {
+     public Boolean isRemoteCheck() {
        return this.remoteCheck;
      }
      

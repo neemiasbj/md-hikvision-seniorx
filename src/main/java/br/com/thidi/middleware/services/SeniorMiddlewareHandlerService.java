@@ -63,7 +63,7 @@ import br.com.seniorx.models.StatusField;
 import br.com.seniorx.models.UnblockDevicePendency;
 import br.com.seniorx.models.UnsetDeviceEmergencyPendency;
 import br.com.seniorx.models.UpdatePersonREPPendency;
-import br.com.seniorx.services.SeniorApiService;
+import br.com.seniorx.services.SeniorService;
 import br.com.thidi.middleware.resource.CLogger;
 import br.com.thidi.middleware.resource.Utils;
 import br.com.thidi.middleware.utils.MiddlewarePropertiesUtilImpl;
@@ -82,20 +82,20 @@ public class SeniorMiddlewareHandlerService {
 	@Autowired
 	public SeniorMiddlewareHandlerService() {
 
-		List<ManagerDevice> devices = SeniorApiService.getDevices();
+		List<ManagerDevice> devices = SeniorService.getDevices();
 		SeniorStaticData.setManagerDeviceList(devices);
 
-		List<AreaControlList> areaControls = SeniorApiService.updateAreaControls();
+		List<AreaControlList> areaControls = SeniorService.updateAreaControls();
 		SeniorStaticData.setAreaControlList(areaControls);
 
-		this.executorService.scheduleAtFixedRate(() -> {
-			try {
-				CLogger.logSeniorInfo("PENDENCIES HANDLER", "Started...");
-				HandleDevicesPendencies();
-			} catch (Exception e) {
-				CLogger.logSeniorInfo("PENDENCIES", "Error: " + e.getMessage());
-			}
-		}, 0, this.pendencyInterval, TimeUnit.SECONDS);
+//		this.executorService.scheduleAtFixedRate(() -> {
+//			try {
+//				CLogger.logSeniorInfo("PENDENCIES HANDLER", "Started...");
+//				HandleDevicesPendencies();
+//			} catch (Exception e) {
+//				CLogger.logSeniorInfo("PENDENCIES", "Error: " + e.getMessage());
+//			}
+//		}, 0, this.pendencyInterval, TimeUnit.SECONDS);
 
 		this.executorService.scheduleAtFixedRate(() -> {
 			try {
@@ -119,7 +119,7 @@ public class SeniorMiddlewareHandlerService {
 
 						HikvisionMinMoeService minmoeService = new HikvisionMinMoeService(device);
 
-						SeniorApiService seniorService = new SeniorApiService();
+						SeniorService seniorService = new SeniorService();
 						seniorService.setDevice(device);
 						checkDeviceStatus(null, seniorService, minmoeService, device.getId());
 					});
@@ -133,51 +133,59 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	public void HandleDevicesPendencies() {
-		try {
-			SeniorApiService seniorService = new SeniorApiService();
-			List<ManagerDevice> devices = SeniorApiService.getDevices();
+//	public void HandleDevicesPendencies() {
+//		try {
+//			SeniorService seniorService = new SeniorService();
+//			List<ManagerDevice> devices = SeniorService.getDevices();
+//
+//			if (devices == null) {
+//				CLogger.logSeniorInfo(String.valueOf(getDeviceInfo(seniorService.getDevice())) + " KEEP ALIVE",
+//						"No devices found.");
+//			} else {
+//				for (ManagerDevice device : devices) {
+//					Thread devicePendnciesHandler = new Thread(() -> {
+//						seniorService.setDevice(device);
+//
+//						AllPendency allPendencies = seniorService.getDevicePendencies(device.getId());
+//						HandleSeniorDevicePendencies(allPendencies, seniorService);
+//					});
+//					devicePendnciesHandler
+//							.setName(String.format("THIDI PENDENCIES HANDLER: %s", device.getNetworkIdentification()));
+//					devicePendnciesHandler.start();
+//				}
+//			}
+//		} catch (Exception e) {
+//			CLogger.logSeniorInfo(" KEEP ALIVE", "Error: " + e.getMessage());
+//		}
+//	}
 
-			if (devices == null) {
-				CLogger.logSeniorInfo(String.valueOf(getDeviceInfo(seniorService.getDevice())) + " KEEP ALIVE",
-						"No devices found.");
-			} else {
-				for (ManagerDevice device : devices) {
-					Thread devicePendnciesHandler = new Thread(() -> {
-						seniorService.setDevice(device);
+	public static void HandleWebSocketMessage(Long deviceId) {
+		SeniorService seniorService = new SeniorService();
+		if (deviceId > 0) {
+			ManagerDevice device = SeniorService.getDevice(deviceId);
+			seniorService.setDevice(device);
 
-						AllPendency allPendencies = seniorService.getDevicePendencies(device.getId());
-						HandleSeniorDevicePendencies(allPendencies, seniorService);
-					});
-					devicePendnciesHandler
-							.setName(String.format("THIDI PENDENCIES HANDLER: %s", device.getNetworkIdentification()));
-					devicePendnciesHandler.start();
-				}
-			}
-		} catch (Exception e) {
-			CLogger.logSeniorInfo(" KEEP ALIVE", "Error: " + e.getMessage());
+			HikvisionMinMoeService minmoeService = new HikvisionMinMoeService(seniorService.getDevice());
+			AllPendency pendencies = seniorService.getDevicePendencies(deviceId);
+			HandleSeniorDevicePendencies(pendencies, seniorService, minmoeService);
+		} else {
+			AllPendency pendencies = seniorService.getPendencies();
+			HandleSeniorDriverPendencies(pendencies, seniorService);
 		}
 	}
 
-	public static void HandleWebSocketDeviceMessage(Long deviceId) {
-		SeniorApiService seniorService = new SeniorApiService();
-		AllPendency pendencies = seniorService.getDevicePendencies(deviceId);
-		HandleSeniorDevicePendencies(pendencies, seniorService);
-	}
-
 	private static String getDeviceInfo(ManagerDevice device) {
-		return String.format(">>> Device:%s : %s - %s <<<",
+		return String.format(">>> Device %s : %s - %s <<<",
 				new Object[] { device.getId(), device.getNetworkIdentification(), device.getNetworkPort() });
 	}
 
-	private static void HandleWebsocketDatamartPendencies(DatamartUpdatedPendency pendency) {
-		SeniorApiService seniorService = new SeniorApiService();
-		handleDatamartUpdatedPendencies(pendency, seniorService);
+	private static void HandleSeniorDriverPendencies(AllPendency pendencies, SeniorService seniorService) {
+		handleDatamartUpdatedPendencies(pendencies.getDatamartUpdated(), seniorService);
 	}
 
-	private static void HandleSeniorDevicePendencies(AllPendency pendencies, SeniorApiService seniorService) {
-		HikvisionMinMoeService hikvisionMinmoeService = new HikvisionMinMoeService(seniorService.getDevice());
-
+	private static void HandleSeniorDevicePendencies(AllPendency pendencies, SeniorService seniorService,
+			HikvisionMinMoeService hikvisionMinmoeService) {
+		handleDatamartUpdatedPendencies(pendencies.getDatamartUpdated(), seniorService);
 		handleDeviceStatusPendencies(pendencies.getDeviceStatus(), seniorService, hikvisionMinmoeService);
 		handleDeviceDateTimePendencies(pendencies.getDeviceDateTime(), seniorService, hikvisionMinmoeService);
 		handleResetDevicePendencies(pendencies.getResetDevice(), seniorService);
@@ -213,17 +221,17 @@ public class SeniorMiddlewareHandlerService {
 		handleLoadCredentialFacialList(pendencies.getLoadCredentialFacialList(), seniorService, hikvisionMinmoeService);
 	}
 
-	private static void sendSuccessPendency(SeniorApiService seniorService, Long pendencyId) {
+	private static void sendSuccessPendency(SeniorService seniorService, Long pendencyId) {
 		List<PendencyExecuted> pendenciesSuccess = new ArrayList<>();
 		PendencyExecuted pendencyExecuted = new PendencyExecuted();
 		pendencyExecuted.setPendencyId(pendencyId);
 		pendenciesSuccess.add(pendencyExecuted);
 		seniorService.updatePendenciesExecuted(pendenciesSuccess);
-		CLogger.logSeniorDebug(String.valueOf(getDeviceInfo(seniorService.getDevice())) + " DeviceDateTimePendencies",
-				"OK");
+		CLogger.logSeniorDebug("DeviceDateTimePendencies",
+				String.format("Pendecy success: %s", Utils.classToJson(pendencyExecuted)));
 	}
 
-	private static void updatePendencyStatus(SeniorApiService seniorService, Long pendencyId,
+	private static void updatePendencyStatus(SeniorService seniorService, Long pendencyId,
 			PendencyUpdated.OperationEnum status, PendencyUpdateStatus updateStatus) {
 		List<PendencyUpdated> pendenciesUpdate = new ArrayList<>();
 		PendencyUpdated pendencyUpdated = new PendencyUpdated();
@@ -234,18 +242,19 @@ public class SeniorMiddlewareHandlerService {
 		seniorService.updatePendenciesStatus(pendenciesUpdate);
 	}
 
-	private static void handleDeviceStatusPendencies(List<DevicePendency> pendencies, SeniorApiService seniorService,
+	private static void handleDeviceStatusPendencies(List<DevicePendency> pendencies, SeniorService seniorService,
 			HikvisionMinMoeService minmoeService) {
 		if (pendencies != null) {
-			for (DevicePendency pendency : pendencies)
+			for (DevicePendency pendency : pendencies) {
 				checkDeviceStatus(pendency, seniorService, minmoeService, null);
+			}
 		} else {
 			CLogger.logSeniorDebug(String.valueOf(getDeviceInfo(seniorService.getDevice())) + " CHECK STATUS PENDENCY",
 					"No check status pendency for device " + seniorService.getDevice().getId());
 		}
 	}
 
-	private static void checkDeviceStatus(DevicePendency pendency, SeniorApiService seniorService,
+	private static void checkDeviceStatus(DevicePendency pendency, SeniorService seniorService,
 			HikvisionMinMoeService minmoeService, Long deviceId) {
 		try {
 			DeviceInfo deviceInfo = null;
@@ -298,12 +307,12 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static void handleDeviceDateTimePendencies(List<DevicePendency> pendencies, SeniorApiService seniorService,
+	private static void handleDeviceDateTimePendencies(List<DevicePendency> pendencies, SeniorService seniorService,
 			HikvisionMinMoeService minmoeService) {
 		try {
 			for (DevicePendency pendency : pendencies) {
-
 				try {
+
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 					DateTime dateTime = new DateTime("manual", sdf.format(new Date()),
 							HikvisionMinMoeService.minutesToUtcString(SeniorStaticData
@@ -343,7 +352,7 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static void handleResetDevicePendencies(List<DevicePendency> pendencies, SeniorApiService seniorService) {
+	private static void handleResetDevicePendencies(List<DevicePendency> pendencies, SeniorService seniorService) {
 		try {
 			for (DevicePendency pendency : pendencies) {
 				List<PendencyUpdated> pendenciesUpdate = new ArrayList<>();
@@ -360,8 +369,8 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static void handleBlockDevicePendencies(List<BlockDevicePendency> pendencies,
-			SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+	private static void handleBlockDevicePendencies(List<BlockDevicePendency> pendencies, SeniorService seniorService,
+			HikvisionMinMoeService minmoeService) {
 		try {
 			for (BlockDevicePendency pendency : pendencies) {
 
@@ -399,7 +408,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handleUnblockDevicePendencies(List<UnblockDevicePendency> pendencies,
-			SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+			SeniorService seniorService, HikvisionMinMoeService minmoeService) {
 		try {
 			for (UnblockDevicePendency pendency : pendencies) {
 
@@ -438,7 +447,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handleSetDeviceEmergencyPendencies(List<SetDeviceEmergencyPendency> pendencies,
-			SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+			SeniorService seniorService, HikvisionMinMoeService minmoeService) {
 		for (SetDeviceEmergencyPendency pendency : pendencies) {
 
 			try {
@@ -470,7 +479,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handleUnsetDeviceEmergencyPendencies(List<UnsetDeviceEmergencyPendency> pendencies,
-			SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+			SeniorService seniorService, HikvisionMinMoeService minmoeService) {
 		for (UnsetDeviceEmergencyPendency pendency : pendencies) {
 			try {
 				Boolean success = Boolean.valueOf(minmoeService.closeDoor());
@@ -500,7 +509,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handleApolloIncludeCardPendencies(List<ApolloIncludeCardPendency> pendencies,
-			SeniorApiService seniorService) {
+			SeniorService seniorService) {
 		try {
 			for (ApolloIncludeCardPendency pendency : pendencies) {
 				updatePendencyStatus(seniorService, pendency.getPendencyId(),
@@ -517,7 +526,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handleApolloExcludeCardPendencies(List<ApolloExcludeCardPendency> pendencies,
-			SeniorApiService seniorService) {
+			SeniorService seniorService) {
 		try {
 			for (ApolloExcludeCardPendency pendency : pendencies) {
 				updatePendencyStatus(seniorService, pendency.getPendencyId(),
@@ -534,21 +543,21 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handleIncludeBiometryPendencies(List<IncludeBiometryPendency> pendencies,
-			SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+			SeniorService seniorService, HikvisionMinMoeService minmoeService) {
 		try {
 			for (IncludeBiometryPendency pendency : pendencies) {
 
 				try {
-					PersonInfo person = SeniorApiService.getPersonCardAndPhotoInfo(pendency.getManagerDeviceId(),
+					PersonInfo person = SeniorService.getPersonCardAndPhotoInfo(pendency.getManagerDeviceId(),
 							pendency.getPersonId(), null);
-					if (person == null) {
-						CLogger.logSeniorDebug(
-								String.valueOf(getDeviceInfo(seniorService.getDevice()))
-										+ " handleIncludeCardPendencies",
-								"Person not found: " + pendency.getPersonId());
-
-						continue;
-					}
+//					if (person == null) {
+//						CLogger.logSeniorDebug(
+//								String.valueOf(getDeviceInfo(seniorService.getDevice()))
+//										+ " handleIncludeCardPendencies",
+//								"Person not found: " + pendency.getPersonId());
+//
+//						continue;
+//					}
 					IncludeUser user = new IncludeUser();
 					IncludeUser.UserInfo userInfo = new IncludeUser.UserInfo();
 					userInfo.setEmployeeNo(person.getPersonId().toString());
@@ -624,7 +633,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handleExcludeBiometryPendencies(List<ExcludeBiometryPendency> pendencies,
-			SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+			SeniorService seniorService, HikvisionMinMoeService minmoeService) {
 		try {
 			for (ExcludeBiometryPendency pendency : pendencies) {
 
@@ -676,16 +685,16 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static void handleDevicePendencies(List<DeviceUpdatedPendency> pendencies, SeniorApiService seniorService,
+	private static void handleDevicePendencies(List<DeviceUpdatedPendency> pendencies, SeniorService seniorService,
 			HikvisionMinMoeService minmoeService) {
 		try {
 			for (DeviceUpdatedPendency pendency : pendencies) {
 
 				try {
 					if (pendency.getOperation().equals(OperationUpdateDeviceEnum.DEVICE_CONFIG)) {
-						ManagerDevice device = SeniorApiService.getDevice(pendency.getManagerDeviceId());
+						ManagerDevice device = SeniorService.getDevice(pendency.getManagerDeviceId());
 
-						ManagerDevice updateDevice = SeniorApiService.getDevice(pendency.getManagerDeviceId());
+						ManagerDevice updateDevice = SeniorService.getDevice(pendency.getManagerDeviceId());
 						SeniorStaticData.upsertManagerDevice(updateDevice);
 
 						Boolean success = Boolean.valueOf(minmoeService.configureDevice(device));
@@ -704,7 +713,7 @@ public class SeniorMiddlewareHandlerService {
 					if (pendency.getOperation().equals(OperationUpdateDeviceEnum.DEVICE_CREATED)
 							|| pendency.getOperation().equals(OperationUpdateDeviceEnum.DEVICE_REMOVED)
 							|| pendency.getOperation().equals(OperationUpdateDeviceEnum.DEVICE_UPDATED)) {
-						ManagerDevice updateDevice = SeniorApiService.getDevice(pendency.getManagerDeviceId());
+						ManagerDevice updateDevice = SeniorService.getDevice(pendency.getManagerDeviceId());
 						SeniorStaticData.upsertManagerDevice(updateDevice);
 						continue;
 					}
@@ -725,7 +734,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handleLoadHolidayListPendencies(List<LoadHolidayListPendency> pendencies,
-			SeniorApiService seniorService) {
+			SeniorService seniorService) {
 		try {
 			for (LoadHolidayListPendency pendency : pendencies) {
 				updatePendencyStatus(seniorService, pendency.getPendencyId(),
@@ -741,7 +750,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handleRemoveHolidayListPendencies(List<DevicePendency> pendencies,
-			SeniorApiService seniorService) {
+			SeniorService seniorService) {
 		try {
 			for (DevicePendency pendency : pendencies) {
 				updatePendencyStatus(seniorService, pendency.getPendencyId(),
@@ -758,7 +767,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handleActivateDeviceOutputPendencies(List<ActiveDeviceOutputPendency> pendencies,
-			SeniorApiService seniorService) {
+			SeniorService seniorService) {
 		try {
 			for (ActiveDeviceOutputPendency pendency : pendencies) {
 				updatePendencyStatus(seniorService, pendency.getPendencyId(),
@@ -775,7 +784,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handleDeactivateDeviceOutputPendencies(List<DeactiveDeviceOutputPendency> pendencies,
-			SeniorApiService seniorService) {
+			SeniorService seniorService) {
 		try {
 			for (DeactiveDeviceOutputPendency pendency : pendencies) {
 				updatePendencyStatus(seniorService, pendency.getPendencyId(),
@@ -791,18 +800,16 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static void handleDatamartUpdatedPendencies(DatamartUpdatedPendency pendency,
-			SeniorApiService seniorService) {
+	private static void handleDatamartUpdatedPendencies(List<DatamartUpdatedPendency> pendencies,
+			SeniorService seniorService) {
 		try {
-			if (pendency.getDatamartObjectType() == DatamartUpdatedPendency.DatamartObjectTypeEnum.AREA_CONTROLLED) {
-				SeniorApiService.updateAreaControls();
+			for (DatamartUpdatedPendency pendency : pendencies) {
+				SeniorService.updateAreaControls();
 				System.out.println(Utils.classToJson(SeniorStaticData.getAreaControlList()));
 				sendSuccessPendency(seniorService, pendency.getPendencyId());
-			} else
-				updatePendencyStatus(seniorService, pendency.getPendencyId(),
-						PendencyUpdated.OperationEnum.REMOVE_PENDENCY, PendencyUpdateStatus.PENDING_NOT_IMPLEMENTED);
-			CLogger.logSeniorDebug(
-					String.valueOf(getDeviceInfo(seniorService.getDevice())) + " DatamartUpdatedPendencies", "OK");
+
+				CLogger.logSeniorDebug("DatamartUpdatedPendencies", "OK");
+			}
 		} catch (Exception e) {
 			CLogger.logSeniorError(
 					String.valueOf(getDeviceInfo(seniorService.getDevice())) + " DatamartUpdatedPendencies",
@@ -811,7 +818,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handlePersonLocationUpdatedPendencies(List<PersonAreaUpdatedPendency> pendencies,
-			SeniorApiService seniorService) {
+			SeniorService seniorService) {
 		try {
 			for (PersonAreaUpdatedPendency pendency : pendencies) {
 				updatePendencyStatus(seniorService, pendency.getPendencyId(),
@@ -828,7 +835,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handleCollectEventPendencies(List<CollectEventPendency> pendencies,
-			SeniorApiService seniorService) {
+			SeniorService seniorService) {
 		try {
 			for (CollectEventPendency pendency : pendencies) {
 				updatePendencyStatus(seniorService, pendency.getPendencyId(),
@@ -842,7 +849,7 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static void handleInputStatusPendencies(List<DevicePendency> pendencies, SeniorApiService seniorService) {
+	private static void handleInputStatusPendencies(List<DevicePendency> pendencies, SeniorService seniorService) {
 		try {
 			for (DevicePendency pendency : pendencies) {
 				updatePendencyStatus(seniorService, pendency.getPendencyId(),
@@ -857,7 +864,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handleManufacturerUpdatedPendencies(List<ManufacturerUpdatedPendency> pendencies,
-			SeniorApiService seniorService) {
+			SeniorService seniorService) {
 		try {
 			for (ManufacturerUpdatedPendency pendency : pendencies) {
 				updatePendencyStatus(seniorService, pendency.getPendencyId(),
@@ -874,7 +881,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handleUpdatePersonREPPendencies(List<UpdatePersonREPPendency> pendencies,
-			SeniorApiService seniorService) {
+			SeniorService seniorService) {
 		try {
 			for (UpdatePersonREPPendency pendency : pendencies) {
 				updatePendencyStatus(seniorService, pendency.getPendencyId(),
@@ -889,12 +896,11 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static void handleLoadAllowCardListPendencies(List<DevicePendency> pendencies,
-			SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+	private static void handleLoadAllowCardListPendencies(List<DevicePendency> pendencies, SeniorService seniorService,
+			HikvisionMinMoeService minmoeService) {
 		try {
 			for (DevicePendency pendency : pendencies) {
 				try {
-
 					Boolean success = handleLoadAllowedCardsList(seniorService, minmoeService);
 
 					if (success.booleanValue()) {
@@ -927,7 +933,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handleRemoveAllowCardListPendencies(List<DevicePendency> pendencies,
-			SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+			SeniorService seniorService, HikvisionMinMoeService minmoeService) {
 		try {
 			for (DevicePendency pendency : pendencies) {
 				minmoeService.excludeAllUsers();
@@ -942,8 +948,8 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static void handleLoadBiometryListPendencies(List<DevicePendency> pendencies,
-			SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+	private static void handleLoadBiometryListPendencies(List<DevicePendency> pendencies, SeniorService seniorService,
+			HikvisionMinMoeService minmoeService) {
 		try {
 			for (DevicePendency pendency : pendencies) {
 				try {
@@ -976,8 +982,8 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static void handleRemoveBiometryListPendencies(List<DevicePendency> pendencies,
-			SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+	private static void handleRemoveBiometryListPendencies(List<DevicePendency> pendencies, SeniorService seniorService,
+			HikvisionMinMoeService minmoeService) {
 		try {
 			for (DevicePendency pendency : pendencies) {
 				List<AccessBiometry> finterprints = seniorService.getDeviceAllowedFingerPrint();
@@ -1019,8 +1025,8 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static void handleIncludeCardPendencies(List<IncludeCardPendency> pendencies,
-			SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+	private static void handleIncludeCardPendencies(List<IncludeCardPendency> pendencies, SeniorService seniorService,
+			HikvisionMinMoeService minmoeService) {
 		try {
 			for (IncludeCardPendency pendency : pendencies) {
 				try {
@@ -1093,7 +1099,7 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static Boolean includeCards(List<IncludeUserCard> cards, SeniorApiService seniorService,
+	private static Boolean includeCards(List<IncludeUserCard> cards, SeniorService seniorService,
 			HikvisionMinMoeService minmoeService) throws Exception {
 		for (IncludeUserCard includeUserCard : cards) {
 			Boolean success = Boolean.valueOf(minmoeService.includeUserCard(includeUserCard));
@@ -1104,8 +1110,8 @@ public class SeniorMiddlewareHandlerService {
 		return Boolean.valueOf(true);
 	}
 
-	private static void handleExcludeCardPendencies(List<ExcludeCardPendency> pendencies,
-			SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+	private static void handleExcludeCardPendencies(List<ExcludeCardPendency> pendencies, SeniorService seniorService,
+			HikvisionMinMoeService minmoeService) {
 		try {
 			for (ExcludeCardPendency pendency : pendencies) {
 				try {
@@ -1154,7 +1160,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void handleDeviceDisplayMessagePendencies(List<DeviceDisplayMessagePendency> pendencies,
-			SeniorApiService seniorService) {
+			SeniorService seniorService) {
 		try {
 			for (DeviceDisplayMessagePendency pendency : pendencies) {
 				updatePendencyStatus(seniorService, pendency.getPendencyId(),
@@ -1170,11 +1176,9 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static void handleUpdateFirmwarePendencies(List<DevicePendency> pendencies,
-			SeniorApiService seniorService) {
+	private static void handleUpdateFirmwarePendencies(List<DevicePendency> pendencies, SeniorService seniorService) {
 		try {
 			for (DevicePendency pendency : pendencies) {
-
 				updatePendencyStatus(seniorService, pendency.getPendencyId(),
 						PendencyUpdated.OperationEnum.REMOVE_PENDENCY, PendencyUpdateStatus.PENDING_NOT_IMPLEMENTED);
 				CLogger.logSeniorDebug(
@@ -1187,12 +1191,11 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static void handleIncludePhotoPendencies(List<IncludePhotoPendency> pendencies,
-			SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+	private static void handleIncludePhotoPendencies(List<IncludePhotoPendency> pendencies, SeniorService seniorService,
+			HikvisionMinMoeService minmoeService) {
 		try {
 			for (IncludePhotoPendency pendency : pendencies) {
 				try {
-
 					Boolean success = handleLoadAllowedPhotosList(seniorService, minmoeService);
 
 					if (success.booleanValue()) {
@@ -1223,7 +1226,7 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static boolean includePerson(HikvisionMinMoeService minmoeService, SeniorApiService seniorService,
+	private static boolean includePerson(HikvisionMinMoeService minmoeService, SeniorService seniorService,
 			IncludeUser user) {
 		try {
 			if (!minmoeService.includeUser(user))
@@ -1237,7 +1240,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static boolean includePhoto(IncludeUser user, String photoUrl, HikvisionMinMoeService minmoeService,
-			SeniorApiService seniorService) {
+			SeniorService seniorService) {
 		try {
 			if (!includePerson(minmoeService, seniorService, user)) {
 				return false;
@@ -1262,8 +1265,8 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static void handleExcludePhotoPendencies(List<ExcludePhotoPendency> pendencies,
-			SeniorApiService seniorService, HikvisionMinMoeService minmoeService) {
+	private static void handleExcludePhotoPendencies(List<ExcludePhotoPendency> pendencies, SeniorService seniorService,
+			HikvisionMinMoeService minmoeService) {
 		try {
 			for (ExcludePhotoPendency pendency : pendencies) {
 				try {
@@ -1306,7 +1309,7 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static void handleLoadCredentialFacialList(List<DevicePendency> pendencies, SeniorApiService seniorService,
+	private static void handleLoadCredentialFacialList(List<DevicePendency> pendencies, SeniorService seniorService,
 			HikvisionMinMoeService minmoeService) {
 		try {
 			for (DevicePendency pendency : pendencies) {
@@ -1340,7 +1343,7 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static Boolean handleLoadAllowedCardsList(SeniorApiService seniorService,
+	private static Boolean handleLoadAllowedCardsList(SeniorService seniorService,
 			HikvisionMinMoeService minmoeService) {
 		try {
 			List<CardList> cardList = seniorService.getDeviceAllowedCardList();
@@ -1410,7 +1413,7 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static Boolean handleLoadAllowedPhotosList(SeniorApiService seniorService,
+	private static Boolean handleLoadAllowedPhotosList(SeniorService seniorService,
 			HikvisionMinMoeService minmoeService) {
 		try {
 			List<PersonPhotoTemplates> personsInfo = seniorService.getDeviceAllowedFacialList();
@@ -1458,7 +1461,7 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static Boolean handleLoadAllowedFingerPrintList(SeniorApiService seniorService,
+	private static Boolean handleLoadAllowedFingerPrintList(SeniorService seniorService,
 			HikvisionMinMoeService minmoeService) {
 		try {
 			List<AccessBiometry> finterprints = seniorService.getDeviceAllowedFingerPrint();
@@ -1503,7 +1506,7 @@ public class SeniorMiddlewareHandlerService {
 		}
 	}
 
-	private static Boolean handleIncludeUser(HikvisionMinMoeService minmoeService, SeniorApiService seniorService,
+	private static Boolean handleIncludeUser(HikvisionMinMoeService minmoeService, SeniorService seniorService,
 			IncludeUser user) throws Exception {
 		minmoeService.includeUser(user);
 		return true;

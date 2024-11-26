@@ -1,7 +1,27 @@
 
 package br.com.thidi.middleware.controllers;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import br.com.hikvision.minmoe.models.EventRequest;
+import br.com.hikvision.minmoe.models.HikvisionAccessValidatePerson;
 import br.com.hikvision.minmoe.models.RemoteCheckEventResponse;
 import br.com.hikvision.services.HikvisionAccessManagerService;
 import br.com.hikvision.services.HikvisionMinMoeService;
@@ -14,24 +34,8 @@ import br.com.seniorx.models.ExtensibleProperty;
 import br.com.seniorx.models.ManagerDevice;
 import br.com.seniorx.models.PersonValidationResponse;
 import br.com.seniorx.models.ReaderDevice;
-import br.com.seniorx.services.SeniorApiService;
+import br.com.seniorx.services.SeniorService;
 import br.com.thidi.middleware.resource.CLogger;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping({ "/api/hikvision/minmoe/webhook" })
@@ -62,8 +66,7 @@ public class MinMoeController {
 					}
 
 					HikvisionMinMoeService minmoeService = new HikvisionMinMoeService(device);
-
-					SeniorApiService seniorService = new SeniorApiService();
+					SeniorService seniorService = new SeniorService();
 
 					seniorService.setDevice(device);
 
@@ -83,7 +86,6 @@ public class MinMoeController {
 					if (areaControl == null) {
 						CLogger.logHikvisionDebug("MINMOE CONTROLLER",
 								"Área não encontada para o id: " + device.getAreaId());
-
 						return;
 					}
 
@@ -95,12 +97,18 @@ public class MinMoeController {
 						return;
 					}
 
-					if (req.getAccessControllerEvent().isRemoteCheck()) {
-						HikvisionAccessManagerService.updateDeviceLastOnlineAccess(req.getIpAddress(),
-								req.getDateTime().substring(0, 19));
-					} else if (!HikvisionAccessManagerService.isNewerOfflineAccess(req.getIpAddress(),
-							req.getDateTime().substring(0, 19))) {
-						return;
+					HikvisionAccessValidatePerson person = new HikvisionAccessValidatePerson(
+							req.getAccessControllerEvent().getCardNo() != null
+									? req.getAccessControllerEvent().getCardNo()
+									: req.getAccessControllerEvent().getEmployeeNoString(),
+							req.getDateTime().substring(0, 19), req.getAccessControllerEvent().getSubEventType(),
+							req.getAccessControllerEvent().getCardReaderNo());
+
+					if (req.getAccessControllerEvent().isRemoteCheck())
+						HikvisionAccessManagerService.updatePersonLastOnlineAccess(req.getIpAddress(), person);
+					else {
+						if (!HikvisionAccessManagerService.checkIsValidAccess(req.getIpAddress(), person))
+							return;
 					}
 
 					if (req.getAccessControllerEvent().getSubEventType() == 39
@@ -191,7 +199,7 @@ public class MinMoeController {
 
 						CLogger.logSeniorInfo("Senior Access Request: ", seniorAccessRquest.toString());
 
-						PersonValidationResponse seniorResponse = SeniorApiService
+						PersonValidationResponse seniorResponse = SeniorService
 								.validateOnlineAccess(seniorAccessRquest);
 
 						CLogger.logSeniorDebug("Senior Access Response: ", seniorResponse.toString());
@@ -243,7 +251,7 @@ public class MinMoeController {
 						}
 						List<Access> personAccesses = new ArrayList<>();
 						personAccesses.add(seniorAccess);
-						SeniorApiService.notifyPersonAccess(personAccesses);
+						SeniorService.notifyPersonAccess(personAccesses);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

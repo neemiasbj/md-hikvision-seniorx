@@ -1,9 +1,11 @@
  package br.com.thidi.middleware.configurations;
  
- import br.com.seniorx.services.SeniorWebSocketService;
- import br.com.thidi.middleware.services.SeniorMiddlewareHandlerService;
  import org.springframework.context.annotation.Bean;
- import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Configuration;
+
+import br.com.hikvision.services.HikvisionAccessManagerService;
+import br.com.seniorx.services.SeniorWebSocketService;
+import br.com.thidi.middleware.services.SeniorMiddlewareHandlerService;
  
  
  @Configuration
@@ -17,6 +19,11 @@
    @Bean
    public SeniorWebSocketService seniorWebSocketService() {
      return new SeniorWebSocketService();
+   }
+   
+   @Bean
+   public HikvisionAccessManagerService hikvisionAccessManagerService() {
+     return new HikvisionAccessManagerService();
    }
  }
 

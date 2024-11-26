@@ -100,10 +100,12 @@ public class HikvisionMinMoeService {
 	private static final String REMOTE_CONTROL_DOOR_PATH = "/ISAPI/AccessControl/RemoteControl/door/65535";
 
 	public HikvisionMinMoeService(ManagerDevice device) {
-		this.device = device;
-		this.deviceUri = buildDeviceUri();
-		this.digestAuthRestTemplate = new HikbisionDigestAuthRestUtil(device.getUsername(), device.getPassword());
-		this.objectMapper.setPropertyNamingStrategy(PropertyNamingStrategies.UPPER_CAMEL_CASE);
+		if (device != null) {
+			this.device = device;
+			this.deviceUri = buildDeviceUri();
+			this.digestAuthRestTemplate = new HikbisionDigestAuthRestUtil(device.getUsername(), device.getPassword());
+			this.objectMapper.setPropertyNamingStrategy(PropertyNamingStrategies.UPPER_CAMEL_CASE);
+		}
 	}
 
 	private String buildDeviceUri() {

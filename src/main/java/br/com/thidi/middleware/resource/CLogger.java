@@ -1,5 +1,8 @@
 package br.com.thidi.middleware.resource;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,11 +15,12 @@ public class CLogger {
 	private static final Logger PROPERTIES = LogManager.getLogger("");
 	private static final Logger FILE = LogManager.getLogger("");
 	private static final Logger GENERAL = LogManager.getLogger("");
+	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
 	public static void logWebSocketInfo(String func, String message) {
 		String logMessage = getFormattedLogMessage(func, message);
-//		WEBSOCKET_LOGGER.info(logMessage);
-		System.out.println("WEBOSCKET INFO: " + logMessage);
+//		WEBSOCKET_LOGGER.info(String.format("%s - %s", dateFormat.format(new Date()), logMessage));
+		System.out.println(String.format("%s - %s", dateFormat.format(new Date()), "WEBOSCKET INFO: " + logMessage));
 	}
 
 	public static void logSpringInfo(String func, String message) {
@@ -34,7 +38,7 @@ public class CLogger {
 	public static void logHikvisionInfo(String func, String message) {
 		String logMessage = getFormattedLogMessage(func, message);
 //		HIKVISION_LOGGER.info(logMessage);
-		System.out.println("HIKVISION INFO: " + logMessage);
+		System.out.println(String.format("%s - %s", dateFormat.format(new Date()), "HIKVISION INFO: " + logMessage));
 	}
 
 	public static void logSeniorError(String func, String message) {
@@ -59,11 +63,13 @@ public class CLogger {
 		String logMessage = getFormattedLogMessage(func, message);
 		String errorMessage = throwable.getMessage();
 //		WEBSOCKET_LOGGER.debug(String.valueOf(logMessage) + " - " + errorMessage);
-		System.out.println("HIKVISION DEBUG: " + String.valueOf(logMessage) + " - " + errorMessage);
+		System.out.println(String.format("%s - %s", dateFormat.format(new Date()),
+				"HIKVISION DEBUG: " + String.valueOf(logMessage) + " - " + errorMessage));
 	}
 
 	public static void logHikvisionDebug(String func, String message) {
-		System.out.println("HIKVISION DEBUG: " + getFormattedLogMessage(func, message));
+		System.out.println(String.format("%s - %s", dateFormat.format(new Date()),
+				"HIKVISION DEBUG: " + getFormattedLogMessage(func, message)));
 //		HIKVISION_LOGGER.debug(getFormattedLogMessage(func, message));
 	}
 
@@ -85,7 +91,8 @@ public class CLogger {
 		String logMessage = getFormattedLogMessage(func, message);
 		String errorMessage = throwable.toString();
 //		HIKVISION_LOGGER.error(String.valueOf(logMessage) + " - " + errorMessage);
-		System.out.println("HIKVISION ERROR: " + String.valueOf(logMessage) + " - " + errorMessage);
+		System.out.println(String.format("%s - %s", dateFormat.format(new Date()),
+				"HIKVISION ERROR: " + String.valueOf(logMessage) + " - " + errorMessage));
 	}
 
 	public static void logSeniorError(String func, String message, Throwable throwable) {
@@ -179,4 +186,3 @@ public class CLogger {
 		return String.format("* %s * %s", new Object[] { func, message });
 	}
 }
-

@@ -2,7 +2,6 @@ package br.com.seniorx.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -35,7 +34,7 @@ import br.com.thidi.middleware.resource.CLogger;
 import br.com.thidi.middleware.resource.Utils;
 import br.com.thidi.middleware.utils.MiddlewareUtilPropertiesImpl;
 
-public class SeniorApiService {
+public class SeniorService {
 	private ManagerDevice device = null;
 	private static ObjectMapper objectMapper = new ObjectMapper();
 
@@ -48,7 +47,8 @@ public class SeniorApiService {
 	private static String uriAreaControl = String.format("%s/datamart/areacontrol", new Object[] { seniorEndpoint });
 	private static String uriNotifyDeviceEvent = String.format("%s/notify/device/event",
 			new Object[] { seniorEndpoint });
-	private static String uriDevicePendencies = String.format("%s/pendency/device", new Object[] { seniorEndpoint });
+	private static String uriPendencies = String.format("%s/pendency", seniorEndpoint);
+	private static String uriPendenciesDevice = String.format("%s/pendency/device", new Object[] { seniorEndpoint });
 	private static String uriPendencyUpdate = String.format("%s/pendency/update", new Object[] { seniorEndpoint });
 	private static String uriPendencySuccess = String.format("%s/pendency/success", new Object[] { seniorEndpoint });
 	private static String uriDeviceAllowedPhotos = String.format("%s/device/access/${id}/photo",
@@ -94,14 +94,6 @@ public class SeniorApiService {
 		headers.add("partner_key", seniorPartnerKey);
 		headers.add("driver_key", seniorDriverKey);
 		return headers;
-	}
-
-	private boolean checkDevice(String method) {
-		if (this.device == null) {
-			CLogger.logSeniorDebug("SENIOR SERVICE", "Device must not be null to use " + method);
-			return false;
-		}
-		return true;
 	}
 
 	public static List<ManagerDevice> getDevices() {
@@ -167,14 +159,25 @@ public class SeniorApiService {
 		}
 	}
 
-	public AllPendency getDevicePendencies(Long deviceId) {
-		if (!checkDevice("getDevicePendencies")) {
+	public AllPendency getPendencies() {
+		try {
+			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
+			ResponseEntity<AllPendency> response = restTemplate.exchange(String.valueOf(uriPendencies), HttpMethod.GET,
+					entity, AllPendency.class, new Object[0]);
+
+			AllPendency allPendencies = (AllPendency) response.getBody();
+			return allPendencies;
+		} catch (Exception e) {
+			CLogger.logSeniorError("getPendencies", "pendencies", e);
 			return null;
 		}
+	}
+
+	public AllPendency getDevicePendencies(Long deviceId) {
 		try {
 			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
 			ResponseEntity<AllPendency> response = restTemplate.exchange(
-					String.valueOf(uriDevicePendencies) + "/" + deviceId, HttpMethod.GET, entity, AllPendency.class,
+					String.valueOf(uriPendenciesDevice) + "/" + deviceId, HttpMethod.GET, entity, AllPendency.class,
 					new Object[0]);
 
 			AllPendency allPendencies = (AllPendency) response.getBody();
