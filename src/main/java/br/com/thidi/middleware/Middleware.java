@@ -33,6 +33,8 @@ public class Middleware extends Thread {
 		String pid = rt.getName();
 		MDC.put("PID", pid);
 
+		CLogger.logPropertiesInfo("FILE CONFIG DATA", "VERSÃO: " + getVersion());
+
 		CLogger.logPropertiesInfo("FILE CONFIG DATA", "api.port: " + MiddlewarePropertiesUtilImpl.getValor("api.port"));
 
 		CLogger.logPropertiesInfo("FILE CONFIG DATA",
@@ -88,7 +90,8 @@ public class Middleware extends Thread {
 
 		try {
 			Properties p = new Properties();
-			InputStream is = getClass().getResourceAsStream("/META-INF/maven/pom.properties");
+			InputStream is = getClass()
+					.getResourceAsStream("/META-INF/maven/br.com.hikvision/hikvisionSeniorX/pom.properties");
 			if (is != null) {
 				p.load(is);
 				version = p.getProperty("version", "");

@@ -1,10 +1,14 @@
 package br.com.seniorx.services;
 
+import java.io.IOException;
+import java.net.URI;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import br.com.thidi.middleware.resource.CLogger;
 import br.com.thidi.middleware.services.SeniorMiddlewareHandlerService;
 import br.com.thidi.middleware.utils.MiddlewareUtilPropertiesImpl;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.websocket.ClientEndpoint;
 import jakarta.websocket.CloseReason;
 import jakarta.websocket.ContainerProvider;
@@ -14,11 +18,6 @@ import jakarta.websocket.OnMessage;
 import jakarta.websocket.OnOpen;
 import jakarta.websocket.Session;
 import jakarta.websocket.WebSocketContainer;
-import java.io.IOException;
-import java.net.URI;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 @ClientEndpoint
 public class SeniorWebSocketClient {
@@ -57,13 +56,14 @@ public class SeniorWebSocketClient {
 	public void onMessage(String message) {
 		System.out.println("Websocket MESSAGE: " + message);
 		CLogger.logSeniorDebug("Websocket", "MESSAGE: " + message);
-		ObjectMapper objectMapper = new ObjectMapper();
+//		ObjectMapper objectMapper = new ObjectMapper();
 
 		try {
-			JsonNode jsonNode = objectMapper.readTree(message);
-			Long deviceId = Long.valueOf(jsonNode.get("deviceId").asLong());
+//			JsonNode jsonNode = objectMapper.readTree(message);
+//			Long deviceId = Long.valueOf(jsonNode.get("deviceId").asLong());
 
-			SeniorMiddlewareHandlerService.HandleWebSocketMessage(deviceId);
+//			SeniorMiddlewareHandlerService.HandleWebSocketMessage(deviceId);
+			SeniorMiddlewareHandlerService.HandleWebSocketMessage();
 		} catch (Exception e) {
 			CLogger.logSeniorError("ON MESSAGE", e.getMessage());
 			e.printStackTrace();

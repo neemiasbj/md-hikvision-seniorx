@@ -1,10 +1,12 @@
 package br.com.seniorx;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import br.com.seniorx.models.AreaControlList;
 import br.com.seniorx.models.ManagerDevice;
 import br.com.thidi.middleware.resource.CLogger;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SeniorStaticData {
 	private static List<ManagerDevice> managerDeviceList = new ArrayList<ManagerDevice>();
@@ -23,8 +25,7 @@ public class SeniorStaticData {
 		for (int i = 0; i < managerDeviceList.size(); i++) {
 			ManagerDevice existingDevice = managerDeviceList.get(i);
 			if (existingDevice.getId().equals(receivedDevice.getId())) {
-				devicePosition = Integer.valueOf(i);
-
+				devicePosition = i;
 				break;
 			}
 		}
@@ -35,6 +36,11 @@ public class SeniorStaticData {
 			managerDeviceList.add(receivedDevice);
 			CLogger.logSeniorDebug("ManagerDeviceList", "ManagerDevice with id " + receivedDevice.getId() + " added");
 		}
+	}
+
+	public static void removeManagerDevice(Long deviceId) {
+		managerDeviceList = managerDeviceList.stream().filter(device -> device.getId() != deviceId)
+				.collect(Collectors.toList());
 	}
 
 	public static ManagerDevice getDeviceByNetworkIdentification(String networkIdentification) {
@@ -61,7 +67,7 @@ public class SeniorStaticData {
 		SeniorStaticData.areaControlList = areaList;
 	}
 
-	public static void upsertManagerDevice(AreaControlList receivedAreaControl) {
+	public static void upsertAreaControl(AreaControlList receivedAreaControl) {
 		for (int i = 0; i < managerDeviceList.size(); i++) {
 			if (areaControlList.get(i).getId().equals(receivedAreaControl.getId())) {
 				areaControlList.set(i, receivedAreaControl);

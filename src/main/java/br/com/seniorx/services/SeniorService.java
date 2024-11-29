@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.seniorx.SeniorStaticData;
 import br.com.seniorx.models.Access;
 import br.com.seniorx.models.AccessBiometry;
 import br.com.seniorx.models.AccessRequest;
@@ -48,7 +49,7 @@ public class SeniorService {
 	private static String uriNotifyDeviceEvent = String.format("%s/notify/device/event",
 			new Object[] { seniorEndpoint });
 	private static String uriPendencies = String.format("%s/pendency", seniorEndpoint);
-	private static String uriPendenciesDevice = String.format("%s/pendency/device", new Object[] { seniorEndpoint });
+//	private static String uriPendenciesDevice = String.format("%s/pendency/device", new Object[] { seniorEndpoint });
 	private static String uriPendencyUpdate = String.format("%s/pendency/update", new Object[] { seniorEndpoint });
 	private static String uriPendencySuccess = String.format("%s/pendency/success", new Object[] { seniorEndpoint });
 	private static String uriDeviceAllowedPhotos = String.format("%s/device/access/${id}/photo",
@@ -119,7 +120,7 @@ public class SeniorService {
 		}
 	}
 
-	public static List<AreaControlList> updateAreaControls() {
+	public static void updateAreaControls() {
 		try {
 			HttpHeaders header = httpHeaderSenior;
 			header.setContentType(MediaType.APPLICATION_JSON);
@@ -129,16 +130,17 @@ public class SeniorService {
 					entity, new ParameterizedTypeReference<List<AreaControlList>>() {
 					}, new Object[0]);
 
-			List<AreaControlList> devices = (List<AreaControlList>) response.getBody();
-			if (devices == null || devices.isEmpty()) {
-				CLogger.logSeniorError("Senior", "No devices found on Senior!");
-				return null;
-			}
+			List<AreaControlList> areasControl = (List<AreaControlList>) response.getBody();
+			if (areasControl == null || areasControl.isEmpty()) {
 
-			return devices;
+				SeniorStaticData.setAreaControlList(new ArrayList<AreaControlList>());
+				CLogger.logSeniorError("Senior", "No Area Controls found on Senior!");
+				return;
+			}
+			SeniorStaticData.setAreaControlList(areasControl);
+
 		} catch (Exception e) {
 			CLogger.logSeniorError("Status Event All Device", "Data sent to the platform. Error Equipment List", e);
-			return null;
 		}
 	}
 
@@ -159,7 +161,7 @@ public class SeniorService {
 		}
 	}
 
-	public AllPendency getPendencies() {
+	public static AllPendency getPendencies() {
 		try {
 			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
 			ResponseEntity<AllPendency> response = restTemplate.exchange(String.valueOf(uriPendencies), HttpMethod.GET,
@@ -173,20 +175,20 @@ public class SeniorService {
 		}
 	}
 
-	public AllPendency getDevicePendencies(Long deviceId) {
-		try {
-			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
-			ResponseEntity<AllPendency> response = restTemplate.exchange(
-					String.valueOf(uriPendenciesDevice) + "/" + deviceId, HttpMethod.GET, entity, AllPendency.class,
-					new Object[0]);
-
-			AllPendency allPendencies = (AllPendency) response.getBody();
-			return allPendencies;
-		} catch (Exception e) {
-			CLogger.logSeniorError("getDevicePendencies", "getDevice", e);
-			return null;
-		}
-	}
+//	public AllPendency getDevicePendencies(Long deviceId) {
+//		try {
+//			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
+//			ResponseEntity<AllPendency> response = restTemplate.exchange(
+//					String.valueOf(uriPendenciesDevice) + "/" + deviceId, HttpMethod.GET, entity, AllPendency.class,
+//					new Object[0]);
+//
+//			AllPendency allPendencies = (AllPendency) response.getBody();
+//			return allPendencies;
+//		} catch (Exception e) {
+//			CLogger.logSeniorError("getDevicePendencies", "getDevice", e);
+//			return null;
+//		}
+//	}
 //
 //	public AreaControlList getAreaById(Long areaId) {
 //		try {

@@ -258,7 +258,7 @@ public class MinMoeController {
 					CLogger.logHikvisionError("MINMOE CONTROLLER", "ERROR", e);
 				}
 			});
-			sendResponse.setName("THIDI EVENT REQUEST HANDLER: " + req.getIpAddress());
+			sendResponse.setName("HIKVISION ACCESS VALIDATION: " + req.getIpAddress());
 			sendResponse.start();
 
 			HttpHeaders headers = new HttpHeaders();
