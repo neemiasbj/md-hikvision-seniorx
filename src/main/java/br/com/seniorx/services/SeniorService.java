@@ -23,8 +23,12 @@ import br.com.seniorx.models.AllPendency;
 import br.com.seniorx.models.AreaControlList;
 import br.com.seniorx.models.CardList;
 import br.com.seniorx.models.DeviceStatus;
+import br.com.seniorx.models.Driver;
+import br.com.seniorx.models.DriverStatusInput;
 import br.com.seniorx.models.Event;
+import br.com.seniorx.models.Event.StatusEnum;
 import br.com.seniorx.models.ManagerDevice;
+import br.com.seniorx.models.ManagerDeviceStatus;
 import br.com.seniorx.models.PendencyExecuted;
 import br.com.seniorx.models.PendencyUpdated;
 import br.com.seniorx.models.PersonInfo;
@@ -43,13 +47,14 @@ public class SeniorService {
 	private static String seniorDriverKey = MiddlewareUtilPropertiesImpl.getValor("senior.driver_key");
 	private static String seniorEndpoint = MiddlewareUtilPropertiesImpl.getValor("senior.api.sdk.uri");
 
+	private static String uriDriver = String.format("%s/driver", new Object[] { seniorEndpoint });
+	private static String uriDriverStatus = String.format("%s/driver/status", new Object[] { seniorEndpoint });
 	private static String uriDevice = String.format("%s/device", new Object[] { seniorEndpoint });
 	private static String uriDevices = String.format("%s/device/", new Object[] { seniorEndpoint });
 	private static String uriAreaControl = String.format("%s/datamart/areacontrol", new Object[] { seniorEndpoint });
 	private static String uriNotifyDeviceEvent = String.format("%s/notify/device/event",
 			new Object[] { seniorEndpoint });
 	private static String uriPendencies = String.format("%s/pendency", seniorEndpoint);
-//	private static String uriPendenciesDevice = String.format("%s/pendency/device", new Object[] { seniorEndpoint });
 	private static String uriPendencyUpdate = String.format("%s/pendency/update", new Object[] { seniorEndpoint });
 	private static String uriPendencySuccess = String.format("%s/pendency/success", new Object[] { seniorEndpoint });
 	private static String uriDeviceAllowedPhotos = String.format("%s/device/access/${id}/photo",
@@ -60,8 +65,6 @@ public class SeniorService {
 			new Object[] { seniorEndpoint });
 	private static String uriDeviceStatus = String.format("%s/device/status", new Object[] { seniorEndpoint });
 	private static String uriAccessRequest = String.format("%s/device/accessrequest", new Object[] { seniorEndpoint });
-//	private static String uriDriveDateTime = String.format("%s/driver/datetime", new Object[] { seniorEndpoint });
-//	private static String uriDeviceBiometry = String.format("%s/device/biometry", new Object[] { seniorEndpoint });
 	private static String uriDatamartPersonCardAndPhotoInfo = String.format("%s/datamart/person/info",
 			new Object[] { seniorEndpoint });
 	private static String uriDatamartPersonFingerPrintInfo = String.format(
@@ -97,17 +100,17 @@ public class SeniorService {
 		return headers;
 	}
 
-	public static List<ManagerDevice> getDevices() {
+	public static List<ManagerDeviceStatus> getDevices() {
 		try {
 			HttpHeaders header = httpHeaderSenior;
 			header.setContentType(MediaType.APPLICATION_JSON);
 
 			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
-			ResponseEntity<List<ManagerDevice>> response = restTemplate.exchange(uriDevices, HttpMethod.GET, entity,
-					new ParameterizedTypeReference<List<ManagerDevice>>() {
+			ResponseEntity<List<ManagerDeviceStatus>> response = restTemplate.exchange(uriDevices, HttpMethod.GET,
+					entity, new ParameterizedTypeReference<List<ManagerDeviceStatus>>() {
 					}, new Object[0]);
 
-			List<ManagerDevice> devices = (List<ManagerDevice>) response.getBody();
+			List<ManagerDeviceStatus> devices = (List<ManagerDeviceStatus>) response.getBody();
 			if (devices == null || devices.isEmpty()) {
 				CLogger.logSeniorError("Senior", "No devices found on Senior!");
 				return null;
@@ -144,6 +147,22 @@ public class SeniorService {
 		}
 	}
 
+	public static Driver getDriver() {
+		try {
+			HttpHeaders header = httpHeaderSenior;
+			header.setContentType(MediaType.APPLICATION_JSON);
+			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
+
+			ResponseEntity<Driver> response = restTemplate.exchange(String.valueOf(uriDriver), HttpMethod.GET, entity,
+					Driver.class, new Object[0]);
+
+			return (Driver) response.getBody();
+		} catch (Exception e) {
+			CLogger.logSeniorError("SENIOR SERVICE", "getDevice", e);
+			return null;
+		}
+	}
+
 	public static ManagerDevice getDevice(Long deviceId) {
 		try {
 			HttpHeaders header = httpHeaderSenior;
@@ -175,45 +194,6 @@ public class SeniorService {
 		}
 	}
 
-//	public AllPendency getDevicePendencies(Long deviceId) {
-//		try {
-//			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
-//			ResponseEntity<AllPendency> response = restTemplate.exchange(
-//					String.valueOf(uriPendenciesDevice) + "/" + deviceId, HttpMethod.GET, entity, AllPendency.class,
-//					new Object[0]);
-//
-//			AllPendency allPendencies = (AllPendency) response.getBody();
-//			return allPendencies;
-//		} catch (Exception e) {
-//			CLogger.logSeniorError("getDevicePendencies", "getDevice", e);
-//			return null;
-//		}
-//	}
-//
-//	public AreaControlList getAreaById(Long areaId) {
-//		try {
-//			HttpEntity<String> entity = new HttpEntity<String>(httpHeaderSenior);
-//			ResponseEntity<List<AreaControlList>> response = restTemplate.exchange(uriAreaControl, HttpMethod.GET,
-//					entity, new ParameterizedTypeReference<List<AreaControlList>>() {
-//					}, new Object[0]);
-//
-//			List<AreaControlList> areasControl = (List<AreaControlList>) response.getBody();
-//			if (areasControl == null || areasControl.isEmpty()) {
-//				CLogger.logSeniorError("Senior", "No area control found for " + areaId);
-//				return null;
-//			}
-//
-//			for (AreaControlList areaControl : areasControl) {
-//				if (Objects.equals(areaControl.getId(), areaId))
-//					return areaControl;
-//			}
-//			return null;
-//		} catch (Exception e) {
-//			CLogger.logSeniorError("getAreaById: " + areaId, "ERROR", e);
-//			return null;
-//		}
-//	}
-
 	public void sendEventList(List<Event> events) {
 		try {
 			CLogger.logSeniorDebug("sendEventList", Utils.listToJson(events));
@@ -222,6 +202,20 @@ public class SeniorService {
 			CLogger.logSeniorDebug("sendEventList", "SUCCESS");
 		} catch (Exception e) {
 			CLogger.logSeniorError("sendEventList", "ERROR", e);
+		}
+	}
+
+	public static void sendDriverStatus(StatusEnum driverStatus) {
+		try {
+			DriverStatusInput status = new DriverStatusInput();
+			if (driverStatus == StatusEnum.ONLINE)
+				status.addDriverIdsItem(SeniorStaticData.getDriver().getId());
+
+			HttpEntity<DriverStatusInput> entity = new HttpEntity<DriverStatusInput>(status, httpHeaderSenior);
+			restTemplate.postForObject(uriDriverStatus, entity, String.class, new Object[0]);
+			CLogger.logSeniorDebug("sendDriverStatus", "SUCCESS");
+		} catch (Exception e) {
+			CLogger.logSeniorError("sendDriverStatus", "ERROR", e);
 		}
 	}
 

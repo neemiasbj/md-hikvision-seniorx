@@ -32,7 +32,6 @@ public class HikvisionAccessManagerService {
 	private void cleanDevicesPersonList() {
 		for (HikvisionAccessValidateDevice device : devices)
 			try {
-				CLogger.logHikvisionDebug("HikvisionAccessManagerService - cleanDevicesPersonList", "Running...");
 				device.cleanDevicesPersonList();
 			} catch (Exception e) {
 				e.printStackTrace();

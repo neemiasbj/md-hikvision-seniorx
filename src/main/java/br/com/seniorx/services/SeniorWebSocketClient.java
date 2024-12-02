@@ -7,7 +7,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import br.com.thidi.middleware.resource.CLogger;
-import br.com.thidi.middleware.services.SeniorMiddlewareHandlerService;
+import br.com.thidi.middleware.services.ThidiMiddlewareService;
 import br.com.thidi.middleware.utils.MiddlewareUtilPropertiesImpl;
 import jakarta.websocket.ClientEndpoint;
 import jakarta.websocket.CloseReason;
@@ -54,7 +54,6 @@ public class SeniorWebSocketClient {
 
 	@OnMessage
 	public void onMessage(String message) {
-		System.out.println("Websocket MESSAGE: " + message);
 		CLogger.logSeniorDebug("Websocket", "MESSAGE: " + message);
 //		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -63,7 +62,7 @@ public class SeniorWebSocketClient {
 //			Long deviceId = Long.valueOf(jsonNode.get("deviceId").asLong());
 
 //			SeniorMiddlewareHandlerService.HandleWebSocketMessage(deviceId);
-			SeniorMiddlewareHandlerService.HandleWebSocketMessage();
+			ThidiMiddlewareService.HandleWebSocketMessage();
 		} catch (Exception e) {
 			CLogger.logSeniorError("ON MESSAGE", e.getMessage());
 			e.printStackTrace();

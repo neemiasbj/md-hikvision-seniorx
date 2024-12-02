@@ -5,22 +5,34 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.seniorx.models.AreaControlList;
+import br.com.seniorx.models.Driver;
 import br.com.seniorx.models.ManagerDevice;
+import br.com.seniorx.models.ManagerDeviceStatus;
+import br.com.seniorx.models.Event.StatusEnum;
 import br.com.thidi.middleware.resource.CLogger;
 
 public class SeniorStaticData {
-	private static List<ManagerDevice> managerDeviceList = new ArrayList<ManagerDevice>();
+	private static List<ManagerDeviceStatus> managerDeviceList = new ArrayList<ManagerDeviceStatus>();
 	private static List<AreaControlList> areaControlList = new ArrayList<AreaControlList>();
+	private static Driver driver;
 
-	public static List<ManagerDevice> getManagerDeviceList() {
+	public static List<ManagerDeviceStatus> getManagerDeviceList() {
 		return managerDeviceList;
 	}
 
-	public static void setManagerDeviceList(List<ManagerDevice> managerDeviceList) {
+	public static void setManagerDeviceList(List<ManagerDeviceStatus> managerDeviceList) {
 		SeniorStaticData.managerDeviceList = managerDeviceList;
 	}
 
-	public static void upsertManagerDevice(ManagerDevice receivedDevice) {
+	public static Driver getDriver() {
+		return driver;
+	}
+
+	public static void setDriver(Driver driver) {
+		SeniorStaticData.driver = driver;
+	}
+
+	public static void upsertManagerDevice(ManagerDeviceStatus receivedDevice) {
 		Integer devicePosition = null;
 		for (int i = 0; i < managerDeviceList.size(); i++) {
 			ManagerDevice existingDevice = managerDeviceList.get(i);
@@ -51,8 +63,8 @@ public class SeniorStaticData {
 		return null;
 	}
 
-	public static ManagerDevice getDeviceByNetworkId(Long deviceId) {
-		for (ManagerDevice device : managerDeviceList) {
+	public static ManagerDeviceStatus getDeviceById(Long deviceId) {
+		for (ManagerDeviceStatus device : managerDeviceList) {
 			if (device.getId().equals(deviceId))
 				return device;
 		}
@@ -85,6 +97,25 @@ public class SeniorStaticData {
 			if (areaControl.getId().equals(areaControlId))
 				return areaControl;
 		return null;
+	}
+
+	public static void updateDeviceStatus(Long deviceId, StatusEnum status) {
+		Integer devicePosition = null;
+		for (int i = 0; i < managerDeviceList.size(); i++) {
+			ManagerDevice existingDevice = managerDeviceList.get(i);
+			if (existingDevice.getId().equals(deviceId)) {
+				devicePosition = i;
+				break;
+			}
+		}
+		if (devicePosition == null) {
+			CLogger.logSeniorDebug("ManagerDeviceList", "ManagerDevice with id " + deviceId + " updated");
+		} else {
+			ManagerDeviceStatus device = managerDeviceList.get(devicePosition);
+			device.setDeviceStatus(status);
+			managerDeviceList.set(devicePosition, device);
+			CLogger.logSeniorDebug("ManagerDeviceList", "ManagerDevice with id " + deviceId + " added");
+		}
 	}
 
 }

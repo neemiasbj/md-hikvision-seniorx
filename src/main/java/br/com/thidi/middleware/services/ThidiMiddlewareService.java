@@ -43,6 +43,7 @@ import br.com.seniorx.models.DevicePendency;
 import br.com.seniorx.models.DeviceStatus;
 import br.com.seniorx.models.DeviceUpdatedPendency;
 import br.com.seniorx.models.Event;
+import br.com.seniorx.models.Event.StatusEnum;
 import br.com.seniorx.models.ExcludeBiometryPendency;
 import br.com.seniorx.models.ExcludeCardPendency;
 import br.com.seniorx.models.ExcludePhotoPendency;
@@ -51,6 +52,7 @@ import br.com.seniorx.models.IncludeCardPendency;
 import br.com.seniorx.models.IncludePhotoPendency;
 import br.com.seniorx.models.LoadHolidayListPendency;
 import br.com.seniorx.models.ManagerDevice;
+import br.com.seniorx.models.ManagerDeviceStatus;
 import br.com.seniorx.models.ManufacturerUpdatedPendency;
 import br.com.seniorx.models.OperationUpdateDeviceEnum;
 import br.com.seniorx.models.PendencyExecuted;
@@ -72,96 +74,68 @@ import br.com.thidi.middleware.resource.Utils;
 import br.com.thidi.middleware.utils.MiddlewarePropertiesUtilImpl;
 
 @Service
-public class SeniorMiddlewareHandlerService {
+public class ThidiMiddlewareService {
 	ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
-	private int deviceInterval = MiddlewarePropertiesUtilImpl.getValor("time.keep.alive.senior.device").isEmpty() ? 600
+	private int deviceInterval = MiddlewarePropertiesUtilImpl.getValor("time.keep.alive.senior.device").isEmpty() ? 60
 			: Integer.valueOf(MiddlewarePropertiesUtilImpl.getValor("time.keep.alive.senior.device")).intValue();
-//	private int pendencyInterval = MiddlewarePropertiesUtilImpl.getValor("time.keep.alive.senior.pendency").isEmpty()
-//			? 600
-//			: Integer.valueOf(MiddlewarePropertiesUtilImpl.getValor("time.keep.alive.senior.pendency")).intValue();
+	private int driverInterval = MiddlewarePropertiesUtilImpl.getValor("time.keep.alive.senior.driver").isEmpty() ? 60
+			: Integer.valueOf(MiddlewarePropertiesUtilImpl.getValor("time.keep.alive.senior.driver")).intValue();
 	private static SimpleDateFormat sdfyyyyMMddHHmmss = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	Calendar calendar = Calendar.getInstance();
 
 	@Autowired
-	public SeniorMiddlewareHandlerService() {
+	public ThidiMiddlewareService() {
 
-		List<ManagerDevice> devices = SeniorService.getDevices();
+		List<ManagerDeviceStatus> devices = SeniorService.getDevices();
 		SeniorStaticData.setManagerDeviceList(devices);
-
 		SeniorService.updateAreaControls();
-
-//		this.executorService.scheduleAtFixedRate(() -> {
-//			try {
-//				CLogger.logSeniorInfo("PENDENCIES HANDLER", "Started...");
-//				HandleDevicesPendencies();
-//			} catch (Exception e) {
-//				CLogger.logSeniorInfo("PENDENCIES", "Error: " + e.getMessage());
-//			}
-//		}, 0, this.pendencyInterval, TimeUnit.SECONDS);
+		SeniorStaticData.setDriver(SeniorService.getDriver());
+		HandleDevicesKeepAlive();
 
 		this.executorService.scheduleAtFixedRate(() -> {
 			try {
-				CLogger.logSeniorInfo("KEEP ALIVE HANDLER", "Started...");
-				HandleKeepAlive(devices);
+				CLogger.logSeniorInfo("DEVICES KEEPALIVE", "Started...");
+				HandleDevicesKeepAlive();
 			} catch (Exception e) {
-				CLogger.logSeniorInfo("KEEP ALIVE", "Error: " + e.getMessage());
+				CLogger.logSeniorInfo("DEVICES KEEPALIVE", "Error: " + e.getMessage());
 			}
-		}, 0, this.deviceInterval, TimeUnit.SECONDS);
+		}, this.deviceInterval, this.deviceInterval, TimeUnit.SECONDS);
 
+		this.executorService.scheduleAtFixedRate(() -> {
+			try {
+				CLogger.logSeniorInfo("DRIVER KEEPALIVE", "Started...");
+				HandleDriverKeepAlive();
+			} catch (Exception e) {
+				CLogger.logSeniorInfo("DRIVER KEEPALIVE", "Error: " + e.getMessage());
+			}
+		}, this.driverInterval, this.driverInterval, TimeUnit.SECONDS);
 		HandleWebSocketMessage();
 	}
 
 	private static final DateFormat seniorDateTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
-	public void HandleKeepAlive(List<ManagerDevice> devices) {
+	public void HandleDriverKeepAlive() {
 		try {
-			if (devices == null || devices.size() == 0) {
-				CLogger.logSeniorInfo(" KEEP ALIVE", "No devices found.");
-			} else {
-				for (ManagerDevice device : devices) {
-					Thread deviceKeepaliveHandler = new Thread(() -> {
-
-						HikvisionMinMoeService minmoeService = new HikvisionMinMoeService(device);
-
-						SeniorService seniorService = new SeniorService();
-						seniorService.setDevice(device);
-						checkDeviceStatus(null, seniorService, minmoeService, device.getId());
-					});
-					deviceKeepaliveHandler
-							.setName(String.format("KEEPALIVE HANDLER: %s", device.getNetworkIdentification()));
-					deviceKeepaliveHandler.start();
-				}
-			}
+			SeniorService.sendDriverStatus(StatusEnum.ONLINE);
 		} catch (Exception e) {
-			CLogger.logSeniorInfo("KEEPALIVE HANDLER", "Error: " + e.getMessage());
+			CLogger.logSeniorInfo("DRIVER KEEPALIVE", "Error: " + e.getMessage());
 		}
 	}
 
-//	public void HandleDevicesPendencies() {
-//		try {
-//			SeniorService seniorService = new SeniorService();
-//			List<ManagerDevice> devices = SeniorService.getDevices();
-//
-//			if (devices == null) {
-//				CLogger.logSeniorInfo(String.valueOf(getDeviceInfo(seniorService.getDevice())) + " KEEP ALIVE",
-//						"No devices found.");
-//			} else {
-//				for (ManagerDevice device : devices) {
-//					Thread devicePendnciesHandler = new Thread(() -> {
-//						seniorService.setDevice(device);
-//
-//						AllPendency allPendencies = seniorService.getDevicePendencies(device.getId());
-//						HandleSeniorDevicePendencies(allPendencies, seniorService);
-//					});
-//					devicePendnciesHandler
-//							.setName(String.format("THIDI PENDENCIES HANDLER: %s", device.getNetworkIdentification()));
-//					devicePendnciesHandler.start();
-//				}
-//			}
-//		} catch (Exception e) {
-//			CLogger.logSeniorInfo(" KEEP ALIVE", "Error: " + e.getMessage());
-//		}
-//	}
+	public void HandleDevicesKeepAlive() {
+		try {
+			CLogger.logSeniorInfo("DEVICE KEEPALIVE", "SENDING DEVICES STATUS");
+			for (ManagerDevice device : SeniorStaticData.getManagerDeviceList()) {
+				HikvisionMinMoeService minmoeService = new HikvisionMinMoeService(device);
+				SeniorService seniorService = new SeniorService();
+				seniorService.setDevice(device);
+				checkDeviceStatus(null, seniorService, minmoeService, device.getId());
+			}
+			CLogger.logSeniorInfo("DEVICE KEEPALIVE", "DEVICES STATUS SENT");
+		} catch (Exception e) {
+			CLogger.logSeniorInfo("DEVICE KEEPALIVE", "Error: " + e.getMessage());
+		}
+	}
 
 	public static void HandleWebSocketMessage() {
 		DeviceAllPendencyList pendencies = handlePendencies();
@@ -330,6 +304,7 @@ public class SeniorMiddlewareHandlerService {
 	}
 
 	private static void sendSuccessPendency(SeniorService seniorService, Long pendencyId) {
+		System.out.println("sendSuccessPendency " + pendencyId.toString());
 		List<PendencyExecuted> pendenciesSuccess = new ArrayList<>();
 		PendencyExecuted pendencyExecuted = new PendencyExecuted();
 		pendencyExecuted.setPendencyId(pendencyId);
@@ -341,6 +316,7 @@ public class SeniorMiddlewareHandlerService {
 
 	private static void updatePendencyStatus(SeniorService seniorService, Long pendencyId,
 			PendencyUpdated.OperationEnum status, PendencyUpdateStatus updateStatus) {
+		System.out.println("updatePendencyStatus " + pendencyId.toString());
 		List<PendencyUpdated> pendenciesUpdate = new ArrayList<>();
 		PendencyUpdated pendencyUpdated = new PendencyUpdated();
 		pendencyUpdated.setPendencyId(pendencyId);
@@ -364,55 +340,68 @@ public class SeniorMiddlewareHandlerService {
 
 	private static void checkDeviceStatus(DevicePendency pendency, SeniorService seniorService,
 			HikvisionMinMoeService minmoeService, Long deviceId) {
-		try {
-			DeviceInfo deviceInfo = null;
-
+		Thread t = new Thread(() -> {
 			try {
-				deviceInfo = minmoeService.getDeviceInfo();
+				DeviceInfo deviceInfo = null;
+
+				try {
+					deviceInfo = minmoeService.getDeviceInfo();
+				} catch (Exception e) {
+					CLogger.logSeniorError(String.valueOf(getDeviceInfo(seniorService.getDevice())) + " DEVICE STATUS",
+							e.getMessage());
+				}
+
+				AreaControlList areaControl = SeniorStaticData.getAreaControlId(seniorService.getDevice().getAreaId());
+				if (areaControl == null) {
+					CLogger.logSeniorDebug(String.valueOf(getDeviceInfo(seniorService.getDevice())) + " DEVICE STATUS",
+							"AREA CONTROL is null");
+					return;
+				}
+
+				if (pendency != null) {
+					String status = deviceInfo != null ? "ONLINE" : "OFFLINE";
+					if (!SeniorStaticData.getDeviceById(seniorService.getDevice().getId()).getDeviceStatus().getValue().equals(status))
+						SeniorStaticData.updateDeviceStatus(deviceId, StatusEnum.fromValue(status));
+
+					StatusField statusField = new StatusField();
+					statusField.setKey("STATUS");
+					statusField.setValue(status);
+
+					DeviceStatus deviceStatus = new DeviceStatus();
+
+					deviceStatus.setManagerDeviceId(seniorService.getDevice().getId());
+					deviceStatus.setPendencyId(pendency.getPendencyId());
+					deviceStatus.setStatus(Collections.singletonList(statusField));
+
+					seniorService.sendDeviceStatus(deviceStatus);
+					updatePendencyStatus(seniorService, pendency.getPendencyId(),
+							PendencyUpdated.OperationEnum.REMOVE_PENDENCY, null);
+
+				} else {
+					Event.StatusEnum status = deviceInfo != null ? Event.StatusEnum.ONLINE : Event.StatusEnum.OFFLINE;
+
+					if (SeniorStaticData.getDeviceById(deviceId).getDeviceStatus() != status) {
+						SeniorStaticData.updateDeviceStatus(deviceId, status);
+						List<Event> events = new ArrayList<>();
+						Event event = new Event();
+						event.setDate(seniorDateTime.format(new Date()));
+						event.setDeviceId(deviceId);
+						event.setEventType(deviceInfo != null ? Event.EventTypeEnum.DEVICE_ONLINE
+								: Event.EventTypeEnum.DEVICE_OFFLINE);
+						event.setStatus(deviceInfo != null ? Event.StatusEnum.ONLINE : Event.StatusEnum.OFFLINE);
+						event.setTimezoneOffset(areaControl.getGmt());
+						events.add(event);
+						seniorService.sendEventList(events);
+					}
+				}
 			} catch (Exception e) {
 				CLogger.logSeniorError(String.valueOf(getDeviceInfo(seniorService.getDevice())) + " DEVICE STATUS",
 						e.getMessage());
 			}
+		});
+		t.setName("DEVICE STATUS: " + seniorService.getDevice().getNetworkIdentification());
+		t.start();
 
-			AreaControlList areaControl = SeniorStaticData.getAreaControlId(seniorService.getDevice().getAreaId());
-			if (areaControl == null) {
-				CLogger.logSeniorDebug(String.valueOf(getDeviceInfo(seniorService.getDevice())) + " DEVICE STATUS",
-						"AREA CONTROL is null");
-				return;
-			}
-
-			if (pendency != null) {
-				StatusField statusField = new StatusField();
-				statusField.setKey(seniorService.getDevice().getNetworkIdentification());
-				statusField.setValue(deviceInfo != null ? "ONLINE" : "OFFLINE");
-
-				DeviceStatus deviceStatus = new DeviceStatus();
-
-				deviceStatus.setManagerDeviceId(seniorService.getDevice().getId());
-				deviceStatus.setPendencyId(pendency.getPendencyId());
-				deviceStatus.setStatus(Collections.singletonList(statusField));
-
-				seniorService.sendDeviceStatus(deviceStatus);
-				updatePendencyStatus(seniorService, pendency.getPendencyId(),
-						PendencyUpdated.OperationEnum.REMOVE_PENDENCY, null);
-
-			} else {
-				List<Event> events = new ArrayList<>();
-				Event event = new Event();
-				event.setDate(seniorDateTime.format(new Date()));
-				event.setDeviceId(deviceId);
-				event.setEventType(
-						deviceInfo != null ? Event.EventTypeEnum.DEVICE_ONLINE : Event.EventTypeEnum.DEVICE_OFFLINE);
-				event.setStatus(deviceInfo != null ? Event.StatusEnum.ONLINE : Event.StatusEnum.OFFLINE);
-				event.setTimezoneOffset(areaControl.getGmt());
-				events.add(event);
-
-				seniorService.sendEventList(events);
-			}
-		} catch (Exception e) {
-			CLogger.logSeniorError(String.valueOf(getDeviceInfo(seniorService.getDevice())) + " DEVICE STATUS",
-					e.getMessage());
-		}
 	}
 
 	private static void handleDeviceDateTimePendencies(List<DevicePendency> pendencies, SeniorService seniorService,
@@ -805,7 +794,7 @@ public class SeniorMiddlewareHandlerService {
 				for (DeviceUpdatedPendency pendency : pendencies) {
 					try {
 						if (pendency.getOperation().equals(OperationUpdateDeviceEnum.DEVICE_CONFIG)) {
-							ManagerDevice device = SeniorStaticData.getDeviceByNetworkId(pendency.getManagerDeviceId());
+							ManagerDevice device = SeniorStaticData.getDeviceById(pendency.getManagerDeviceId());
 
 							Boolean success = Boolean.valueOf(minmoeService.configureDevice(device));
 							if (success.booleanValue()) {
@@ -825,7 +814,8 @@ public class SeniorMiddlewareHandlerService {
 
 						if (pendency.getOperation().equals(OperationUpdateDeviceEnum.DEVICE_CREATED)
 								|| pendency.getOperation().equals(OperationUpdateDeviceEnum.DEVICE_UPDATED)) {
-							ManagerDevice updateDevice = SeniorService.getDevice(pendency.getManagerDeviceId());
+							ManagerDeviceStatus updateDevice = (ManagerDeviceStatus) SeniorService
+									.getDevice(pendency.getManagerDeviceId());
 							SeniorStaticData.upsertManagerDevice(updateDevice);
 						}
 						sendSuccessPendency(seniorService, pendency.getPendencyId());

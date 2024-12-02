@@ -3,6 +3,10 @@ package br.com.thidi.middleware;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import br.com.seniorx.models.Event.StatusEnum;
+import br.com.seniorx.services.SeniorService;
+import br.com.thidi.middleware.resource.CLogger;
+
 public class ServiceManager {
 	private static Logger logger = LogManager.getLogger();
 
@@ -59,8 +63,8 @@ public class ServiceManager {
 	}
 
 	public static void stop() {
-		logger.info("SERVICO PARANDO...");
-
-		logger.info("SERVICO PARADO");
+		CLogger.logGeneralInfo("SERVICE", "STOPING SERVICE...");
+		SeniorService.sendDriverStatus(StatusEnum.OFFLINE);
+		CLogger.logGeneralInfo("SERVICE", "SERVICE STOPPED...");
 	}
 }

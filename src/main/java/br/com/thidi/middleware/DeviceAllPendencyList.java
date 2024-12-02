@@ -3,6 +3,7 @@ package br.com.thidi.middleware;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.seniorx.SeniorStaticData;
 import br.com.seniorx.models.ActiveDeviceOutputPendency;
 import br.com.seniorx.models.AllPendency;
 import br.com.seniorx.models.ApolloExcludeCardPendency;
@@ -28,7 +29,6 @@ import br.com.seniorx.models.SetDeviceEmergencyPendency;
 import br.com.seniorx.models.UnblockDevicePendency;
 import br.com.seniorx.models.UnsetDeviceEmergencyPendency;
 import br.com.seniorx.models.UpdatePersonREPPendency;
-import br.com.seniorx.services.SeniorService;
 
 public class DeviceAllPendencyList {
 
@@ -40,7 +40,7 @@ public class DeviceAllPendencyList {
 		if (devicePendencyType == DevicePendencyType.DATAMARTUPDATED) {
 			datamartPendencies.add((DatamartUpdatedPendency) pendency);
 		} else if (index == null) {
-			ManagerDevice device = SeniorService.getDevice(deviceId);
+			ManagerDevice device = SeniorStaticData.getDeviceById(deviceId);
 			AllPendency devicePendency = new AllPendency();
 			deviceAndPendency.add(new DeviceAndPendencies(device, devicePendency));
 			addPendency(0, devicePendencyType, pendency);

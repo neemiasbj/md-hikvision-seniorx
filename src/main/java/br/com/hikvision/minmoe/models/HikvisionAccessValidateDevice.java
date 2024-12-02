@@ -27,8 +27,6 @@ public class HikvisionAccessValidateDevice {
 					/ 1000 > cleanInterval)
 				personList.remove(i);
 		}
-		CLogger.logHikvisionDebug("HikvisionAccessManagerService - cleanDevicesPersonList result",
-				Utils.classToJson(personList));
 	}
 
 	public String getDeviceName() {
